@@ -4,8 +4,6 @@
     {
         bool IsBroken();
 
-        uint Code { get; }
-
         string Message { get; }
     }
 }
