@@ -1,0 +1,39 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35209.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7D448B23-AA07-45BA-884B-0F71A3AEEA46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BDCB64A7-5E58-43EB-A1A9-4E3BA910B950}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{CEB83A10-7169-4462-99AD-70AD676F5F41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Shared.Domain", "src\Shared\Cine.Shared.Domain\Cine.Shared.Domain.csproj", "{EA5EBD46-424C-471B-BEDC-F78CE84035FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{776EF8E9-BD13-4AE7-81D1-EFBC23F664AB}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA5EBD46-424C-471B-BEDC-F78CE84035FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5EBD46-424C-471B-BEDC-F78CE84035FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5EBD46-424C-471B-BEDC-F78CE84035FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5EBD46-424C-471B-BEDC-F78CE84035FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CEB83A10-7169-4462-99AD-70AD676F5F41} = {7D448B23-AA07-45BA-884B-0F71A3AEEA46}
+		{EA5EBD46-424C-471B-BEDC-F78CE84035FA} = {CEB83A10-7169-4462-99AD-70AD676F5F41}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72CCF0CE-B2C8-4FA5-A63C-A57C199D79A0}
+	EndGlobalSection
+EndGlobal
