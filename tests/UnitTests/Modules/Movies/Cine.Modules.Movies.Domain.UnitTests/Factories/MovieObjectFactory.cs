@@ -6,7 +6,7 @@
         {
             var title = "The Matrix";
             var description = "Any short description.";
-            var genre = MovieGenre.SciFi;
+            var genre = MovieGenre.Of("SciFi");
             var duration = TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(136));
             var releaseDate = new DateOnly(1999, 3, 31);
 
@@ -31,7 +31,7 @@
         {
             var title = "";
             var description = "Any short description.";
-            var genre = MovieGenre.SciFi;
+            var genre = MovieGenre.Of("SciFi");
             var duration = TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(136));
             var releaseDate = new DateOnly(1999, 3, 31);
 

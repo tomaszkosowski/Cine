@@ -1,4 +1,4 @@
-﻿namespace Cine.Modules.Movies.Domain
+﻿namespace Cine.Shared.Domain
 {
     public record TypedId<TTypedId> where TTypedId : new()
     {

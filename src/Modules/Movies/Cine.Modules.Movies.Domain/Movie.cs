@@ -42,7 +42,7 @@ namespace Cine.Modules.Movies.Domain
             // Blank for ORM
         }
 
-        private Movie(string title, string description, MovieGenre movieGenre, TimeOnly duration, DateOnly releaseDate, List<Person> directors, List<Person> cast)
+        private Movie(string title, string description, MovieGenre movieGenre, TimeOnly duration, DateOnly releaseDate, IReadOnlyList<Person> directors, IReadOnlyList<Person> cast)
         {
             CheckRule(new EnsureNotEmptyRule(title, nameof(title)));
 
@@ -84,7 +84,7 @@ namespace Cine.Modules.Movies.Domain
             }
         }
 
-        public static Movie Create(string title, string description, MovieGenre movieGenre, TimeOnly duration, DateOnly releaseDate, List<Person> directors, List<Person> cast)
+        public static Movie Create(string title, string description, MovieGenre movieGenre, TimeOnly duration, DateOnly releaseDate, IReadOnlyList<Person> directors, IReadOnlyList<Person> cast)
             => new(title, description, movieGenre, duration, releaseDate, directors, cast);
 
         #endregion
