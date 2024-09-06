@@ -1,0 +1,33 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: 'Checkout'
+        uses: actions/checkout@v4.1.7
+
+      # Step 2: Setup .NET env
+      - name: 'Setup .NET'
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      # Step 3: Restore dependencies
+      - name: 'Restore dependencies'
+        run: dotnet restore
+
+      # Step 4: Build project
+      - name: 'Build'
+        run: dotnet build --configuration Release --no-restore
+
+      # Step 5: Run tests
+      - name: 'Run tests'
+        run: dotnet tests --no-build --verbosity normal
