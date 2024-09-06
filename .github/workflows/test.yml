@@ -1,9 +1,9 @@
-name: Deploy to Azure
+name: Run tests
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   run-tests:
