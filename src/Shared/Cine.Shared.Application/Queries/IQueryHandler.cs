@@ -1,6 +1,4 @@
-﻿using OneOf;
-using MediatR;
-using OneOf.Types;
+﻿using MediatR;
 
 namespace Cine.Shared.Application.Queries
 {
