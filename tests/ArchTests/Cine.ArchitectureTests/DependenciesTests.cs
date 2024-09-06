@@ -23,7 +23,17 @@ namespace Cine.ArchitectureTests
         {
             public static ProjectInfo[] LoadProjects(string filePath)
             {
-                var json = File.ReadAllText(filePath)!;
+                static string GetConfiguration()
+                {
+#if DEBUG
+                    return "Debug";
+#endif
+#pragma warning disable CS0162 // Unreachable code detected
+                    return "Release";
+#pragma warning restore CS0162 // Unreachable code detected
+                }
+
+                var json = File.ReadAllText(filePath)!.Replace("{Configuration}", GetConfiguration());
 
                 return [.. JsonSerializer.Deserialize<ProjectInfos>(json)!.Projects];
             }
