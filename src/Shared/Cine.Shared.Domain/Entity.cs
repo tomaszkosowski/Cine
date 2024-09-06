@@ -8,13 +8,13 @@ namespace Cine.Shared.Domain
     {
         #region Fields
 
-        private List<IDomainEvent> _domainEvents;
+        private List<IDomainEvent> _domainEvents = null!;
 
         #endregion
 
         #region Properties
 
-        public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
+        public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly()!;
 
         #endregion
 
