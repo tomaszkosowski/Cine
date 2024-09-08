@@ -22,12 +22,12 @@ jobs:
 
       # Step 3: Restore dependencies
       - name: 'Restore dependencies'
-        run: dotnet restore .\Cine.sln
+        run: dotnet restore ./Cine.sln
 
       # Step 4: Build project
       - name: 'Build'
-        run: dotnet build .\Cine.sln --configuration Release --no-restore
+        run: dotnet build ./Cine.sln --configuration Release --no-restore
 
       # Step 5: Run tests
       - name: 'Run tests'
-        run: dotnet test .\Cine.sln --configuration Release --no-build --verbosity normal
+        run: dotnet test ./Cine.sln --configuration Release --no-build --verbosity normal
