@@ -12,12 +12,21 @@ namespace Cine.Modules.Movies.Infrastructure.Database.Write.Configurations
 
             builder.HasKey(entity => entity.MovieId);
 
+            builder.Property(entity => entity.MovieId)
+                .HasConversion(
+                    movieId => (Guid)movieId,
+                    id => MovieId.Create(id))
+                .IsRequired();
+
             builder.Property(entity => entity.Title)
                 .IsRequired();
 
             builder.Property(entity => entity.Description);
 
             builder.Property(entity => entity.MovieGenre)
+                .HasConversion(
+                    genre => genre.Genre,
+                    genre => MovieGenre.Of(genre))
                 .IsRequired();
 
             builder.Property(entity => entity.Duration)

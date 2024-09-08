@@ -1,0 +1,11 @@
+@host = http://localhost:8080
+
+POST {{host}}/person/add
+Accept: application/json
+Content-Type: application/json
+{
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+###

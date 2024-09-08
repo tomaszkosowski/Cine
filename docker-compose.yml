@@ -1,0 +1,21 @@
+services:
+  cine.modules.movies.api:
+    image: ${DOCKER_REGISTRY-}cine.module.movies.api
+    build:
+      context: .
+      dockerfile: src/Modules/Movies/Cine.Modules.Movies.Api/Dockerfile
+    ports:
+        - "8080:8080"
+    depends_on:
+      - mssql
+
+  mssql:
+    container_name: ms-sql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "W88QnBWn"
+      MSSQL_PID: 'Developer' 
+      MSSQL_TCP_PORT: 1433 
+    ports:
+      - 1433:1433

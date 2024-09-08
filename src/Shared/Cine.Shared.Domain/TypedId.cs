@@ -1,16 +1,18 @@
 ﻿namespace Cine.Shared.Domain
 {
-    public record TypedId<TTypedId> where TTypedId : new()
+    public record TypedId<TTypedId> where TTypedId : TypedId<TTypedId>, new()
     {
-        private Guid _value;
+        public Guid Value { get; set; }
 
         public TypedId()
         {
-            _value = Guid.NewGuid();
+            Value = Guid.NewGuid();
         }
 
-        public static TTypedId Create() => new();
+        public static TTypedId Create() => new() { Value = Guid.NewGuid() };
 
-        public static implicit operator Guid(TypedId<TTypedId> typedId) => typedId._value;
+        public static TTypedId Create(Guid value) => new() { Value = value };
+
+        public static implicit operator Guid(TypedId<TTypedId> typedId) => typedId.Value;
     }
 }
