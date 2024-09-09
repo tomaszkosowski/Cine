@@ -1,8 +1,9 @@
-﻿using Cine.Modules.Movies.Application.People.CreatePerson;
+﻿using Cine.Modules.Movies.Api.Endpoints.People.Get;
+using Cine.Modules.Movies.Application.People.CreatePerson;
 using FastEndpoints;
 using MediatR;
 
-namespace Cine.Modules.Movies.Api.Endpoints.People
+namespace Cine.Modules.Movies.Api.Endpoints.People.Add
 {
     internal record Request(string FirstName, string LastName);
 
@@ -20,10 +21,10 @@ namespace Cine.Modules.Movies.Api.Endpoints.People
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            var oneOf = await _sender.Send(new CreatePersonCommand(req.FirstName, req.LastName));
+            var oneOf = await _sender.Send(new CreatePersonCommand(req.FirstName, req.LastName), ct);
 
             await oneOf.Match(
-                personId => SendOkAsync(new(personId), ct),
+                personId => SendCreatedAtAsync<GetEndpoint>(personId, new(personId), cancellation: ct),
                 error => throw error.Value);
         }
     }

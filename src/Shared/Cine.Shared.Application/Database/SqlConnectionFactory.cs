@@ -1,10 +1,15 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Cine.Shared.Infrastructure.Database;
+using Microsoft.Data.SqlClient;
 
-namespace Cine.Shared.Infrastructure.Database
+namespace Cine.Shared.Application.Database
 {
-    internal sealed class SqlConnectionFactory(string _connectionString) : ISqlConnectionFactory
+    public sealed class SqlConnectionFactory(string _connectionString) : ISqlConnectionFactory
     {
-        public SqlConnection GetConnection()
-            => new(_connectionString);
+        public async Task<SqlConnection> GetConnectionAsync()
+        {
+            var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            return connection;
+        }
     }
 }

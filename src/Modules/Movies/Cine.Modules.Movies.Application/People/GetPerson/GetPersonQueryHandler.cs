@@ -21,8 +21,8 @@ namespace Cine.Modules.Movies.Application.People.GetPerson
                 const string sql = $"""
                                    SELECT
                                        [FirstName] AS [{nameof(PersonDto.FirstName)}],
-                                       [LastName] AS [{nameof(PersonDto.LastName)}],
-                                   FROM [People]
+                                       [LastName] AS [{nameof(PersonDto.LastName)}]
+                                   FROM [dbo].[People]
                                    WHERE [PersonId] = @PersonId
                                    """;
 

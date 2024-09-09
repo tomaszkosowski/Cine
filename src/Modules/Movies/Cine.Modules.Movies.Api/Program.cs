@@ -7,13 +7,16 @@ var configuration = builder.Configuration;
 
 builder.Services
     .AddFastEndpoints()
-    .AddApplication()
+    .AddApplication(opts => opts.ConnectionString = configuration["Database:MsSql:ConnectionString"]!)
     .AddInfrastructure(opts => opts.ConnectionString = configuration["Database:MsSql:ConnectionString"]!);
 
-var app = builder.Build();
+var application = builder.Build();
 
-app.UseFastEndpoints();
+application
+    .UseFastEndpoints()
+    .UseInfrastructure();
 
-app.Run();
+application.Run();
+
 
 public partial class Program { }

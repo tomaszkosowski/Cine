@@ -1,4 +1,6 @@
 ﻿using FastEndpoints.Testing;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Testcontainers.MsSql;
 
 namespace Cine.IntegrationTests
@@ -15,6 +17,16 @@ namespace Cine.IntegrationTests
                 .Build();
 
             await _container.StartAsync();
+        }
+
+        protected override IHost ConfigureAppHost(IHostBuilder a)
+        {
+            a.ConfigureHostConfiguration(b =>
+                b.AddInMemoryCollection(new Dictionary<string, string?> {
+                    { "Database:MsSql:ConnectionString", _container.GetConnectionString() }
+                }));
+
+            return base.ConfigureAppHost(a);
         }
 
         protected override async Task TearDownAsync()

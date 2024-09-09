@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="FastEndpoints.Testing" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Snapshooter.Xunit" />
     <PackageReference Include="Testcontainers.MsSql" />
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="xunit" />
@@ -36,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit"/>
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>

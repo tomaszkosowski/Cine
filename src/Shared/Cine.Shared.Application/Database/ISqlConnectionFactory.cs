@@ -4,6 +4,6 @@ namespace Cine.Shared.Infrastructure.Database
 {
     public interface ISqlConnectionFactory
     {
-        SqlConnection GetConnection();
+        Task<SqlConnection> GetConnectionAsync();
     }
 }

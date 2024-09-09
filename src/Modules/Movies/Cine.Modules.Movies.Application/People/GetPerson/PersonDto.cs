@@ -1,6 +1,6 @@
 ﻿namespace Cine.Modules.Movies.Application.People.GetPerson
 {
-    internal record PersonDto
+    public record PersonDto
     {
         public required string FirstName { get; init; }
 

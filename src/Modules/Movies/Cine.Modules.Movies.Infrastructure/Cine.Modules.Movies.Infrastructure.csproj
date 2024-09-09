@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Cine.Modules.Movies.Domain\Cine.Modules.Movies.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cine.IntegrationTests"/>
+  </ItemGroup>
+
 </Project>
