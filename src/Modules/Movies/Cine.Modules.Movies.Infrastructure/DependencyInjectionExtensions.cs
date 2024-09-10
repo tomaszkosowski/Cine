@@ -1,6 +1,9 @@
 ﻿using Cine.Modules.Movies.Domain;
 using Cine.Modules.Movies.Infrastructure.Database.Write;
+using Cine.Modules.Movies.Infrastructure.Outbox;
+using Cine.Shared.Application.Outbox;
 using Cine.Shared.Infrastructure.Database;
+using Cine.Shared.Infrastructure.Events;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +21,9 @@ namespace Cine.Modules.Movies.Infrastructure
             services.AddUnitOfWork();
             services.AddDbContext<WriteContext>(builder => builder.UseSqlServer(options.ConnectionString));
 
+            services.AddOutbox();
             services.AddRepositories();
+            services.AddEventsDispatching();
 
             return services;
         }
@@ -34,6 +39,21 @@ namespace Cine.Modules.Movies.Infrastructure
         {
             services.AddScoped<IUnitOfWork, WriteUnitOfWork>();
             services.Decorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
+
+            return services;
+        }
+
+        private static IServiceCollection AddOutbox(this IServiceCollection services)
+        {
+            services.AddScoped<IOutbox, OutboxAccessor>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddEventsDispatching(this IServiceCollection services)
+        {
+            services.AddScoped<IDomainEventsCollector>(scope => new DomainEventsCollector<WriteContext>(scope.GetRequiredService<WriteContext>()));
+            services.AddScoped<IDomainEventsDispatcher, DomainEventsDispatcher>();
 
             return services;
         }

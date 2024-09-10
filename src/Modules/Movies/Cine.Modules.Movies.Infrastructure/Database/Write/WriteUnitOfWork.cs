@@ -1,9 +1,10 @@
 ﻿using Cine.Shared.Infrastructure.Database;
+using Cine.Shared.Infrastructure.Events;
 
 namespace Cine.Modules.Movies.Infrastructure.Database.Write
 {
-    internal sealed class WriteUnitOfWork(WriteContext _context)
-        : UnitOfWork<WriteContext>(_context)
+    internal sealed class WriteUnitOfWork(WriteContext context, IDomainEventsDispatcher domainEventsDispatcher)
+        : UnitOfWork<WriteContext>(context, domainEventsDispatcher)
     {
     }
 }
