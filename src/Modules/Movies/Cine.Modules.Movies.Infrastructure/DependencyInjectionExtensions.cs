@@ -18,8 +18,7 @@ namespace Cine.Modules.Movies.Infrastructure
             services.AddUnitOfWork();
             services.AddDbContext<WriteContext>(builder => builder.UseSqlServer(options.ConnectionString));
 
-            services.AddScoped<IPeopleRepository, PeopleRespository>();
-            services.AddScoped<IMoviesRepository, MoviesRepository>();
+            services.AddRepositories();
 
             return services;
         }
@@ -35,6 +34,14 @@ namespace Cine.Modules.Movies.Infrastructure
         {
             services.AddScoped<IUnitOfWork, WriteUnitOfWork>();
             services.Decorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
+
+            return services;
+        }
+
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IPeopleRepository, PeopleRespository>();
+            services.AddScoped<IMoviesRepository, MoviesRepository>();
 
             return services;
         }

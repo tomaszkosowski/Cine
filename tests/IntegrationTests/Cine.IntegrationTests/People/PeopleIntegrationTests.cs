@@ -14,7 +14,7 @@ namespace Cine.IntegrationTests.People
 {
     public class PeopleIntegrationTests(MoviesApiApp _app, PersonState _state) : TestBase<MoviesApiApp, PersonState>
     {
-        [Fact, Priority(1)]
+        [Fact]
         public async Task Add_WhenValidRequest_ShouldReturnValidResponse()
         {
             var (addHttp, addResponse) = await CallAddAsync("John", "Doe");

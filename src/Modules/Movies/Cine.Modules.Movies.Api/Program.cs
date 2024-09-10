@@ -14,7 +14,8 @@ var application = builder.Build();
 
 application
     .UseFastEndpoints()
-    .UseInfrastructure();
+    .UseInfrastructure()
+    .UseDefaultExceptionHandler();
 
 application.Run();
 

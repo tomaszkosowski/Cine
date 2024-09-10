@@ -24,7 +24,7 @@ namespace Cine.Modules.Movies.Api.Endpoints.People.Add
             var oneOf = await _sender.Send(new CreatePersonCommand(req.FirstName, req.LastName), ct);
 
             await oneOf.Match(
-                personId => SendCreatedAtAsync<GetEndpoint>(personId, new(personId), cancellation: ct),
+                async personId => await SendCreatedAtAsync<GetEndpoint>(personId, new(personId), cancellation: ct),
                 error => throw error.Value);
         }
     }

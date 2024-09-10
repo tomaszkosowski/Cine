@@ -1,8 +1,9 @@
 ﻿using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Database;
 using Cine.Shared.Application.Queries;
+using Cine.Shared.Application.Validation;
 using Cine.Shared.Infrastructure.Database;
-using Microsoft.AspNetCore.Builder;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cine.Modules.Movies.Application
@@ -14,12 +15,12 @@ namespace Cine.Modules.Movies.Application
             var options = new ApplicationOptionsBuilder();
             builder(options);
 
-            services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(IApplicationAssembly).Assembly));
+            services.AddMediatR(c => c.AddOpenBehavior(typeof(ValidationBehavior<,>)).RegisterServicesFromAssemblyContaining<IApplicationAssembly>());
             services.AddCommandHandlers();
             services.AddQueryHandlers();
+            services.AddValidators();
 
-            services.AddScoped<ISqlConnectionFactory>(_ => new SqlConnectionFactory(options.ConnectionString));
-            services.AddScoped<ISqlConnection, SqlConnectionFacade>();
+            services.AddSqlConnection(options.ConnectionString);
 
             return services;
         }
@@ -42,6 +43,21 @@ namespace Cine.Modules.Movies.Application
                     .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)))
                     .AsImplementedInterfaces().WithScopedLifetime();
             });
+        }
+
+        private static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssemblyContaining<IApplicationAssembly>(includeInternalTypes: true);
+
+            return services;
+        }
+
+        private static IServiceCollection AddSqlConnection(this IServiceCollection services, string connectionString)
+        {
+            services.AddScoped<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
+            services.AddScoped<ISqlConnection, SqlConnectionFacade>();
+
+            return services;
         }
     }
 }

@@ -4,8 +4,8 @@ POST {{host}}/person/add
 Accept: application/json
 Content-Type: application/json
 {
-  "firstName": "John",
-  "lastName": "Doe"
+  "firstName": "Clint",
+  "lastName": "Eastwood"
 }
 
 ###
@@ -14,7 +14,7 @@ GET {{host}}/person/get
 Accept: application/json
 Content-Type: application/json
 {
-  "personId": "4199d5cf-aeb4-4d9b-a4b8-00abfda248c8"
+  "personId": ""
 }
 
 ###

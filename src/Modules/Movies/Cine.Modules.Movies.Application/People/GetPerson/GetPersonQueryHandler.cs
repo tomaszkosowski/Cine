@@ -1,5 +1,6 @@
 ﻿using Cine.Shared.Application.Database;
 using Cine.Shared.Application.Logger;
+using Cine.Shared.Application.Optional;
 using Cine.Shared.Application.Queries;
 using Microsoft.Extensions.Logging;
 using OneOf;
@@ -36,7 +37,7 @@ namespace Cine.Modules.Movies.Application.People.GetPerson
             {
                 _logger.LogApplicationError(ex);
 
-                return new Error<ApplicationException>(new ApplicationException(ex.Message, ex));
+                return OneOfFactory.CreateApplicationError(ex);
             }
         }
     }

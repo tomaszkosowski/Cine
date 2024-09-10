@@ -1,6 +1,7 @@
 ﻿using Cine.Modules.Movies.Domain;
 using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Logger;
+using Cine.Shared.Application.Optional;
 using Cine.Shared.Application.Tasks;
 using Microsoft.Extensions.Logging;
 using OneOf;
@@ -35,7 +36,7 @@ namespace Cine.Modules.Movies.Application.Movies.CreateMovie
             {
                 _logger.LogApplicationError(ex);
 
-                return new Error<ApplicationException>(new ApplicationException(ex.Message, ex));
+                return OneOfFactory.CreateApplicationError(ex);
             }
         }
     }
