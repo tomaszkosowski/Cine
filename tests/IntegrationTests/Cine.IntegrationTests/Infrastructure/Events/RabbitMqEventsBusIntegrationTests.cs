@@ -19,8 +19,6 @@ namespace Cine.IntegrationTests.Infrastructure.Events
                 .WithUsername("guest")
                 .WithPassword("guest")
                 .Build();
-
-            _eventsBus = new RabbitMqEventsBus(_container.Hostname);
         }
 
         public async Task InitializeAsync()
