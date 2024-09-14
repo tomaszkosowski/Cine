@@ -8,6 +8,7 @@ services:
         - "8080:8080"
     depends_on:
       - mssql
+      - rabbitmq
 
   mssql:
     container_name: ms-sql
@@ -19,3 +20,10 @@ services:
       MSSQL_TCP_PORT: 1433 
     ports:
       - 1433:1433
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672

@@ -22,6 +22,7 @@ namespace Cine.Modules.Movies.Infrastructure
             services.AddDbContext<WriteContext>(builder => builder.UseSqlServer(options.ConnectionString));
 
             services.AddOutbox();
+            services.AddEventsBus();
             services.AddRepositories();
             services.AddEventsDispatching();
 
@@ -46,6 +47,13 @@ namespace Cine.Modules.Movies.Infrastructure
         private static IServiceCollection AddOutbox(this IServiceCollection services)
         {
             services.AddScoped<IOutbox, OutboxAccessor>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddEventsBus(this IServiceCollection services)
+        {
+            services.AddSingleton<IEventsBus, RabbitMqEventsBus>();
 
             return services;
         }
