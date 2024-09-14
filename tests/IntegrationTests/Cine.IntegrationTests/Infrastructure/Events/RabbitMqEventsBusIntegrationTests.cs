@@ -14,8 +14,7 @@ namespace Cine.IntegrationTests.Infrastructure.Events
             _container = _container = new RabbitMqBuilder()
                 .WithImage("rabbitmq:3-management-alpine")
                 .WithName("rabbitmq-integration-tests")
-                .WithPortBinding(5672, 5672)
-                .WithPortBinding(15672, 15672)
+                .WithPortBinding(5672, true)
                 .WithUsername("guest")
                 .WithPassword("guest")
                 .Build();
@@ -25,7 +24,7 @@ namespace Cine.IntegrationTests.Infrastructure.Events
         {
             await _container.StartAsync();
 
-            _eventsBus = new RabbitMqEventsBus(_container.Hostname);
+            _eventsBus = new RabbitMqEventsBus(_container.Hostname, _container.GetMappedPublicPort(5672));
         }
 
         public async Task DisposeAsync() => await _container.DisposeAsync();

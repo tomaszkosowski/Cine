@@ -8,17 +8,19 @@ namespace Cine.Shared.Infrastructure.Events
     public sealed class RabbitMqEventsBus : IEventsBus, IDisposable
     {
         private readonly string _hostName;
+        private readonly int _port;
         private readonly string _exchange;
 
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
-        public RabbitMqEventsBus(string hostName = "host.docker.internal", string exchange = "integration_events")
+        public RabbitMqEventsBus(string hostName = "host.docker.internal", int port = 5672, string exchange = "integration_events")
         {
             _hostName = hostName;
+            _port = port;
             _exchange = exchange;
 
-            var connectionFactory = new ConnectionFactory { HostName = _hostName };
+            var connectionFactory = new ConnectionFactory { HostName = _hostName, Port = _port };
             _connection = connectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
 
