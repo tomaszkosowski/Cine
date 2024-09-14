@@ -7,19 +7,28 @@ namespace Cine.IntegrationTests.Infrastructure.Events
     public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
     {
         private readonly RabbitMqContainer _container;
-        private readonly IEventsBus _eventsBus;
+        private IEventsBus _eventsBus;
 
         public RabbitMqEventsBusIntegrationTests()
         {
             _container = _container = new RabbitMqBuilder()
                 .WithImage("rabbitmq:3-management-alpine")
                 .WithName("rabbitmq-integration-tests")
+                .WithPortBinding(5672, 5672)
+                .WithPortBinding(15672, 15672)
+                .WithUsername("guest")
+                .WithPassword("guest")
                 .Build();
 
             _eventsBus = new RabbitMqEventsBus(_container.Hostname);
         }
 
-        public async Task InitializeAsync() => await _container.StartAsync();
+        public async Task InitializeAsync()
+        {
+            await _container.StartAsync();
+
+            _eventsBus = new RabbitMqEventsBus(_container.Hostname);
+        }
 
         public async Task DisposeAsync() => await _container.DisposeAsync();
 
