@@ -1,4 +1,4 @@
 ﻿namespace Cine.Shared.Infrastructure.Events
 {
-    public abstract record IntegrationEvent(Guid Id) : IIntegrationEvent;
+    public abstract record IntegrationEvent(Guid Id, DateTime CreatedAt) : IIntegrationEvent;
 }

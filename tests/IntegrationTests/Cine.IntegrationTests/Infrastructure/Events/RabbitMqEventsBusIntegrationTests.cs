@@ -50,7 +50,7 @@ namespace Cine.IntegrationTests.Infrastructure.Events
 
         #region Embedded
 
-        record TestIntegrationEvent(Guid Id) : IntegrationEvent(Id);
+        record TestIntegrationEvent(Guid Id) : IntegrationEvent(Id, DateTime.UtcNow);
 
         class TestIntegrationEventHandler(ManualResetEventSlim _manualResetEvent) : IIntegrationEventHandler<TestIntegrationEvent>
         {
