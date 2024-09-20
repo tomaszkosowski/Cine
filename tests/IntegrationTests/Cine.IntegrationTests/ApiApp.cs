@@ -1,7 +1,6 @@
 ﻿using FastEndpoints.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Respawn;
 using Testcontainers.MsSql;
 
 namespace Cine.IntegrationTests
