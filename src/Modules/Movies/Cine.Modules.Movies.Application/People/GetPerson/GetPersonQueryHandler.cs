@@ -8,7 +8,7 @@ using OneOf.Types;
 
 namespace Cine.Modules.Movies.Application.People.GetPerson
 {
-    internal class GetPersonQueryHandler(ISqlConnection _sqlConnection, ILogger<GetPersonQueryHandler> _logger)
+    internal sealed class GetPersonQueryHandler(ISqlConnection _sqlConnection, ILogger<GetPersonQueryHandler> _logger)
         : IQueryHandler<GetPersonQuery,
             OneOf<
                 PersonDto,

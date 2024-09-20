@@ -1,19 +1,20 @@
 ﻿using FastEndpoints.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Respawn;
 using Testcontainers.MsSql;
 
 namespace Cine.IntegrationTests
 {
-    public class MoviesApiApp : AppFixture<Program>
+    public abstract class ApiApp(string _name) : AppFixture<Program>
     {
-        private MsSqlContainer _container = null!;
+        private MsSqlContainer _container = default!;
 
         protected override async Task PreSetupAsync()
         {
             _container = new MsSqlBuilder()
                 .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-                .WithName("ms-sql-integration-tests")
+                .WithName($"ms-sql-{_name}-integration-tests")
                 .Build();
 
             await _container.StartAsync();

@@ -9,10 +9,9 @@ using AddResponse = Cine.Modules.Movies.Api.Endpoints.People.Add.Response;
 using GetRequest = Cine.Modules.Movies.Api.Endpoints.People.Get.Request;
 using GetResponse = Cine.Modules.Movies.Api.Endpoints.People.Get.Response;
 
-
 namespace Cine.IntegrationTests.People
 {
-    public class PeopleIntegrationTests(MoviesApiApp _app, PersonState _state) : TestBase<MoviesApiApp, PersonState>
+    public class PeopleIntegrationTests(PeopleApiApp _app) : TestBase<PeopleApiApp>, IAsyncLifetime
     {
         [Fact]
         public async Task Add_WhenValidRequest_ShouldReturnValidResponse()

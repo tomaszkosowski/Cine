@@ -11,7 +11,7 @@ namespace Cine.Shared.Infrastructure.Events
         {
             var entities = _context.ChangeTracker
                 .Entries<Entity>().Where(entry
-                    => entry is not null && entry.Entity.DomainEvents.Count > 0)
+                    => entry is not null && entry.Entity.DomainEvents?.Count > 0)
                 .ToList();
 
             var events = entities.SelectMany(entity => entity.Entity.DomainEvents).ToList();
@@ -23,7 +23,7 @@ namespace Cine.Shared.Infrastructure.Events
         {
             var entities = _context.ChangeTracker
                .Entries<Entity>().Where(entry
-                   => entry is not null && entry.Entity.DomainEvents.Count > 0)
+                   => entry is not null && entry.Entity.DomainEvents?.Count > 0)
                .ToList();
 
             entities.ForEach(entity => entity.Entity.ClearDomainEvents());

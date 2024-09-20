@@ -34,11 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Movies\" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <Folder Include="Movies\__snapshots__\" />
   </ItemGroup>
 
 </Project>

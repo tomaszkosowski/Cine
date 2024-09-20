@@ -4,7 +4,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
-namespace Cine.Modules.Movies.Application.UnitTests.People
+namespace Cine.Modules.Movies.Application.UnitTests.Movies
 {
     public class CreateMovieTests
     {
@@ -116,6 +116,6 @@ namespace Cine.Modules.Movies.Application.UnitTests.People
             );
         }
 
-        private CreateMovieCommandHandler CreateHandler() => new CreateMovieCommandHandler(_moviesRepository, _peopleRepository, _logger);
+        private CreateMovieCommandHandler CreateHandler() => new(_moviesRepository, _peopleRepository, _logger);
     }
 }

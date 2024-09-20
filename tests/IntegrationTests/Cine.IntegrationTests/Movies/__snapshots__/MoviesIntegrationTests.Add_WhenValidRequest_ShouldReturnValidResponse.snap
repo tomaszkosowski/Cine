@@ -1,0 +1,11 @@
+﻿{
+  "Dto": {
+    "Title": "Movie 43",
+    "Description": "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+    "Genre": "Comedy",
+    "Duration": "01:33:00",
+    "ReleaseDate": "2013-01-25T00:00:00",
+    "Directors": "Elizabeth Banks, Peter Farrelly",
+    "Cast": "Halle Berry, Hugh Jackman, Johnny Knoxville, Kate Winslet"
+  }
+}

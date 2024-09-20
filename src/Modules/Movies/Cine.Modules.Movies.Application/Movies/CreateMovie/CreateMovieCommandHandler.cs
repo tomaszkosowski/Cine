@@ -2,7 +2,6 @@
 using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Logger;
 using Cine.Shared.Application.Optional;
-using Cine.Shared.Application.Tasks;
 using Microsoft.Extensions.Logging;
 using OneOf;
 using OneOf.Types;
@@ -15,9 +14,7 @@ namespace Cine.Modules.Movies.Application.Movies.CreateMovie
         {
             try
             {
-                var (directors, cast) = await (
-                    _peopleRepository.GetAsync(request.Directors),
-                    _peopleRepository.GetAsync(request.Cast));
+                var (directors, cast) = await GetPeopleAsync(request.Directors, request.Cast);
 
                 var movie = Movie.Create(
                     request.Title,
@@ -39,5 +36,8 @@ namespace Cine.Modules.Movies.Application.Movies.CreateMovie
                 return OneOfFactory.CreateApplicationError(ex);
             }
         }
+
+        private async Task<(IReadOnlyList<Person> Directors, IReadOnlyList<Person> Cast)> GetPeopleAsync(IReadOnlyList<(string FirstName, string LastName)> directors, IReadOnlyList<(string FirstName, string LastName)> cast)
+            => (await _peopleRepository.GetAsync(directors), await _peopleRepository.GetAsync(cast));
     }
 }

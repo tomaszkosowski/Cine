@@ -18,3 +18,32 @@ Content-Type: application/json
 }
 
 ###
+
+POST {{host}}/movie/add
+Accept: application/json
+Content-Type: application/json
+{
+  "title": "The Matrix",
+  "description": "Matrix is a science fiction action film written and directed by the Wachowski brothers.",
+  "genre": "SciFi",
+  "duration": "02:16:00",
+  "releaseDate": "1999-03-31",
+  "directors": [
+    { "FirstName": "Larry", "LastName": "Wachowski" },
+    { "FirstName": "Andy", "LastName": "Wachowski" }
+  ],
+  "cast": [
+    { "FirstName": "Keanu", "LastName": "Reeves" }
+  ]
+}
+
+###
+
+GET {{host}}/movie/get
+Accept: application/json
+Content-Type: application/json
+{
+  "movieId": ""
+}
+
+###
