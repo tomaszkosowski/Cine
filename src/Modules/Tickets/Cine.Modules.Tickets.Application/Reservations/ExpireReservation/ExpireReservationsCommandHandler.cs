@@ -4,7 +4,6 @@ using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Logger;
 using Cine.Shared.Application.Optional;
 using Cine.Shared.Domain;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using OneOf;
