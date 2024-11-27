@@ -2,15 +2,15 @@
   "Projects": [
     {
       "Name": "Cine.Modules.Movies.Domain",
-      "Path": "..//..//..//..//..//..//src//Modules//Movies//Cine.Modules.Movies.Domain//bin//{Configuration}//net8.0//Cine.Modules.Movies.Domain.dll"
+      "Path": "..//..//..//..//..//..//src//Modules//Movies//Cine.Modules.Movies.Domain//bin//{Configuration}//net9.0//Cine.Modules.Movies.Domain.dll"
     },
     {
       "Name": "Cine.Modules.Movies.Application",
-      "Path": "..//..//..//..//..//..//src//Modules//Movies//Cine.Modules.Movies.Application//bin//{Configuration}//net8.0//Cine.Modules.Movies.Application.dll"
+      "Path": "..//..//..//..//..//..//src//Modules//Movies//Cine.Modules.Movies.Application//bin//{Configuration}//net9.0//Cine.Modules.Movies.Application.dll"
     },
     {
       "Name": "Cine.Modules.Movies.Infrastructure",
-      "Path": "..//..//..//..//..//..//src//Modules//Movies//Cine.Modules.Movies.Infrastructure//bin//{Configuration}//net8.0//Cine.Modules.Movies.Infrastructure.dll"
+      "Path": "..//..//..//..//..//..//src//Modules//Movies//Cine.Modules.Movies.Infrastructure//bin//{Configuration}//net9.0//Cine.Modules.Movies.Infrastructure.dll"
     }
   ]
 }
