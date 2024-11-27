@@ -9,6 +9,17 @@ services:
     depends_on:
       - mssql
       - rabbitmq
+        
+  cine.modules.tickets.api:
+    image: ${DOCKER_REGISTRY-}cine.module.tickets.api
+    build:
+      context: .
+      dockerfile: src/Modules/Tickets/Cine.Modules.Tickets.Api/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mssql
+      - rabbitmq
 
   mssql:
     container_name: ms-sql
@@ -19,11 +30,11 @@ services:
       MSSQL_PID: 'Developer' 
       MSSQL_TCP_PORT: 1433 
     ports:
-      - 1433:1433
+      - "1433:1433"
 
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3-management-alpine
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"

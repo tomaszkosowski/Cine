@@ -1,0 +1,10 @@
+@host = http://localhost:8081
+
+POST {{host}}/reservation/create
+Accept: application/json
+Content-Type: application/json
+
+{
+  
+}
+###

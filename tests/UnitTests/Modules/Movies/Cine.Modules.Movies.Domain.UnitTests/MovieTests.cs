@@ -1,6 +1,7 @@
 ﻿using Cine.Modules.Movies.Domain.Events;
 using Cine.Modules.Movies.Domain.UnitTests.Factories;
 using Cine.Shared.Domain.Rules;
+using Cine.Shared.Domain.UnitTests;
 using FluentAssertions;
 
 namespace Cine.Modules.Movies.Domain.UnitTests

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Cine.Shared.Infrastructure.Database
+namespace Cine.Shared.Application.Database
 {
     public interface ISqlConnectionFactory
     {

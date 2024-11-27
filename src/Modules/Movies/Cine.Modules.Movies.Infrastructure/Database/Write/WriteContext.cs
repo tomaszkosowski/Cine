@@ -1,7 +1,7 @@
 ﻿using Cine.Modules.Movies.Domain;
 using Cine.Shared.Application.Outbox;
-using Microsoft.EntityFrameworkCore;
 using Cine.Shared.Infrastructure.Database.Configurations.Write;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cine.Modules.Movies.Infrastructure.Database.Write
 {

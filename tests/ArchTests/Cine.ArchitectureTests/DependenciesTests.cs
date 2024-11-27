@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
-using NetArchTest.Rules;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.Json;
+using FluentAssertions;
+using NetArchTest.Rules;
 
 namespace Cine.ArchitectureTests
 {

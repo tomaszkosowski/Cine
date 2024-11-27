@@ -5,7 +5,7 @@ using Testcontainers.MsSql;
 
 namespace Cine.IntegrationTests
 {
-    public abstract class ApiApp(string _name) : AppFixture<Program>
+    public abstract class ApiApp(string _name) : AppFixture<Modules.Movies.Api.Program>
     {
         private MsSqlContainer _container = default!;
 

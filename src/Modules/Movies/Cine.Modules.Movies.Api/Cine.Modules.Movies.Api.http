@@ -3,6 +3,7 @@
 POST {{host}}/person/add
 Accept: application/json
 Content-Type: application/json
+
 {
   "firstName": "Clint",
   "lastName": "Eastwood"
@@ -13,8 +14,9 @@ Content-Type: application/json
 GET {{host}}/person/get
 Accept: application/json
 Content-Type: application/json
+
 {
-  "personId": ""
+  "personId": "431c294e-60ba-416f-ad2d-103330ed69b8"
 }
 
 ###
@@ -22,6 +24,7 @@ Content-Type: application/json
 POST {{host}}/movie/add
 Accept: application/json
 Content-Type: application/json
+
 {
   "title": "The Matrix",
   "description": "Matrix is a science fiction action film written and directed by the Wachowski brothers.",
@@ -42,6 +45,7 @@ Content-Type: application/json
 GET {{host}}/movie/get
 Accept: application/json
 Content-Type: application/json
+
 {
   "movieId": ""
 }

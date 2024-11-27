@@ -2,7 +2,6 @@
 using Cine.Shared.Application.Database;
 using Cine.Shared.Application.Queries;
 using Cine.Shared.Application.Validation;
-using Cine.Shared.Infrastructure.Database;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 

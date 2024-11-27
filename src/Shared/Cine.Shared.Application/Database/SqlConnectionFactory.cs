@@ -1,5 +1,4 @@
-﻿using Cine.Shared.Infrastructure.Database;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 
 namespace Cine.Shared.Application.Database
 {

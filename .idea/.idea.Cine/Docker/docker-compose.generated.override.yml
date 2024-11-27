@@ -1,0 +1,38 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  cine.modules.movies.api:
+    build:
+      context: "C:\\Dev\\Craftusion\\Cine"
+      dockerfile: "src/Modules/Movies/Cine.Modules.Movies.Api/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Cine.Modules.Movies.Api.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "cine.module.movies.api:dev"
+    ports: []
+    volumes:
+    - "C:\\Dev\\Craftusion\\Cine\\src\\Modules\\Movies\\Cine.Modules.Movies.Api:/app:rw"
+    - "C:\\Dev\\Craftusion\\Cine:/src:rw"
+    - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  cine.modules.tickets.api:
+    build:
+      context: "C:\\Dev\\Craftusion\\Cine"
+      dockerfile: "src/Modules/Tickets/Cine.Modules.Tickets.Api/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Cine.Modules.Tickets.Api.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "cine.module.tickets.api:dev"
+    ports: []
+    volumes:
+    - "C:\\Dev\\Craftusion\\Cine\\src\\Modules\\Tickets\\Cine.Modules.Tickets.Api:/app:rw"
+    - "C:\\Dev\\Craftusion\\Cine:/src:rw"
+    - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"

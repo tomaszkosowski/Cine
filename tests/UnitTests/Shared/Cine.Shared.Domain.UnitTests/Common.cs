@@ -1,12 +1,12 @@
-﻿using Cine.Shared.Domain;
-using Cine.Shared.Domain.Events;
+﻿using Cine.Shared.Domain.Events;
 using Cine.Shared.Domain.Exceptions;
 using Cine.Shared.Domain.Rules;
 using FluentAssertions;
+using Xunit;
 
-namespace Cine.Modules.Movies.Domain.UnitTests
+namespace Cine.Shared.Domain.UnitTests
 {
-    internal static class Common
+    public static class Common
     {
         public static TDomainEvent? GetDomainEvent<TDomainEvent>(this Entity entity) where TDomainEvent : IDomainEvent
             => entity.DomainEvents.OfType<TDomainEvent>().FirstOrDefault();

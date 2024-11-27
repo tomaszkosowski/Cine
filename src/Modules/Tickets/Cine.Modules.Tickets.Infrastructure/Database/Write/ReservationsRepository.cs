@@ -1,0 +1,17 @@
+﻿using Cine.Modules.Tickets.Domain;
+using Microsoft.EntityFrameworkCore;
+
+namespace Cine.Modules.Tickets.Infrastructure.Database.Write;
+
+internal sealed class ReservationsRepository(WriteContext context) : IReservationsRepository
+{
+    public async Task<IReadOnlyList<Reservation>> GetUnpaidReservationsAsync()
+    {
+        var reservations = await context.Reservations
+            .ToListAsync();
+
+        return reservations
+            .Where(reservation => reservation.ReservationStatus is Unpaid)
+            .ToList();
+    }
+}

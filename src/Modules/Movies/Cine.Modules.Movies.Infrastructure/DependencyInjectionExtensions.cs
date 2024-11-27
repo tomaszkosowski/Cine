@@ -19,7 +19,7 @@ namespace Cine.Modules.Movies.Infrastructure
             builder(options);
 
             services.AddUnitOfWork();
-            services.AddDbContext<WriteContext>(builder => builder.UseSqlServer(options.ConnectionString));
+            services.AddDbContext<WriteContext>(cfg => cfg.UseSqlServer(options.ConnectionString));
 
             services.AddOutbox();
             services.AddEventsBus();

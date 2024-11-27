@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\src\Modules\Movies\Cine.Modules.Movies.Domain\Cine.Modules.Movies.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Cine.Shared.Domain.UnitTests\Cine.Shared.Domain.UnitTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

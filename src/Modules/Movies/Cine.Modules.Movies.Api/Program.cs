@@ -20,4 +20,7 @@ application
 application.Run();
 
 
-public partial class Program { }
+namespace Cine.Modules.Movies.Api
+{
+    public partial class Program { }
+}

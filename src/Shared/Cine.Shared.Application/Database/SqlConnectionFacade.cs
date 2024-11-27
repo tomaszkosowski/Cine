@@ -1,6 +1,5 @@
-﻿using Cine.Shared.Infrastructure.Database;
+﻿using System.Data;
 using Dapper;
-using System.Data;
 
 namespace Cine.Shared.Application.Database
 {
