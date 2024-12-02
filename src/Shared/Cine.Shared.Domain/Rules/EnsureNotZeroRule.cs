@@ -1,9 +1,9 @@
 ﻿namespace Cine.Shared.Domain.Rules
 {
-    public sealed class EnsureNotZeroRule(TimeSpan Value, string PropertyName) : IBusinessRule
+    public sealed class EnsureNotZeroRule(TimeSpan value, string propertyName) : IBusinessRule
     {
-        public string Message => $"'{PropertyName}' cannot be zero.";
+        public string Message => $"'{propertyName}' cannot be zero.";
 
-        public bool IsBroken() => Value == TimeSpan.Zero;
+        public bool IsBroken() => value == TimeSpan.Zero;
     }
 }

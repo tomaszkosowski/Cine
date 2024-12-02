@@ -2,11 +2,11 @@
 
 namespace Cine.Shared.Application.Events
 {
-    public class DomainEventNotification<TDomainEvent>(Guid _id, TDomainEvent _domainEvent)
+    public record DomainEventNotification<TDomainEvent>(Guid id, TDomainEvent domainEvent)
         : IDomainEventNotification<TDomainEvent> where TDomainEvent : IDomainEvent
     {
-        public Guid Id => _id;
+        public Guid Id => id;
 
-        public TDomainEvent DomainEvent => _domainEvent;
+        public TDomainEvent DomainEvent => domainEvent;
     }
 }

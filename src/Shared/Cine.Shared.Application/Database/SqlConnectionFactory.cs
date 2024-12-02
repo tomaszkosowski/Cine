@@ -2,11 +2,11 @@
 
 namespace Cine.Shared.Application.Database
 {
-    public sealed class SqlConnectionFactory(string _connectionString) : ISqlConnectionFactory
+    public sealed class SqlConnectionFactory(string connectionString) : ISqlConnectionFactory
     {
         public async Task<SqlConnection> GetConnectionAsync()
         {
-            var connection = new SqlConnection(_connectionString);
+            var connection = new SqlConnection(connectionString);
             await connection.OpenAsync();
             return connection;
         }

@@ -18,7 +18,7 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -72,6 +72,16 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Migrations
                     b.HasIndex("ReservationId");
 
                     b.ToTable("Seats", (string)null);
+                });
+
+            modelBuilder.Entity("Cine.Modules.Tickets.Domain.Show", b =>
+                {
+                    b.Property<Guid>("ShowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ShowId");
+
+                    b.ToTable("Shows", (string)null);
                 });
 
             modelBuilder.Entity("Cine.Shared.Application.Outbox.OutboxMessage", b =>

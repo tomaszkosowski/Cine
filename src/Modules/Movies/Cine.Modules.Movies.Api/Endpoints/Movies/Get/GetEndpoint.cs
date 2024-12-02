@@ -8,7 +8,7 @@ namespace Cine.Modules.Movies.Api.Endpoints.Movies.Get
 
     internal record Response(MovieDto Dto);
 
-    internal sealed class GetEndpoint(ISender _sender) : Endpoint<Request, Response>
+    internal sealed class GetEndpoint(ISender sender) : Endpoint<Request, Response>
     {
         public override void Configure()
         {
@@ -18,7 +18,7 @@ namespace Cine.Modules.Movies.Api.Endpoints.Movies.Get
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            var oneOf = await _sender.Send(new GetMovieQuery(req.MovieId), ct);
+            var oneOf = await sender.Send(new GetMovieQuery(req.MovieId), ct);
 
             await oneOf.Match(
                 async dto => await SendOkAsync(new(dto), ct),

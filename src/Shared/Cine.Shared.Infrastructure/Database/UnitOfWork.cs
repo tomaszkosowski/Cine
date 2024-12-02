@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cine.Shared.Infrastructure.Database
 {
-    public abstract class UnitOfWork<TContext>(TContext _context, IDomainEventsDispatcher _domainEventsDispatcher) : IUnitOfWork
+    public abstract class UnitOfWork<TContext>(TContext context, IDomainEventsDispatcher domainEventsDispatcher) : IUnitOfWork
         where TContext : DbContext
     {
         public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {
-            await _domainEventsDispatcher.DispatchEventsAsync();
+            await domainEventsDispatcher.DispatchEventsAsync();
 
-            return await _context.SaveChangesAsync(cancellationToken);
+            return await context.SaveChangesAsync(cancellationToken);
         }
     }
 }

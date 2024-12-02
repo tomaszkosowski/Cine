@@ -11,4 +11,24 @@ public sealed class Show : Entity, IAggregateRoot
     public ShowId ShowId { get; }
 
     #endregion
+
+    #region Constructors
+
+    private Show()
+    {
+        // Only for ORM.
+    }
+
+    private Show(ShowId showId)
+    {
+        ShowId = showId;
+    }
+
+    #endregion
+
+    #region Public methods
+
+    public static Show Create(ShowId showId) => new(showId);
+
+    #endregion
 }

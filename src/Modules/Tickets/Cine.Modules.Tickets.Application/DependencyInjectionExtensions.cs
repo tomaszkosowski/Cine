@@ -1,25 +1,53 @@
-﻿using Cine.Shared.Application.Commands;
+﻿using Cine.Modules.Tickets.Application.Shows;
+using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Database;
 using Cine.Shared.Application.Queries;
 using Cine.Shared.Application.Validation;
+using Cine.Shared.Infrastructure.Events;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cine.Modules.Tickets.Application
 {
     public static class DependencyInjectionExtensions
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services, Action<ApplicationOptionsBuilder> builder)
+        public static IServiceCollection AddApplication(this IServiceCollection services,
+            Action<ApplicationOptionsBuilder> builder)
         {
             var options = new ApplicationOptionsBuilder();
             builder(options);
 
-            services.AddMediatR(c => c.AddOpenBehavior(typeof(ValidationBehavior<,>)).RegisterServicesFromAssemblyContaining<IApplicationAssembly>());
+            services.AddMediatR(c =>
+                c.AddOpenBehavior(typeof(ValidationBehavior<,>))
+                    .RegisterServicesFromAssemblyContaining<IApplicationAssembly>());
+            services.AddIntegrationEventHandlers();
             services.AddCommandHandlers();
             services.AddQueryHandlers();
             services.AddValidators();
 
             services.AddSqlConnection(options.ConnectionString);
+
+            return services;
+        }
+
+        public static IApplicationBuilder UseApplication(this IApplicationBuilder appBuilder)
+        {
+            appBuilder.UseIntegrationEvents();
+
+            return appBuilder;
+        }
+
+        private static IServiceCollection AddIntegrationEventHandlers(this IServiceCollection services)
+        {
+            services.AddSingleton<ShowAddedIntegrationEventHandler>();
+
+            // return services.Scan(scanner =>
+            // {
+            //     scanner.FromAssemblyOf<IApplicationAssembly>()
+            //         .AddClasses(classes => classes.AssignableTo(typeof(IIntegrationEventHandler<>)))
+            //         .AsImplementedInterfaces().WithScopedLifetime();
+            // });
 
             return services;
         }
@@ -57,6 +85,16 @@ namespace Cine.Modules.Tickets.Application
             services.AddScoped<ISqlConnection, SqlConnectionFacade>();
 
             return services;
+        }
+
+        private static IApplicationBuilder UseIntegrationEvents(this IApplicationBuilder appBuilder)
+        {
+            var services = appBuilder.ApplicationServices;
+            var eventBus = services.GetRequiredService<IEventsBus>();
+
+            eventBus.Subscribe(services.GetRequiredService<ShowAddedIntegrationEventHandler>());
+
+            return appBuilder;
         }
     }
 }

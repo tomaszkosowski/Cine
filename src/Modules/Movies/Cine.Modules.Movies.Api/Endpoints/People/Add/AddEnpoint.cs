@@ -9,7 +9,7 @@ namespace Cine.Modules.Movies.Api.Endpoints.People.Add
 
     internal record Response(Guid PersonId);
 
-    internal sealed class AddEnpoint(ISender _sender) : Endpoint<Request, Response>
+    internal sealed class AddEnpoint(ISender sender) : Endpoint<Request, Response>
     {
         public override void Configure()
         {
@@ -21,7 +21,7 @@ namespace Cine.Modules.Movies.Api.Endpoints.People.Add
 
         public override async Task HandleAsync(Request req, CancellationToken ct)
         {
-            var oneOf = await _sender.Send(new CreatePersonCommand(req.FirstName, req.LastName), ct);
+            var oneOf = await sender.Send(new CreatePersonCommand(req.FirstName, req.LastName), ct);
 
             await oneOf.Match(
                 async personId => await SendCreatedAtAsync<GetEndpoint>(personId, new(personId), cancellation: ct),

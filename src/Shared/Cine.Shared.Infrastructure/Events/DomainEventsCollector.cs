@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cine.Shared.Infrastructure.Events
 {
-    public sealed class DomainEventsCollector<TContext>(TContext _context)
+    public sealed class DomainEventsCollector<TContext>(TContext context)
         : IDomainEventsCollector where TContext : DbContext
     {
         public IReadOnlyCollection<IDomainEvent> GetAllDomainEvents()
         {
-            var entities = _context.ChangeTracker
+            var entities = context.ChangeTracker
                 .Entries<Entity>().Where(entry
                     => entry is not null && entry.Entity.DomainEvents?.Count > 0)
                 .ToList();
@@ -21,7 +21,7 @@ namespace Cine.Shared.Infrastructure.Events
 
         public void ClearAllDomainEvents()
         {
-            var entities = _context.ChangeTracker
+            var entities = context.ChangeTracker
                .Entries<Entity>().Where(entry
                    => entry is not null && entry.Entity.DomainEvents?.Count > 0)
                .ToList();

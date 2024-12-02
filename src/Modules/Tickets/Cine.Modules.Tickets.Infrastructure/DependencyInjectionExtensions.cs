@@ -1,10 +1,13 @@
-﻿using Cine.Modules.Tickets.Domain;
+﻿using Cine.Modules.Shows.IntegrationEvents.Shows;
+using Cine.Modules.Tickets.Domain;
+using Cine.Modules.Tickets.Domain.Events;
 using Cine.Modules.Tickets.Infrastructure.Database.Write;
 using Cine.Modules.Tickets.Infrastructure.Jobs;
 using Cine.Modules.Tickets.Infrastructure.Outbox;
 using Cine.Shared.Application.Outbox;
 using Cine.Shared.Infrastructure.Database;
 using Cine.Shared.Infrastructure.Events;
+using Cine.Shared.Infrastructure.Jobs;
 using Hangfire;
 using Hangfire.Dashboard;
 using MediatR;
@@ -27,6 +30,7 @@ namespace Cine.Modules.Tickets.Infrastructure
 
             services.AddOutbox();
             services.AddHangfire();
+            services.AddEventsBus();
             services.AddRepositories();
             services.AddRecurringJobs();
             services.AddEventsDispatching();
@@ -54,6 +58,11 @@ namespace Cine.Modules.Tickets.Infrastructure
         private static IServiceCollection AddOutbox(this IServiceCollection services)
         {
             services.AddScoped<IOutbox, OutboxAccessor>();
+            services.AddSingleton<IDomainEventsMapper>(_ => new DomainEventsMapper(new Dictionary<string, Type>
+            {
+                { nameof(ReservationCreatedDomainEvent), typeof(ReservationCreatedDomainEvent) },
+                { nameof(ReservationExpiredDomainEvent), typeof(ReservationExpiredDomainEvent) }
+            }));
 
             return services;
         }
@@ -65,16 +74,21 @@ namespace Cine.Modules.Tickets.Infrastructure
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseInMemoryStorage());
-            
+
             services.AddHangfireServer();
+
+            return services;
+        }
+
+        private static IServiceCollection AddEventsBus(this IServiceCollection services)
+        {
+            services.AddSingleton<IEventsBus, RabbitMqEventsBus>();
 
             return services;
         }
 
         private static IServiceCollection AddRecurringJobs(this IServiceCollection services)
         {
-            
-
             return services;
         }
 
@@ -90,6 +104,7 @@ namespace Cine.Modules.Tickets.Infrastructure
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IReservationsRepository, ReservationsRepository>();
+            services.AddScoped<IShowsRepository, ShowsRepository>();
 
             return services;
         }
@@ -116,11 +131,14 @@ namespace Cine.Modules.Tickets.Infrastructure
 
         private static IApplicationBuilder TriggerRecurringJobs(this IApplicationBuilder appBuilder)
         {
+            RecurringJob.AddOrUpdate<ProcessOutboxJob>(ProcessOutboxJob.JobName, job => job.ExecuteAsync(),
+                "* * * * * *");
+
+            RecurringJob.TriggerJob(ProcessOutboxJob.JobName);
+
             RecurringJob.AddOrUpdate<ExpireReservationsJob>(ExpireReservationsJob.JobName,
                 job => job.ExecuteAsync(), Cron.Minutely);
 
-            // using var server = new BackgroundJobServer();
-            
             RecurringJob.TriggerJob(ExpireReservationsJob.JobName);
 
             return appBuilder;

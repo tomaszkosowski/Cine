@@ -84,6 +84,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Modules.Tickets.Infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Modules.Tickets.Api", "src\Modules\Tickets\Cine.Modules.Tickets.Api\Cine.Modules.Tickets.Api.csproj", "{E9974248-AD97-4EDB-BF04-B857EBC6CF4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Modules.Shows.IntegrationEvents", "src\Modules\Shows\Cine.Modules.Shows.IntegrationEvents\Cine.Modules.Shows.IntegrationEvents.csproj", "{D4957F99-A1B1-4D19-BC0B-BA282914E5F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Modules.Shows.Application", "src\Modules\Shows\Cine.Modules.Shows.Application\Cine.Modules.Shows.Application.csproj", "{13104F62-2A90-486D-8D4C-A7FDD5C62D2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Modules.Tickets.IntegrationEvents", "src\Modules\Tickets\Cine.Modules.Tickets.IntegrationEvents\Cine.Modules.Tickets.IntegrationEvents.csproj", "{A896368D-05FE-4296-A432-64361B868BBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +180,18 @@ Global
 		{E9974248-AD97-4EDB-BF04-B857EBC6CF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9974248-AD97-4EDB-BF04-B857EBC6CF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9974248-AD97-4EDB-BF04-B857EBC6CF4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4957F99-A1B1-4D19-BC0B-BA282914E5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4957F99-A1B1-4D19-BC0B-BA282914E5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4957F99-A1B1-4D19-BC0B-BA282914E5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4957F99-A1B1-4D19-BC0B-BA282914E5F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13104F62-2A90-486D-8D4C-A7FDD5C62D2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13104F62-2A90-486D-8D4C-A7FDD5C62D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13104F62-2A90-486D-8D4C-A7FDD5C62D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13104F62-2A90-486D-8D4C-A7FDD5C62D2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A896368D-05FE-4296-A432-64361B868BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A896368D-05FE-4296-A432-64361B868BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A896368D-05FE-4296-A432-64361B868BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A896368D-05FE-4296-A432-64361B868BBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,6 +231,9 @@ Global
 		{7D0D5E15-60A2-4475-B42A-66FEE9774CB2} = {CD3847D5-A42E-4D6B-A5CA-1023F66A9B63}
 		{F8D2DEB2-6053-4723-944E-31C9E52B6F4D} = {CD3847D5-A42E-4D6B-A5CA-1023F66A9B63}
 		{E9974248-AD97-4EDB-BF04-B857EBC6CF4F} = {CD3847D5-A42E-4D6B-A5CA-1023F66A9B63}
+		{D4957F99-A1B1-4D19-BC0B-BA282914E5F0} = {FBB941D5-D696-4A70-B70D-9BC2170BFB55}
+		{13104F62-2A90-486D-8D4C-A7FDD5C62D2B} = {FBB941D5-D696-4A70-B70D-9BC2170BFB55}
+		{A896368D-05FE-4296-A432-64361B868BBE} = {CD3847D5-A42E-4D6B-A5CA-1023F66A9B63}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72CCF0CE-B2C8-4FA5-A63C-A57C199D79A0}

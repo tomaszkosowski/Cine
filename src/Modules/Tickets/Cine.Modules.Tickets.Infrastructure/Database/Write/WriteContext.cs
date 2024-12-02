@@ -8,7 +8,7 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Write;
 internal sealed class WriteContext(DbContextOptions<WriteContext> options) : DbContext(options)
 {
     public DbSet<Reservation> Reservations { get; set; }
-
+    public DbSet<Show> Shows { get; set; }
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

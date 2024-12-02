@@ -1,10 +1,20 @@
 @host = http://localhost:8081
+@showId = 9ab9081b-d380-455d-b55a-7b705cbb5613
 
 POST {{host}}/reservation/create
 Accept: application/json
 Content-Type: application/json
 
 {
-  
+  "ShowId": "{{showId}}"
 }
+
 ###
+
+POST {{host}}/reservation/{{showId}}/addSeat
+Accept: application/json
+Content-Type: application/json
+
+{
+  "SeatId": "{{$random.uuid}}"
+}

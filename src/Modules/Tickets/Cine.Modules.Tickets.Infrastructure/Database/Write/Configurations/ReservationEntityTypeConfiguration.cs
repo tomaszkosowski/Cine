@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cine.Modules.Tickets.Infrastructure.Database.Write.Configurations;
 
-public class ReservationEntityTypeConfiguration : IEntityTypeConfiguration<Reservation>
+internal class ReservationEntityTypeConfiguration : IEntityTypeConfiguration<Reservation>
 {
     public void Configure(EntityTypeBuilder<Reservation> builder)
     {

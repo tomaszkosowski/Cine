@@ -1,4 +1,4 @@
 ﻿namespace Cine.Shared.Application.Exceptions
 {
-    public class ApplicationException(string Message, Exception InnerException) : Exception(Message, InnerException);
+    public class ApplicationException(string message, Exception? innerException = null) : Exception(message, innerException);
 }

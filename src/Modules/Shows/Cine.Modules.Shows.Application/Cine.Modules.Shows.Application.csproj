@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Application\Cine.Shared.Application.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Infrastructure\Cine.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\Cine.Modules.Shows.Domain\Cine.Modules.Shows.Domain.csproj" />
+      <ProjectReference Include="..\Cine.Modules.Shows.IntegrationEvents\Cine.Modules.Shows.IntegrationEvents.csproj" />
+    </ItemGroup>
+
+</Project>

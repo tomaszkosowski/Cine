@@ -8,7 +8,7 @@ using OneOf.Types;
 
 namespace Cine.Modules.Movies.Application.Movies.CreateMovie
 {
-    internal class CreateMovieCommandHandler(IMoviesRepository _moviesRepository, IPeopleRepository _peopleRepository, ILogger<CreateMovieCommandHandler> _logger) : ICommandHandler<CreateMovieCommand, OneOf<Guid, Error<ApplicationException>>>
+    internal sealed class CreateMovieCommandHandler(IMoviesRepository moviesRepository, IPeopleRepository peopleRepository, ILogger<CreateMovieCommandHandler> logger) : ICommandHandler<CreateMovieCommand, OneOf<Guid, Error<ApplicationException>>>
     {
         public async Task<OneOf<Guid, Error<ApplicationException>>> Handle(CreateMovieCommand request, CancellationToken cancellationToken)
         {
@@ -25,19 +25,19 @@ namespace Cine.Modules.Movies.Application.Movies.CreateMovie
                     directors,
                     cast);
 
-                await _moviesRepository.AddAsync(movie);
+                await moviesRepository.AddAsync(movie);
 
                 return (Guid)movie.MovieId;
             }
             catch (Exception ex)
             {
-                _logger.LogApplicationError(ex);
+                logger.LogApplicationError(ex);
 
                 return OneOfFactory.CreateApplicationError(ex);
             }
         }
 
         private async Task<(IReadOnlyList<Person> Directors, IReadOnlyList<Person> Cast)> GetPeopleAsync(IReadOnlyList<(string FirstName, string LastName)> directors, IReadOnlyList<(string FirstName, string LastName)> cast)
-            => (await _peopleRepository.GetAsync(directors), await _peopleRepository.GetAsync(cast));
+            => (await peopleRepository.GetAsync(directors), await peopleRepository.GetAsync(cast));
     }
 }

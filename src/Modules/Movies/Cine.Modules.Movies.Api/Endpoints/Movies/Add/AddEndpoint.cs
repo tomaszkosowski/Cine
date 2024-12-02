@@ -14,7 +14,7 @@ namespace Cine.Modules.Movies.Api.Endpoints.Movies.Add
         internal (string FirstName, string LastName) Deconstruct() => (FirstName, LastName);
     }
 
-    internal sealed class AddEndpoint(ISender _sender) : Endpoint<Request, Response>
+    internal sealed class AddEndpoint(ISender sender) : Endpoint<Request, Response>
     {
         public override void Configure()
         {
@@ -29,7 +29,7 @@ namespace Cine.Modules.Movies.Api.Endpoints.Movies.Add
             var directors = req.Directors.Select(person => person.Deconstruct()).ToList();
             var cast = req.Cast.Select(person => person.Deconstruct()).ToList();
 
-            var oneOf = await _sender.Send(new CreateMovieCommand(req.Title, req.Description, req.Genre, req.Duration, req.ReleaseDate, directors.AsReadOnly(), cast.AsReadOnly()), ct);
+            var oneOf = await sender.Send(new CreateMovieCommand(req.Title, req.Description, req.Genre, req.Duration, req.ReleaseDate, directors.AsReadOnly(), cast.AsReadOnly()), ct);
 
             await oneOf.Match(
                 async movieId => await SendCreatedAtAsync<GetEndpoint>(movieId, new(movieId), cancellation: ct),

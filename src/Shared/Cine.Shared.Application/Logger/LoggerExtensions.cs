@@ -6,5 +6,8 @@ namespace Cine.Shared.Application.Logger
     {
         public static void LogApplicationError(this ILogger logger, Exception exception)
             => logger.LogError(exception, "Application error.");
+
+        public static void LogInfrastructureError(this ILogger logger, Exception exception)
+            => logger.LogError(exception, "Infrastructure error.");
     }
 }

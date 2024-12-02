@@ -9,13 +9,17 @@
     <ItemGroup>
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
       <PackageReference Include="MediatR" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.Configuration" />
       <PackageReference Include="Scrutor" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Cine.Shared.Application\Cine.Shared.Application.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Infrastructure\Cine.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Shows\Cine.Modules.Shows.IntegrationEvents\Cine.Modules.Shows.IntegrationEvents.csproj" />
       <ProjectReference Include="..\Cine.Modules.Tickets.Domain\Cine.Modules.Tickets.Domain.csproj" />
+      <ProjectReference Include="..\Cine.Modules.Tickets.IntegrationEvents\Cine.Modules.Tickets.IntegrationEvents.csproj" />
     </ItemGroup>
 
     <ItemGroup>

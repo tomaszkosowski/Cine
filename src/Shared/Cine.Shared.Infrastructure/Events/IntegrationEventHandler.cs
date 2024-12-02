@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 
 namespace Cine.Shared.Infrastructure.Events
 {
-    public abstract class IntegrationEventHandler<TIntegrationEvent>(IServiceScopeFactory _serviceScopeFactory)
+    public abstract class IntegrationEventHandler<TIntegrationEvent>(IServiceScopeFactory serviceScopeFactory)
         : IIntegrationEventHandler<TIntegrationEvent> where TIntegrationEvent : IntegrationEvent
     {
         public async Task HandleAsync(TIntegrationEvent @event)
         {
-            using var scope = _serviceScopeFactory.CreateScope();
+            using var scope = serviceScopeFactory.CreateScope();
             var sqlConnection = scope.ServiceProvider.GetRequiredService<ISqlConnection>();
 
             const string sql = $"""

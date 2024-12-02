@@ -11,7 +11,7 @@ using GetResponse = Cine.Modules.Movies.Api.Endpoints.People.Get.Response;
 
 namespace Cine.IntegrationTests.People
 {
-    public class PeopleIntegrationTests(PeopleApiApp _app) : TestBase<PeopleApiApp>, IAsyncLifetime
+    public class PeopleIntegrationTests(PeopleApiApp app) : TestBase<PeopleApiApp>, IAsyncLifetime
     {
         [Fact]
         public async Task Add_WhenValidRequest_ShouldReturnValidResponse()
@@ -29,7 +29,7 @@ namespace Cine.IntegrationTests.People
         {
             var request = new AddRequest(firstName, lastName);
 
-            var (http, response) = await _app.Client.POSTAsync<AddEnpoint, AddRequest, AddResponse>(request);
+            var (http, response) = await app.Client.POSTAsync<AddEnpoint, AddRequest, AddResponse>(request);
 
             return (http, response);
         }
@@ -38,7 +38,7 @@ namespace Cine.IntegrationTests.People
         {
             var request = new GetRequest(personId);
 
-            var (http, response) = await _app.Client.GETAsync<GetEndpoint, GetRequest, GetResponse>(request);
+            var (http, response) = await app.Client.GETAsync<GetEndpoint, GetRequest, GetResponse>(request);
 
             return (http, response);
         }

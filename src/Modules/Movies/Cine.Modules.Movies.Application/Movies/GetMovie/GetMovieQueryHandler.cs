@@ -8,7 +8,7 @@ using OneOf.Types;
 
 namespace Cine.Modules.Movies.Application.Movies.GetMovie
 {
-    internal sealed class GetMovieQueryHandler(ISqlConnection _sqlConnection, ILogger<GetMovieQueryHandler> _logger)
+    internal sealed class GetMovieQueryHandler(ISqlConnection sqlConnection, ILogger<GetMovieQueryHandler> logger)
         : IQueryHandler<GetMovieQuery,
             OneOf<
                 MovieDto,
@@ -48,7 +48,7 @@ namespace Cine.Modules.Movies.Application.Movies.GetMovie
                                     WHERE M.[MovieId] = @MovieId
                                     """;
 
-                var movie = await _sqlConnection.QuerySingleOrDefaultAsync<MovieDto>(sql, new { query.MovieId });
+                var movie = await sqlConnection.QuerySingleOrDefaultAsync<MovieDto>(sql, new { query.MovieId });
 
                 return movie is null
                     ? new NotFound()
@@ -56,7 +56,7 @@ namespace Cine.Modules.Movies.Application.Movies.GetMovie
             }
             catch (Exception ex)
             {
-                _logger.LogApplicationError(ex);
+                logger.LogApplicationError(ex);
 
                 return OneOfFactory.CreateApplicationError(ex);
             }

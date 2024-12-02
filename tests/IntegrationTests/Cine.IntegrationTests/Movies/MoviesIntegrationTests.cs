@@ -15,7 +15,7 @@ using GetMovieResponse = Cine.Modules.Movies.Api.Endpoints.Movies.Get.Response;
 
 namespace Cine.IntegrationTests.Movies
 {
-    public class MoviesIntegrationTests(MoviesApiApp _app) : TestBase<MoviesApiApp>, IAsyncLifetime
+    public class MoviesIntegrationTests(MoviesApiApp app) : TestBase<MoviesApiApp>, IAsyncLifetime
     {
         [Fact]
         public async Task Add_WhenValidRequest_ShouldReturnValidResponse()
@@ -58,7 +58,7 @@ namespace Cine.IntegrationTests.Movies
         {
             var request = new AddPersonRequest(firstName, lastName);
 
-            var (http, _) = await _app.Client.POSTAsync<AddPersonEndpoint, AddPersonRequest, AddPersonResponse>(request);
+            var (http, _) = await app.Client.POSTAsync<AddPersonEndpoint, AddPersonRequest, AddPersonResponse>(request);
 
             return http;
         }
@@ -81,7 +81,7 @@ namespace Cine.IntegrationTests.Movies
                     new("Johnny", "Knoxville")
                 ]);
 
-            var (http, response) = await _app.Client.POSTAsync<AddMovieEndpoint, AddMovieRequest, AddMovieResponse>(request);
+            var (http, response) = await app.Client.POSTAsync<AddMovieEndpoint, AddMovieRequest, AddMovieResponse>(request);
 
             return (http, response);
         }
@@ -90,7 +90,7 @@ namespace Cine.IntegrationTests.Movies
         {
             var request = new GetMovieRequest(personId);
 
-            var (http, response) = await _app.Client.GETAsync<GetEndpoint, GetMovieRequest, GetMovieResponse>(request);
+            var (http, response) = await app.Client.GETAsync<GetEndpoint, GetMovieRequest, GetMovieResponse>(request);
 
             return (http, response);
         }

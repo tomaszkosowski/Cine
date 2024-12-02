@@ -5,7 +5,7 @@ using Testcontainers.MsSql;
 
 namespace Cine.IntegrationTests
 {
-    public abstract class ApiApp(string _name) : AppFixture<Modules.Movies.Api.Program>
+    public abstract class ApiApp(string name) : AppFixture<Modules.Movies.Api.Program>
     {
         private MsSqlContainer _container = default!;
 
@@ -13,7 +13,7 @@ namespace Cine.IntegrationTests
         {
             _container = new MsSqlBuilder()
                 .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-                .WithName($"ms-sql-{_name}-integration-tests")
+                .WithName($"ms-sql-{name}-integration-tests")
                 .Build();
 
             await _container.StartAsync();

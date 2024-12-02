@@ -26,4 +26,8 @@
       <ProjectReference Include="..\Cine.Modules.Tickets.Infrastructure\Cine.Modules.Tickets.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Endpoints\Reservations\RemoveSeat\" />
+    </ItemGroup>
+
 </Project>

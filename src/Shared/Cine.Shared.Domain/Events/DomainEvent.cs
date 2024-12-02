@@ -4,9 +4,9 @@
     {
         #region Properties
 
-        public Guid EventId { get; set; }
+        public Guid EventId { get; } = Guid.NewGuid();
 
-        public DateTime PublishedAt { get; set; }
+        public DateTime PublishedAt { get; } = Utc.Now;
 
         #endregion
     }

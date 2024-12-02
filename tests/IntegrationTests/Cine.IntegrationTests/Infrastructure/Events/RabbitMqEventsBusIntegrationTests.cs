@@ -50,15 +50,15 @@ namespace Cine.IntegrationTests.Infrastructure.Events
 
         #region Embedded
 
-        record TestIntegrationEvent(Guid Id) : IntegrationEvent(Id, DateTime.UtcNow);
+        record TestIntegrationEvent(Guid Id) : IntegrationEvent;
 
-        class TestIntegrationEventHandler(ManualResetEventSlim _manualResetEvent) : IIntegrationEventHandler<TestIntegrationEvent>
+        class TestIntegrationEventHandler(ManualResetEventSlim manualResetEvent) : IIntegrationEventHandler<TestIntegrationEvent>
         {
             public TestIntegrationEvent? ReceivedEvent { get; private set; }
 
             public Task HandleAsync(TestIntegrationEvent @event)
             {
-                _manualResetEvent.Set();
+                manualResetEvent.Set();
                 ReceivedEvent = @event;
 
                 return Task.CompletedTask;

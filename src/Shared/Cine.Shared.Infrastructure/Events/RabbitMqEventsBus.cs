@@ -30,7 +30,12 @@ namespace Cine.Shared.Infrastructure.Events
         public void Publish<TEvent>(TEvent @event, CancellationToken cancellationToken = default) where TEvent : IIntegrationEvent
         {
             var body = JsonConvert.SerializeObject(@event);
-            _channel.BasicPublish(exchange: _exchange, routingKey: "", basicProperties: null, body: Encoding.UTF8.GetBytes(body));
+            
+            var properties = _channel.CreateBasicProperties();
+            properties.Persistent = true;
+            properties.Type = typeof(TEvent).FullName;
+            
+            _channel.BasicPublish(exchange: _exchange, routingKey: "", basicProperties: properties, body: Encoding.UTF8.GetBytes(body));
         }
 
         public void Subscribe<TEvent>(IIntegrationEventHandler<TEvent> handler) where TEvent : IIntegrationEvent
@@ -41,6 +46,12 @@ namespace Cine.Shared.Infrastructure.Events
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, args) =>
             {
+                var type = args.BasicProperties.Type;
+                if (type != typeof(TEvent).FullName)
+                {
+                    return;
+                }
+                
                 var body = args.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 var @event = JsonConvert.DeserializeObject<TEvent>(message);

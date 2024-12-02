@@ -1,4 +1,5 @@
-﻿using Cine.Modules.Tickets.Domain.Events;
+﻿using System.Collections.Immutable;
+using Cine.Modules.Tickets.Domain.Events;
 using Cine.Shared.Domain;
 using Cine.Shared.Domain.Rules;
 
@@ -8,11 +9,17 @@ public record ReservationId : TypedId<ReservationId>;
 
 public sealed class Reservation : Entity, IAggregateRoot
 {
+    #region Fields
+
+    private readonly List<Seat> _seats = [];
+
+    #endregion
+
     #region Properties
 
     public ReservationId ReservationId { get; private set; }
 
-    public IReadOnlyList<Seat> Seats { get; } = [];
+    public IReadOnlyList<Seat> Seats => _seats.ToImmutableList();
 
     public IReservationStatus ReservationStatus { get; private set; }
 
@@ -31,34 +38,40 @@ public sealed class Reservation : Entity, IAggregateRoot
         // Only for ORM.
     }
 
-    private Reservation(List<Seat> seats, DateTime reservedAt)
+    private Reservation(DateTime reservedAt)
     {
-        CheckRule(new EnsureNotEmptyCollectionRule<Seat>(seats, nameof(seats)));
-        CheckRule(new EnsureNotPastRule(reservedAt, nameof(reservedAt)));
+        // CheckRule(new EnsureNotPastRule(reservedAt, nameof(reservedAt)));
 
         ReservationId = ReservationId.Create();
 
         ReservationStatus = new Unpaid(reservedAt);
 
-        AddDomainEvent(new ReservationCreatedDomainEvent(seats));
+        AddDomainEvent(new ReservationCreatedDomainEvent());
     }
 
     #endregion
 
     #region Public methods
 
-    public static Reservation Create(List<Seat> seats) => new(seats, Utc.Now);
+    public static Reservation Create() => new(Utc.Now);
+
+    public void AddSeat(Seat seat)
+    {
+        _seats.Add(seat);
+        
+        AddDomainEvent(new SeatReservedDomainEvent());
+    }
 
     public void Expire()
     {
-        ReservationStatus = new Expired(Utc.Now);
+        ReservationStatus = ReservationStatus.AdvanceTo<Expired>();
 
         AddDomainEvent(new ReservationExpiredDomainEvent(ReservationId));
     }
 
     public void Pay()
     {
-        ReservationStatus = new Paid(DateTime.UtcNow);
+        ReservationStatus = ReservationStatus.AdvanceTo<Paid>();
 
         AddDomainEvent(new ReservationPaidDomainEvent(ReservationId));
     }
