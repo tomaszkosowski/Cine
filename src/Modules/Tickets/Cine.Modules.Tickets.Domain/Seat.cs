@@ -23,7 +23,7 @@ public sealed class Seat : Entity, IAggregateRoot
 
     private Seat()
     {
-        // Blank for ORM
+        // Blank for ORM.
     }
 
     private Seat(SeatStatusType status)

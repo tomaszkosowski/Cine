@@ -22,7 +22,7 @@ namespace Cine.Modules.Movies.Domain
 
         private Person()
         {
-            // Blank for ORM
+            // Blank for ORM.
         }
 
         public Person(string firstName, string lastName)

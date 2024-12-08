@@ -23,7 +23,7 @@ namespace Cine.Modules.Theater.Domain
 
         public static SeatType Regular => new(nameof(Regular));
 
-        public static SeatType Vip => new(nameof(Vip));
+        public static SeatType Premium => new(nameof(Premium));
 
         public override string ToString() => Value;
 

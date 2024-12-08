@@ -1,0 +1,1 @@
+﻿global using ApplicationException = Cine.Shared.Application.Exceptions.ApplicationException;

@@ -24,7 +24,7 @@ namespace Cine.Modules.Theater.Domain
 
         private Seat()
         {
-            // Blank for ORM
+            // Blank for ORM.
         }
 
         private Seat(HallId hallId, string row, int number, SeatType type)
@@ -41,9 +41,11 @@ namespace Cine.Modules.Theater.Domain
 
         #region Public methods
 
-        public static Seat CreateRegular(HallId hallId, string row, int number) => new(hallId, row, number, SeatType.Regular);
+        public static Seat CreateRegular(HallId hallId, string row, int number) =>
+            new(hallId, row, number, SeatType.Regular);
 
-        public static Seat CreateVip(HallId hallId, string row, int number) => new(hallId, row, number, SeatType.Vip);
+        public static Seat CreatePremium(HallId hallId, string row, int number) =>
+            new(hallId, row, number, SeatType.Premium);
 
         #endregion
     }

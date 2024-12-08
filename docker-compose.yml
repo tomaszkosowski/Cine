@@ -5,11 +5,11 @@ services:
       context: .
       dockerfile: src/Modules/Movies/Cine.Modules.Movies.Api/Dockerfile
     ports:
-        - "8080:8080"
+      - "8080:8080"
     depends_on:
       - mssql
       - rabbitmq
-        
+  
   cine.modules.tickets.api:
     image: ${DOCKER_REGISTRY-}cine.module.tickets.api
     build:
@@ -20,6 +20,17 @@ services:
     depends_on:
       - mssql
       - rabbitmq
+    
+  cine.modules.theater.api:
+    image: ${DOCKER_REGISTRY-}cine.module.theater.api
+    build:
+      context: .
+      dockerfile: src/Modules/Theater/Cine.Modules.Theater.Api/Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mssql
+      - rabbitmq
 
   mssql:
     container_name: ms-sql
@@ -27,8 +38,8 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "W88QnBWn"
-      MSSQL_PID: 'Developer' 
-      MSSQL_TCP_PORT: 1433 
+      MSSQL_PID: 'Developer'
+      MSSQL_TCP_PORT: 1433
     ports:
       - "1433:1433"
 

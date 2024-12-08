@@ -10,6 +10,23 @@ namespace Cine.Modules.Theater.Domain
 
         public string Name { get; }
 
-        public IReadOnlyCollection<Seat> Seats { get; } = [];
+        public IReadOnlyCollection<Seat> Seats { get; private set; } = [];
+
+        private Hall()
+        {
+            // Blank for ORM..
+        }
+
+        private Hall(string name, List<Seat> seats)
+        {
+            HallId = HallId.Create();
+
+            Name = name;
+            Seats = seats;
+        }
+
+        public static Hall Create(string name, List<Seat> seats) => new(name, seats);
+
+        public void AssignSeats(List<Seat> seats) => Seats = seats;
     }
 }

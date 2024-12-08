@@ -1,0 +1,14 @@
+@host = http://localhost:8082
+
+POST {{host}}/hall/add
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Hall #1",
+  "seatRows": 13,
+  "seatsPerRow": 20,
+  "premiumSeats": []
+}
+
+###

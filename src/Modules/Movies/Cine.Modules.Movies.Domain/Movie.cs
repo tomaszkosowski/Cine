@@ -39,7 +39,7 @@ namespace Cine.Modules.Movies.Domain
 
         private Movie()
         {
-            // Blank for ORM
+            // Blank for ORM.
         }
 
         private Movie(string title, string description, MovieGenre movieGenre, TimeOnly duration, DateOnly releaseDate, IReadOnlyList<Person> directors, IReadOnlyList<Person> cast)

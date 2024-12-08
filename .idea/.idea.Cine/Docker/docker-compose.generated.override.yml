@@ -18,6 +18,24 @@ services:
     - "C:\\Dev\\Craftusion\\Cine:/src:rw"
     - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
     working_dir: "/app"
+  cine.modules.theater.api:
+    build:
+      context: "C:\\Dev\\Craftusion\\Cine"
+      dockerfile: "src/Modules/Theater/Cine.Modules.Theater.Api/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Cine.Modules.Theater.Api.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "cine.module.theater.api:dev"
+    ports: []
+    volumes:
+    - "C:\\Dev\\Craftusion\\Cine\\src\\Modules\\Theater\\Cine.Modules.Theater.Api:/app:rw"
+    - "C:\\Dev\\Craftusion\\Cine:/src:rw"
+    - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
   cine.modules.tickets.api:
     build:
       context: "C:\\Dev\\Craftusion\\Cine"

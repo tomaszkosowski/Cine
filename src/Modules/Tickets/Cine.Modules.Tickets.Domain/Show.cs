@@ -16,7 +16,7 @@ public sealed class Show : Entity, IAggregateRoot
 
     private Show()
     {
-        // Only for ORM.
+        // Blank for ORM..
     }
 
     private Show(ShowId showId)
