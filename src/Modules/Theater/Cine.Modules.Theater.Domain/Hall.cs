@@ -1,4 +1,5 @@
-﻿using Cine.Shared.Domain;
+﻿using Cine.Modules.Theater.Domain.Events;
+using Cine.Shared.Domain;
 
 namespace Cine.Modules.Theater.Domain
 {
@@ -14,7 +15,7 @@ namespace Cine.Modules.Theater.Domain
 
         private Hall()
         {
-            // Blank for ORM..
+            // Blank for ORM.
         }
 
         private Hall(string name, List<Seat> seats)
@@ -23,6 +24,8 @@ namespace Cine.Modules.Theater.Domain
 
             Name = name;
             Seats = seats;
+
+            AddDomainEvent(new HallCreatedDomainEvent(HallId));
         }
 
         public static Hall Create(string name, List<Seat> seats) => new(name, seats);

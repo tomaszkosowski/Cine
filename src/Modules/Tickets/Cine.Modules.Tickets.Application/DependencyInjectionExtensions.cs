@@ -46,7 +46,7 @@ namespace Cine.Modules.Tickets.Application
             // {
             //     scanner.FromAssemblyOf<IApplicationAssembly>()
             //         .AddClasses(classes => classes.AssignableTo(typeof(IIntegrationEventHandler<>)))
-            //         .AsImplementedInterfaces().WithScopedLifetime();
+            //         .AsImplementedInterfaces().WithSingletonLifetime();
             // });
 
             return services;

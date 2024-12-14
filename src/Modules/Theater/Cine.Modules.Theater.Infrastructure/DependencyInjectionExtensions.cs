@@ -1,4 +1,5 @@
 ﻿using Cine.Modules.Theater.Domain;
+using Cine.Modules.Theater.Domain.Events;
 using Cine.Modules.Theater.Infrastructure.Database.Write;
 using Cine.Modules.Theater.Infrastructure.Outbox;
 using Cine.Shared.Application.Outbox;
@@ -48,6 +49,10 @@ namespace Cine.Modules.Theater.Infrastructure
         private static IServiceCollection AddOutbox(this IServiceCollection services)
         {
             services.AddScoped<IOutbox, OutboxAccessor>();
+            services.AddSingleton<IDomainEventsMapper>(_ => new DomainEventsMapper(new Dictionary<string, Type>
+            {
+                { nameof(HallCreatedDomainEvent), typeof(HallCreatedDomainEvent) }
+            }));
 
             return services;
         }
@@ -80,7 +85,7 @@ namespace Cine.Modules.Theater.Infrastructure
         {
             using var scope = appBuilder.ApplicationServices.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<WriteContext>();
-
+            
             context.Database.Migrate();
 
             return appBuilder;

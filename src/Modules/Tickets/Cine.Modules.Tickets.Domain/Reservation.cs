@@ -35,7 +35,7 @@ public sealed class Reservation : Entity, IAggregateRoot
 
     private Reservation()
     {
-        // Blank for ORM..
+        // Blank for ORM.
     }
 
     private Reservation(DateTime reservedAt)

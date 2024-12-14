@@ -6,8 +6,8 @@ Content-Type: application/json
 
 {
   "name": "Hall #1",
-  "seatRows": 13,
-  "seatsPerRow": 20,
+  "seatRows": 2,
+  "seatsPerRow": 4,
   "premiumSeats": []
 }
 

@@ -8,7 +8,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Cine.Shared.Application\Cine.Shared.Application.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Infrastructure\Cine.Shared.Infrastructure.csproj" />
       <ProjectReference Include="..\Cine.Modules.Theater.Domain\Cine.Modules.Theater.Domain.csproj" />
+      <ProjectReference Include="..\Cine.Modules.Theater.IntegrationEvents\Cine.Modules.Theater.IntegrationEvents.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,6 @@
+@Cine.Modules.Shows.Api_HostAddress = http://localhost:5129
+
+GET {{Cine.Modules.Shows.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

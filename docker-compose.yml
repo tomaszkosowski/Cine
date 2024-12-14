@@ -31,6 +31,17 @@ services:
     depends_on:
       - mssql
       - rabbitmq
+        
+  cine.modules.shows.api:
+    image: ${DOCKER_REGISTRY-}cine.module.shows.api
+    build:
+      context: .
+      dockerfile: src/Modules/Shows/Cine.Modules.Shows.Api/Dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mssql
+      - rabbitmq
 
   mssql:
     container_name: ms-sql

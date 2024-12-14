@@ -30,4 +30,8 @@
       <Folder Include="Endpoints\Reservations\RemoveSeat\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageVersion Update="FastEndpoints" Version="5.32.0" />
+    </ItemGroup>
+
 </Project>

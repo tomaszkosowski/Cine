@@ -19,3 +19,10 @@ services:
       - ASPNETCORE_HTTP_PORTS=8082
     ports:
       - "8082"
+  
+  cine.modules.shows.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8083
+    ports:
+      - "8083"

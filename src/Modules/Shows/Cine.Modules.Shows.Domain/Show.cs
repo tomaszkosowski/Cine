@@ -18,7 +18,7 @@ namespace Cine.Modules.Shows.Domain
 
         private Show()
         {
-            // Only for ORM   
+            // Blank for ORM.
         }
 
         private Show(HallId hallId, MovieId movieId, Schedule scheduledAt, IReadOnlyList<Show> otherShows)

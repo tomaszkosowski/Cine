@@ -9,8 +9,16 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Cine.Shared.Application\Cine.Shared.Application.csproj" />
       <ProjectReference Include="..\..\..\Shared\Cine.Shared.Infrastructure\Cine.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Movies\Cine.Modules.Movies.IntegrationEvents\Cine.Modules.Movies.IntegrationEvents.csproj" />
+      <ProjectReference Include="..\..\Theater\Cine.Modules.Theater.IntegrationEvents\Cine.Modules.Theater.IntegrationEvents.csproj" />
       <ProjectReference Include="..\Cine.Modules.Shows.Domain\Cine.Modules.Shows.Domain.csproj" />
       <ProjectReference Include="..\Cine.Modules.Shows.IntegrationEvents\Cine.Modules.Shows.IntegrationEvents.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+      <PackageReference Include="Scrutor" />
     </ItemGroup>
 
 </Project>
