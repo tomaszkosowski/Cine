@@ -1,6 +1,5 @@
-﻿namespace Cine.Modules.Tickets.Infrastructure
+﻿namespace Cine.Modules.Tickets.Infrastructure;
+
+internal interface IInfrastructureAssembly
 {
-    internal interface IInfrastructureAssembly
-    {
-    }
 }

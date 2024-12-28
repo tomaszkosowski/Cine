@@ -1,9 +1,8 @@
-﻿namespace Cine.IntegrationTests.People
+﻿namespace Cine.IntegrationTests.People;
+
+public class PeopleApiApp : ApiApp
 {
-    public class PeopleApiApp : ApiApp
+    public PeopleApiApp() : base("people")
     {
-        public PeopleApiApp() : base("people")
-        {
-        }
     }
 }

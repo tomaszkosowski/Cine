@@ -1,11 +1,10 @@
-﻿namespace Cine.Shared.Application.Outbox
+﻿namespace Cine.Shared.Application.Outbox;
+
+public interface IOutbox
 {
-    public interface IOutbox
-    {
-        void Add(OutboxMessage message);
+    void Add(OutboxMessage message);
 
-        void AddRange(IEnumerable<OutboxMessage> messages);
+    void AddRange(IEnumerable<OutboxMessage> messages);
 
-        Task SaveAsync();
-    }
+    Task SaveAsync();
 }

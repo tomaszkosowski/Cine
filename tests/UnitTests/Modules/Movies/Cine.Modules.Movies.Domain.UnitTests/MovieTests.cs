@@ -4,115 +4,114 @@ using Cine.Shared.Domain.Rules;
 using Cine.Shared.Domain.UnitTests;
 using FluentAssertions;
 
-namespace Cine.Modules.Movies.Domain.UnitTests
+namespace Cine.Modules.Movies.Domain.UnitTests;
+
+public class MovieTests
 {
-    public class MovieTests
+    [Fact]
+    public void Create_WithValidData_ShouldPublishMovieCreatedDomainEvent()
     {
-        [Fact]
-        public void Create_WithValidData_ShouldPublishMovieCreatedDomainEvent()
+        // Arrange
+        var createMovie = () => MovieObjectFactory.CreateValidObject();
+
+        // Act
+        var movie = createMovie();
+
+        // Assert
+        var domainEvent = movie.GetDomainEvent<MovieCreatedDomainEvent>();
+
+        domainEvent.Should().NotBeNull();
+        domainEvent?.MovieId.Should().Be(movie.MovieId);
+
+    }
+
+    [Fact]
+    public void Create_WithInvalidData_ShouldThrowBusinessRuleException()
+    {
+        // Arrange
+        var createMovie = () => MovieObjectFactory.CreateInvalidObject();
+
+        // Act & Assert
+        createMovie.AssertBrokenRule<EnsureNotEmptyRule>();
+    }
+
+    [Fact]
+    public void AddDirectors_WithValidData_ShouldPublishMovieUpdatedDomainEvent()
+    {
+        // Arrange
+        var director1 = Person.Create("John", "Doe");
+        var director2 = Person.Create("Clint", "Eastwood");
+
+        var directors = new List<Person>()
         {
-            // Arrange
-            var createMovie = () => MovieObjectFactory.CreateValidObject();
+            director1,
+            director2
+        };
 
-            // Act
-            var movie = createMovie();
+        var movie = MovieObjectFactory.CreateValidObject();
 
-            // Assert
-            var domainEvent = movie.GetDomainEvent<MovieCreatedDomainEvent>();
+        // Act
+        movie.AddDirectors(directors);
 
-            domainEvent.Should().NotBeNull();
-            domainEvent?.MovieId.Should().Be(movie.MovieId);
+        // Assert
+        var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
 
-        }
+        domainEvent.Should().NotBeNull();
+        domainEvent?.MovieId?.Should().Be(movie.MovieId);
+    }
 
-        [Fact]
-        public void Create_WithInvalidData_ShouldThrowBusinessRuleException()
+    [Fact]
+    public void AddDirectors_WithEmptyData_ShouldNotPublishMovieUpdatedDomainEvent()
+    {
+        // Arrange
+        var movie = MovieObjectFactory.CreateValidObject();
+
+        // Act
+        movie.AddDirectors([]);
+
+        // Assert
+        var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
+
+        domainEvent.Should().BeNull();
+    }
+
+    [Fact]
+    public void AddCast_WithValidData_ShouldPublishMovieUpdatedDomainEvent()
+    {
+        // Arrange
+        var cast1 = Person.Create("John", "Doe");
+        var cast2 = Person.Create("Clint", "Eastwood");
+
+        var cast = new List<Person>()
         {
-            // Arrange
-            var createMovie = () => MovieObjectFactory.CreateInvalidObject();
+            cast1,
+            cast2
+        };
 
-            // Act & Assert
-            createMovie.AssertBrokenRule<EnsureNotEmptyRule>();
-        }
+        var movie = MovieObjectFactory.CreateValidObject();
 
-        [Fact]
-        public void AddDirectors_WithValidData_ShouldPublishMovieUpdatedDomainEvent()
-        {
-            // Arrange
-            var director1 = Person.Create("John", "Doe");
-            var director2 = Person.Create("Clint", "Eastwood");
+        // Act
+        movie.AddCast(cast);
 
-            var directors = new List<Person>()
-            {
-                director1,
-                director2
-            };
+        // Assert
+        var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
 
-            var movie = MovieObjectFactory.CreateValidObject();
+        domainEvent.Should().NotBeNull();
+        domainEvent?.MovieId?.Should().Be(movie.MovieId);
+    }
 
-            // Act
-            movie.AddDirectors(directors);
+    [Fact]
+    public void AddCast_WithEmptyData_ShouldNotPublishMovieUpdatedDomainEvent()
+    {
+        // Arrange
+        var movie = MovieObjectFactory.CreateValidObject();
 
-            // Assert
-            var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
+        // Act
+        movie.AddCast([]);
 
-            domainEvent.Should().NotBeNull();
-            domainEvent?.MovieId?.Should().Be(movie.MovieId);
-        }
+        // Assert
+        var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
 
-        [Fact]
-        public void AddDirectors_WithEmptyData_ShouldNotPublishMovieUpdatedDomainEvent()
-        {
-            // Arrange
-            var movie = MovieObjectFactory.CreateValidObject();
-
-            // Act
-            movie.AddDirectors([]);
-
-            // Assert
-            var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
-
-            domainEvent.Should().BeNull();
-        }
-
-        [Fact]
-        public void AddCast_WithValidData_ShouldPublishMovieUpdatedDomainEvent()
-        {
-            // Arrange
-            var cast1 = Person.Create("John", "Doe");
-            var cast2 = Person.Create("Clint", "Eastwood");
-
-            var cast = new List<Person>()
-            {
-                cast1,
-                cast2
-            };
-
-            var movie = MovieObjectFactory.CreateValidObject();
-
-            // Act
-            movie.AddCast(cast);
-
-            // Assert
-            var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
-
-            domainEvent.Should().NotBeNull();
-            domainEvent?.MovieId?.Should().Be(movie.MovieId);
-        }
-
-        [Fact]
-        public void AddCast_WithEmptyData_ShouldNotPublishMovieUpdatedDomainEvent()
-        {
-            // Arrange
-            var movie = MovieObjectFactory.CreateValidObject();
-
-            // Act
-            movie.AddCast([]);
-
-            // Assert
-            var domainEvent = movie.GetDomainEvent<MovieUpdatedDomainEvent>();
-
-            domainEvent.Should().BeNull();
-        }
+        domainEvent.Should().BeNull();
     }
 }

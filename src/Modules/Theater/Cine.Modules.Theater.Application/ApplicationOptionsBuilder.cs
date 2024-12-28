@@ -1,7 +1,6 @@
-﻿namespace Cine.Modules.Theater.Application
+﻿namespace Cine.Modules.Theater.Application;
+
+public sealed class ApplicationOptionsBuilder
 {
-    public sealed class ApplicationOptionsBuilder
-    {
-        public string ConnectionString { get; set; }
-    }
+    public string ConnectionString { get; set; }
 }

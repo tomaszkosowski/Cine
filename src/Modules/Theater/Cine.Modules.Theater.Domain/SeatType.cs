@@ -1,32 +1,31 @@
 ﻿using Cine.Shared.Domain;
 
-namespace Cine.Modules.Theater.Domain
+namespace Cine.Modules.Theater.Domain;
+
+public record SeatType : ValueObject
 {
-    public record SeatType : ValueObject
-    {
-        #region Properties
+    #region Properties
 
-        public string Value { get; }
+    public string Value { get; }
 
-        #endregion
+    #endregion
 
-        #region Constructor
+    #region Constructor
 
-        private SeatType(string type)
-            => Value = type.ToLower();
+    private SeatType(string type)
+        => Value = type.ToLower();
 
-        #endregion
+    #endregion
 
-        #region Public methods
+    #region Public methods
 
-        public static SeatType Of(string type) => new(type);
+    public static SeatType Of(string type) => new(type);
 
-        public static SeatType Regular => new(nameof(Regular));
+    public static SeatType Regular => new(nameof(Regular));
 
-        public static SeatType Premium => new(nameof(Premium));
+    public static SeatType Premium => new(nameof(Premium));
 
-        public override string ToString() => Value;
+    public override string ToString() => Value;
 
-        #endregion
-    }
+    #endregion
 }

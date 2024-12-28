@@ -1,6 +1,5 @@
-﻿namespace Cine.Modules.Tickets.Application
+﻿namespace Cine.Modules.Tickets.Application;
+
+internal interface IApplicationAssembly
 {
-    internal interface IApplicationAssembly
-    {
-    }
 }

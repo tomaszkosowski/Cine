@@ -1,29 +1,28 @@
 ﻿using Cine.Shared.Domain;
 
-namespace Cine.Modules.Movies.Domain
+namespace Cine.Modules.Movies.Domain;
+
+public record MovieGenre : ValueObject
 {
-    public record MovieGenre : ValueObject
-    {
-        #region Properties
+    #region Properties
 
-        public string Genre { get; }
+    public string Genre { get; }
 
-        #endregion
+    #endregion
 
-        #region Constructor
+    #region Constructor
 
-        private MovieGenre(string genre) => Genre = genre;
+    private MovieGenre(string genre) => Genre = genre;
 
-        #endregion
+    #endregion
 
-        #region Public methods
+    #region Public methods
 
-        public static MovieGenre Of(string genre) => new(genre);
+    public static MovieGenre Of(string genre) => new(genre);
 
-        public static implicit operator MovieGenre(string genre) => Of(genre);
+    public static implicit operator MovieGenre(string genre) => Of(genre);
 
-        public override string ToString() => Genre;
+    public override string ToString() => Genre;
 
-        #endregion
-    }
+    #endregion
 }

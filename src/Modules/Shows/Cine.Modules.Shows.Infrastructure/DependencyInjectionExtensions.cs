@@ -13,132 +13,132 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cine.Modules.Shows.Infrastructure
+namespace Cine.Modules.Shows.Infrastructure;
+
+public static class DependencyInjectionExtensions
 {
-    public static class DependencyInjectionExtensions
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services,
+        Action<InfrastructureOptionsBuilder> builder)
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-            Action<InfrastructureOptionsBuilder> builder)
+        var options = new InfrastructureOptionsBuilder();
+        builder(options);
+
+        services.AddUnitOfWork();
+        services.AddDbContext<WriteContext>(cfg => cfg.UseSqlServer(options.ConnectionString));
+
+        services.AddOutbox();
+        services.AddHangfire();
+        services.AddEventsBus();
+        services.AddRepositories();
+        services.AddRecurringJobs();
+        services.AddEventsDispatching();
+
+        return services;
+    }
+
+    public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder appBuilder)
+    {
+        appBuilder.ApplyMigrations();
+        appBuilder.UseHangfireDashboard();
+        appBuilder.TriggerRecurringJobs();
+
+        return appBuilder;
+    }
+
+    private static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, WriteUnitOfWork>();
+        services.Decorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
+
+        return services;
+    }
+
+    private static IServiceCollection AddOutbox(this IServiceCollection services)
+    {
+        services.AddScoped<IOutbox, OutboxAccessor>();
+        services.AddSingleton<IDomainEventsMapper>(_ => new DomainEventsMapper(new Dictionary<string, Type>
         {
-            var options = new InfrastructureOptionsBuilder();
-            builder(options);
+            { nameof(ShowCreatedDomainEvent), typeof(ShowCreatedDomainEvent) }
+        }));
 
-            services.AddUnitOfWork();
-            services.AddDbContext<WriteContext>(cfg => cfg.UseSqlServer(options.ConnectionString));
+        return services;
+    }
 
-            services.AddOutbox();
-            services.AddHangfire();
-            services.AddEventsBus();
-            services.AddRepositories();
-            services.AddRecurringJobs();
-            services.AddEventsDispatching();
+    private static IServiceCollection AddHangfire(this IServiceCollection services)
+    {
+        services.AddHangfire(cfg => cfg
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseInMemoryStorage());
 
-            return services;
-        }
+        services.AddHangfireServer();
 
-        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder appBuilder)
-        {
-            appBuilder.ApplyMigrations();
-            appBuilder.UseHangfireDashboard();
-            appBuilder.TriggerRecurringJobs();
+        return services;
+    }
 
-            return appBuilder;
-        }
+    private static IServiceCollection AddEventsBus(this IServiceCollection services)
+    {
+        services.AddHostedService<RabbitMqEventsBusBackgroundService>();
+        services.AddSingleton<IEventsBus, RabbitMqEventsBusBackgroundService>();
 
-        private static IServiceCollection AddUnitOfWork(this IServiceCollection services)
-        {
-            services.AddScoped<IUnitOfWork, WriteUnitOfWork>();
-            services.Decorate(typeof(IRequestHandler<,>), typeof(UnitOfWorkCommandHandlerDecorator<,>));
+        return services;
+    }
 
-            return services;
-        }
+    private static IServiceCollection AddRecurringJobs(this IServiceCollection services)
+    {
+        return services;
+    }
 
-        private static IServiceCollection AddOutbox(this IServiceCollection services)
-        {
-            services.AddScoped<IOutbox, OutboxAccessor>();
-            services.AddSingleton<IDomainEventsMapper>(_ => new DomainEventsMapper(new Dictionary<string, Type>
-            {
-                { nameof(ShowCreatedDomainEvent), typeof(ShowCreatedDomainEvent) }
-            }));
+    private static IServiceCollection AddEventsDispatching(this IServiceCollection services)
+    {
+        services.AddScoped<IDomainEventsCollector>(scope =>
+            new DomainEventsCollector<WriteContext>(scope.GetRequiredService<WriteContext>()));
+        services.AddScoped<IDomainEventsDispatcher, DomainEventsDispatcher>();
 
-            return services;
-        }
+        return services;
+    }
 
-        private static IServiceCollection AddHangfire(this IServiceCollection services)
-        {
-            services.AddHangfire(cfg => cfg
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseInMemoryStorage());
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<IHallsRepository, HallsRepository>();
+        services.AddScoped<IMoviesRepository, MoviesRepository>();
 
-            services.AddHangfireServer();
+        return services;
+    }
 
-            return services;
-        }
-
-        private static IServiceCollection AddEventsBus(this IServiceCollection services)
-        {
-            services.AddSingleton<IEventsBus, RabbitMqEventsBus>();
-
-            return services;
-        }
-
-        private static IServiceCollection AddRecurringJobs(this IServiceCollection services)
-        {
-            return services;
-        }
-
-        private static IServiceCollection AddEventsDispatching(this IServiceCollection services)
-        {
-            services.AddScoped<IDomainEventsCollector>(scope =>
-                new DomainEventsCollector<WriteContext>(scope.GetRequiredService<WriteContext>()));
-            services.AddScoped<IDomainEventsDispatcher, DomainEventsDispatcher>();
-
-            return services;
-        }
-
-        private static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            services.AddScoped<IHallsRepository, HallsRepository>();
-            services.AddScoped<IMoviesRepository, MoviesRepository>();
-
-            return services;
-        }
-
-        private static IApplicationBuilder ApplyMigrations(this IApplicationBuilder appBuilder)
-        {
-            using var scope = appBuilder.ApplicationServices.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<WriteContext>();
+    private static IApplicationBuilder ApplyMigrations(this IApplicationBuilder appBuilder)
+    {
+        using var scope = appBuilder.ApplicationServices.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<WriteContext>();
             
-            context.Database.Migrate();
+        context.Database.Migrate();
 
-            return appBuilder;
-        }
+        return appBuilder;
+    }
 
-        private static IApplicationBuilder UseHangfireDashboard(this IApplicationBuilder appBuilder)
+    private static IApplicationBuilder UseHangfireDashboard(this IApplicationBuilder appBuilder)
+    {
+        appBuilder.UseHangfireDashboard("/hangfire", new DashboardOptions
         {
-            appBuilder.UseHangfireDashboard("/hangfire", new DashboardOptions
-            {
-                Authorization = [new AllowAll()]
-            });
+            Authorization = [new AllowAll()]
+        });
 
-            return appBuilder;
-        }
+        return appBuilder;
+    }
 
-        private static IApplicationBuilder TriggerRecurringJobs(this IApplicationBuilder appBuilder)
-        {
-            RecurringJob.AddOrUpdate<ProcessOutboxJob>(ProcessOutboxJob.JobName, job => job.ExecuteAsync(),
-                "* * * * * *");
+    private static IApplicationBuilder TriggerRecurringJobs(this IApplicationBuilder appBuilder)
+    {
+        RecurringJob.AddOrUpdate<ProcessOutboxJob>(ProcessOutboxJob.JobName, job => job.ExecuteAsync(),
+            "* * * * * *");
 
-            RecurringJob.TriggerJob(ProcessOutboxJob.JobName);
+        RecurringJob.TriggerJob(ProcessOutboxJob.JobName);
 
-            return appBuilder;
-        }
+        return appBuilder;
+    }
 
-        private class AllowAll : IDashboardAuthorizationFilter
-        {
-            public bool Authorize(DashboardContext context) => true;
-        }
+    private class AllowAll : IDashboardAuthorizationFilter
+    {
+        public bool Authorize(DashboardContext context) => true;
     }
 }

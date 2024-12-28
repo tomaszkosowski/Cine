@@ -1,17 +1,16 @@
-﻿namespace Cine.Shared.Application.Outbox
+﻿namespace Cine.Shared.Application.Outbox;
+
+public record OutboxMessage
 {
-    public record OutboxMessage
-    {
-        public Guid Id { get; init; }
+    public Guid Id { get; init; }
 
-        public DateTime CreatedAt { get; init; }
+    public DateTime CreatedAt { get; init; }
 
-        public string Type { get; init; }
+    public string Type { get; init; }
 
-        public string Content { get; init; }
+    public string Content { get; init; }
 
-        public DateTime? ProcessedAt { get; private set; }
+    public DateTime? ProcessedAt { get; private set; }
 
-        public void SetAsProcessed() => ProcessedAt = DateTime.UtcNow;
-    };
-}
+    public void SetAsProcessed() => ProcessedAt = DateTime.UtcNow;
+};

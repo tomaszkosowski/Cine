@@ -1,6 +1,5 @@
-﻿namespace Cine.Shared.Infrastructure.Events
+﻿namespace Cine.Shared.Infrastructure.Events;
+
+public interface IIntegrationEvent
 {
-    public interface IIntegrationEvent
-    {
-    }
 }

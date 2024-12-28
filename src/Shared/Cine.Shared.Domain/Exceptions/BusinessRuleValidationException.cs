@@ -1,26 +1,25 @@
 ﻿using Cine.Shared.Domain.Rules;
 
-namespace Cine.Shared.Domain.Exceptions
+namespace Cine.Shared.Domain.Exceptions;
+
+public sealed class BusinessRuleValidationException(IBusinessRule brokenRule) : Exception(brokenRule.Message)
 {
-    public sealed class BusinessRuleValidationException(IBusinessRule brokenRule) : Exception(brokenRule.Message)
-    {
-        #region Properties
+    #region Properties
 
-        public IBusinessRule BrokenRule { get; } = brokenRule;
+    public IBusinessRule BrokenRule { get; } = brokenRule;
 
-        public string Details { get; } = brokenRule.Message;
+    public string Details { get; } = brokenRule.Message;
 
-        #endregion
+    #endregion
 
-        #region Constructors
+    #region Constructors
 
-        #endregion
+    #endregion
 
-        #region Public methods
+    #region Public methods
 
-        public override string ToString()
-            => $"{BrokenRule.GetType().FullName} = {BrokenRule.Message}";
+    public override string ToString()
+        => $"{BrokenRule.GetType().FullName} = {BrokenRule.Message}";
 
-        #endregion
-    }
+    #endregion
 }

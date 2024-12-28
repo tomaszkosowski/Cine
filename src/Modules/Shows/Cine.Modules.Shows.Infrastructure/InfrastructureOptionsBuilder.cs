@@ -1,7 +1,6 @@
-﻿namespace Cine.Modules.Shows.Infrastructure
+﻿namespace Cine.Modules.Shows.Infrastructure;
+
+public sealed class InfrastructureOptionsBuilder
 {
-    public sealed class InfrastructureOptionsBuilder
-    {
-        public string ConnectionString { get; set; }
-    }
+    public string ConnectionString { get; set; }
 }

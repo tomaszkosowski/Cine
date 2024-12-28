@@ -1,6 +1,5 @@
-﻿namespace Cine.Modules.Shows.Application
+﻿namespace Cine.Modules.Shows.Application;
+
+internal interface IApplicationAssembly
 {
-    internal interface IApplicationAssembly
-    {
-    }
 }

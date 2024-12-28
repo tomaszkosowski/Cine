@@ -1,9 +1,8 @@
-﻿namespace Cine.IntegrationTests.Movies
+﻿namespace Cine.IntegrationTests.Movies;
+
+public class MoviesApiApp : ApiApp
 {
-    public class MoviesApiApp : ApiApp
+    public MoviesApiApp() : base("movies")
     {
-        public MoviesApiApp() : base("movies")
-        {
-        }
     }
 }

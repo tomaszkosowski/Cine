@@ -1,19 +1,18 @@
 ﻿using System.Data;
 
-namespace Cine.Shared.Application.Database
+namespace Cine.Shared.Application.Database;
+
+public interface ISqlConnection
 {
-    public interface ISqlConnection
-    {
-        Task ExecuteScalarAsync(string sql, object? param = null, IDbTransaction? transaction = null,
-            int? commandTimeout = null, CommandType? commandType = null);
+    Task ExecuteScalarAsync(string sql, object? param = null, IDbTransaction? transaction = null,
+        int? commandTimeout = null, CommandType? commandType = null);
         
-        Task<IEnumerable<T>> QueryAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null,
-            int? commandTimeout = null, CommandType? commandType = null);
+    Task<IEnumerable<T>> QueryAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null,
+        int? commandTimeout = null, CommandType? commandType = null);
 
-        Task<T> QuerySingleAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null,
-            int? commandTimeout = null, CommandType? commandType = null);
+    Task<T> QuerySingleAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null,
+        int? commandTimeout = null, CommandType? commandType = null);
 
-        Task<T?> QuerySingleOrDefaultAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null,
-            int? commandTimeout = null, CommandType? commandType = null);
-    }
+    Task<T?> QuerySingleOrDefaultAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null,
+        int? commandTimeout = null, CommandType? commandType = null);
 }

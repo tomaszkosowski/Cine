@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Cine.Shared.Application.Logger
-{
-    public static class LoggerExtensions
-    {
-        public static void LogApplicationError(this ILogger logger, Exception exception)
-            => logger.LogError(exception, "Application error.");
+namespace Cine.Shared.Application.Logger;
 
-        public static void LogInfrastructureError(this ILogger logger, Exception exception)
-            => logger.LogError(exception, "Infrastructure error.");
-    }
+public static class LoggerExtensions
+{
+    public static void LogApplicationError(this ILogger logger, Exception exception)
+        => logger.LogError(exception, "Application error.");
+
+    public static void LogInfrastructureError(this ILogger logger, Exception exception)
+        => logger.LogError(exception, "Infrastructure error.");
 }

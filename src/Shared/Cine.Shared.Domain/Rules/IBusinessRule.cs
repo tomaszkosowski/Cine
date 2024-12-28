@@ -1,9 +1,8 @@
-﻿namespace Cine.Shared.Domain.Rules
-{
-    public interface IBusinessRule
-    {
-        bool IsBroken();
+﻿namespace Cine.Shared.Domain.Rules;
 
-        string Message { get; }
-    }
+public interface IBusinessRule
+{
+    bool IsBroken();
+
+    string Message { get; }
 }

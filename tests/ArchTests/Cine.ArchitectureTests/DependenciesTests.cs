@@ -3,107 +3,106 @@ using System.Text.Json;
 using FluentAssertions;
 using NetArchTest.Rules;
 
-namespace Cine.ArchitectureTests
+namespace Cine.ArchitectureTests;
+
+public class DependenciesTests
 {
-    public class DependenciesTests
+    public record ProjectInfo
     {
-        public record ProjectInfo
-        {
-            public required string Name { get; set; }
+        public required string Name { get; set; }
 
-            public required string Path { get; set; }
-        }
+        public required string Path { get; set; }
+    }
 
-        public class ProjectInfos
-        {
-            public required List<ProjectInfo> Projects { get; set; }
-        }
+    public class ProjectInfos
+    {
+        public required List<ProjectInfo> Projects { get; set; }
+    }
 
-        public static class ProjectsLoader
+    public static class ProjectsLoader
+    {
+        public static ProjectInfo[] LoadProjects(string filePath)
         {
-            public static ProjectInfo[] LoadProjects(string filePath)
+            static string GetConfiguration()
             {
-                static string GetConfiguration()
-                {
 #if DEBUG
-                    return "Debug";
+                return "Debug";
 #endif
 #pragma warning disable CS0162 // Unreachable code detected
-                    return "Release";
+                return "Release";
 #pragma warning restore CS0162 // Unreachable code detected
-                }
-
-                var json = File.ReadAllText(filePath)!.Replace("{Configuration}", GetConfiguration());
-
-                return [.. JsonSerializer.Deserialize<ProjectInfos>(json)!.Projects];
             }
+
+            var json = File.ReadAllText(filePath)!.Replace("{Configuration}", GetConfiguration());
+
+            return [.. JsonSerializer.Deserialize<ProjectInfos>(json)!.Projects];
+        }
+    }
+
+    public static class AssemblyLoader
+    {
+        public static Assembly[] LoadAssemblies(IEnumerable<ProjectInfo> projectInfos)
+        {
+            return [.. projectInfos.Select(projectInfo => Assembly.LoadFrom(projectInfo.Path))];
         }
 
-        public static class AssemblyLoader
+        public static Assembly[] LoadAssemblies(IEnumerable<ProjectInfo> projectInfos, string namePattern)
         {
-            public static Assembly[] LoadAssemblies(IEnumerable<ProjectInfo> projectInfos)
-            {
-                return [.. projectInfos.Select(projectInfo => Assembly.LoadFrom(projectInfo.Path))];
-            }
-
-            public static Assembly[] LoadAssemblies(IEnumerable<ProjectInfo> projectInfos, string namePattern)
-            {
-                return LoadAssemblies(projectInfos.Where(projectInfo => projectInfo.Name.Contains(namePattern)));
-            }
+            return LoadAssemblies(projectInfos.Where(projectInfo => projectInfo.Name.Contains(namePattern)));
         }
+    }
 
-        [Fact]
-        public void DomainLayer_ShouldNotDependOnApplicationOrInfrastructure()
+    [Fact]
+    public void DomainLayer_ShouldNotDependOnApplicationOrInfrastructure()
+    {
+        var projects = ProjectsLoader.LoadProjects("projects.json");
+
+        var domainAssemblies = AssemblyLoader.LoadAssemblies(projects, "Domain");
+        var nonDependentProjects = projects.Where(projectInfo => projectInfo.Name.ContainsAny(["Application", "Infrastructure"])).Select(projectInfo => projectInfo.Name).ToArray();
+
+        foreach (var domain in domainAssemblies)
         {
-            var projects = ProjectsLoader.LoadProjects("projects.json");
+            var result = Types.InAssembly(domain)
+                .Should().NotHaveDependencyOnAny(nonDependentProjects)
+                .GetResult();
 
-            var domainAssemblies = AssemblyLoader.LoadAssemblies(projects, "Domain");
-            var nonDependentProjects = projects.Where(projectInfo => projectInfo.Name.ContainsAny(["Application", "Infrastructure"])).Select(projectInfo => projectInfo.Name).ToArray();
-
-            foreach (var domain in domainAssemblies)
-            {
-                var result = Types.InAssembly(domain)
-                     .Should().NotHaveDependencyOnAny(nonDependentProjects)
-                     .GetResult();
-
-                result.IsSuccessful.Should().BeTrue();
-            }
+            result.IsSuccessful.Should().BeTrue();
         }
+    }
 
-        [Fact]
-        public void ApplicationLayer_ShouldNotDependOnInfrastructure()
+    [Fact]
+    public void ApplicationLayer_ShouldNotDependOnInfrastructure()
+    {
+        var projects = ProjectsLoader.LoadProjects("projects.json");
+
+        var applicationAssemblies = AssemblyLoader.LoadAssemblies(projects, "Application");
+        var nonDependentProjects = projects.Where(projectInfo => projectInfo.Name.Contains("Infrastructure")).Select(projectInfo => projectInfo.Name).ToArray();
+
+        foreach (var application in applicationAssemblies)
         {
-            var projects = ProjectsLoader.LoadProjects("projects.json");
+            var result = Types.InAssembly(application)
+                .Should().NotHaveDependencyOnAny(nonDependentProjects)
+                .GetResult();
 
-            var applicationAssemblies = AssemblyLoader.LoadAssemblies(projects, "Application");
-            var nonDependentProjects = projects.Where(projectInfo => projectInfo.Name.Contains("Infrastructure")).Select(projectInfo => projectInfo.Name).ToArray();
-
-            foreach (var application in applicationAssemblies)
-            {
-                var result = Types.InAssembly(application)
-                     .Should().NotHaveDependencyOnAny(nonDependentProjects)
-                     .GetResult();
-
-                result.IsSuccessful.Should().BeTrue();
-            }
+            result.IsSuccessful.Should().BeTrue();
         }
+    }
 
-        [Fact]
-        public void InfrastructureLayer_ShouldNotDependOnApi()
+    [Fact]
+    public void InfrastructureLayer_ShouldNotDependOnApi()
+    {
+        var projects = ProjectsLoader.LoadProjects("projects.json");
+
+        var infrastructureAssemblies = AssemblyLoader.LoadAssemblies(projects, "Infrastructure");
+        var nonDependentProjects = projects.Where(projectInfo => projectInfo.Name.Contains("Api")).Select(projectInfo => projectInfo.Name).ToArray();
+
+        foreach (var infrastructure in infrastructureAssemblies)
         {
-            var projects = ProjectsLoader.LoadProjects("projects.json");
+            var result = Types.InAssembly(infrastructure)
+                .Should().NotHaveDependencyOnAny(nonDependentProjects)
+                .GetResult();
 
-            var infrastructureAssemblies = AssemblyLoader.LoadAssemblies(projects, "Infrastructure");
-            var nonDependentProjects = projects.Where(projectInfo => projectInfo.Name.Contains("Api")).Select(projectInfo => projectInfo.Name).ToArray();
-
-            foreach (var infrastructure in infrastructureAssemblies)
-            {
-                var result = Types.InAssembly(infrastructure)
-                     .Should().NotHaveDependencyOnAny(nonDependentProjects)
-                     .GetResult();
-
-                result.IsSuccessful.Should().BeTrue();
-            }
+            result.IsSuccessful.Should().BeTrue();
         }
     }
 }

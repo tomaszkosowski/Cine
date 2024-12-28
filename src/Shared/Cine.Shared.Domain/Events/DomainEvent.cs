@@ -1,13 +1,12 @@
-﻿namespace Cine.Shared.Domain.Events
+﻿namespace Cine.Shared.Domain.Events;
+
+public abstract record DomainEvent : IDomainEvent
 {
-    public abstract record DomainEvent : IDomainEvent
-    {
-        #region Properties
+    #region Properties
 
-        public Guid EventId { get; } = Guid.NewGuid();
+    public Guid EventId { get; } = Guid.NewGuid();
 
-        public DateTime PublishedAt { get; } = Utc.Now;
+    public DateTime PublishedAt { get; } = Utc.Now;
 
-        #endregion
-    }
+    #endregion
 }

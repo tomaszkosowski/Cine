@@ -1,9 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Cine.Shared.Application.Database
+namespace Cine.Shared.Application.Database;
+
+public interface ISqlConnectionFactory
 {
-    public interface ISqlConnectionFactory
-    {
-        Task<SqlConnection> GetConnectionAsync();
-    }
+    Task<SqlConnection> GetConnectionAsync();
 }

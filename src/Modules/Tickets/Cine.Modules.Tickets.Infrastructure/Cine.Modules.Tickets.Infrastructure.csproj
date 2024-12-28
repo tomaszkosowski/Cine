@@ -7,20 +7,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Hangfire" />
-      <PackageReference Include="Hangfire.InMemory" />
-      <PackageReference Include="MediatR" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+        <PackageReference Include="Hangfire"/>
+        <PackageReference Include="Hangfire.InMemory"/>
+        <PackageReference Include="MediatR"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
+        <PackageReference Include="Scrutor"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Infrastructure\Cine.Shared.Infrastructure.csproj" />
-      <ProjectReference Include="..\Cine.Modules.Tickets.Application\Cine.Modules.Tickets.Application.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Cine.Shared.Infrastructure\Cine.Shared.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Cine.Modules.Tickets.Application\Cine.Modules.Tickets.Application.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Database\Migrations\" />
+        <Folder Include="Database\Migrations\"/>
     </ItemGroup>
 
 </Project>

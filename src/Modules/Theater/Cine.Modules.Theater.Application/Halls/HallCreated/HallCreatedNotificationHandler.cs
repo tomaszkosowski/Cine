@@ -8,8 +8,6 @@ public class HallCreatedNotificationHandler(IEventsBus eventsBus) : INotificatio
 {
     public async Task Handle(HallCreatedNotification notification, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-
-        eventsBus.Publish(new HallCreatedIntegrationEvent(notification.DomainEvent.HallId), cancellationToken);
+        await eventsBus.PublishAsync(new HallCreatedIntegrationEvent(notification.DomainEvent.HallId), cancellationToken);
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Cine.Shared.Infrastructure.Database
+﻿namespace Cine.Shared.Infrastructure.Database;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        public Task<int> CommitAsync(CancellationToken cancellationToken = default);
-    }
+    public Task<int> CommitAsync(CancellationToken cancellationToken = default);
 }

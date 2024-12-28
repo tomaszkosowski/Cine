@@ -1,6 +1,5 @@
-﻿namespace Cine.Modules.Shows.Infrastructure
+﻿namespace Cine.Modules.Shows.Infrastructure;
+
+internal interface IInfrastructureAssembly
 {
-    internal interface IInfrastructureAssembly
-    {
-    }
 }

@@ -1,7 +1,6 @@
-﻿namespace Cine.Shared.Infrastructure.Events
+﻿namespace Cine.Shared.Infrastructure.Events;
+
+public interface IDomainEventsDispatcher
 {
-    public interface IDomainEventsDispatcher
-    {
-        Task DispatchEventsAsync();
-    }
+    Task DispatchEventsAsync();
 }

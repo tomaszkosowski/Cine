@@ -1,24 +1,23 @@
-﻿namespace Cine.Shared.Domain
+﻿namespace Cine.Shared.Domain;
+
+public static class Utc
 {
-    public static class Utc
+    private static DateTime? _utcNowOverride;
+
+    public static DateTime Now
     {
-        private static DateTime? _utcNowOverride;
-
-        public static DateTime Now
+        get
         {
-            get
+            if (_utcNowOverride.HasValue)
             {
-                if (_utcNowOverride.HasValue)
-                {
-                    return _utcNowOverride.Value;
-                }
-
-                return DateTime.UtcNow;
+                return _utcNowOverride.Value;
             }
+
+            return DateTime.UtcNow;
         }
-
-        public static void Override(DateTime value) => _utcNowOverride = value;
-
-        public static void Rollback() => _utcNowOverride = null;
     }
+
+    public static void Override(DateTime value) => _utcNowOverride = value;
+
+    public static void Rollback() => _utcNowOverride = null;
 }

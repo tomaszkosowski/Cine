@@ -2,28 +2,27 @@
 using FastEndpoints;
 using MediatR;
 
-namespace Cine.Modules.Movies.Api.Endpoints.Movies.Get
+namespace Cine.Modules.Movies.Api.Endpoints.Movies.Get;
+
+internal record Request(Guid MovieId);
+
+internal record Response(MovieDto Dto);
+
+internal sealed class GetEndpoint(ISender sender) : Endpoint<Request, Response>
 {
-    internal record Request(Guid MovieId);
-
-    internal record Response(MovieDto Dto);
-
-    internal sealed class GetEndpoint(ISender sender) : Endpoint<Request, Response>
+    public override void Configure()
     {
-        public override void Configure()
-        {
-            Get("movie/get");
-            AllowAnonymous();
-        }
+        Get("movie/get");
+        AllowAnonymous();
+    }
 
-        public override async Task HandleAsync(Request req, CancellationToken ct)
-        {
-            var oneOf = await sender.Send(new GetMovieQuery(req.MovieId), ct);
+    public override async Task HandleAsync(Request req, CancellationToken ct)
+    {
+        var oneOf = await sender.Send(new GetMovieQuery(req.MovieId), ct);
 
-            await oneOf.Match(
-                async dto => await SendOkAsync(new(dto), ct),
-                async notFound => await SendNotFoundAsync(ct),
-                error => throw error.Value);
-        }
+        await oneOf.Match(
+            async dto => await SendOkAsync(new(dto), ct),
+            async notFound => await SendNotFoundAsync(ct),
+            error => throw error.Value);
     }
 }

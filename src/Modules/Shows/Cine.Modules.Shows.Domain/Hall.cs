@@ -1,23 +1,22 @@
 ﻿using Cine.Shared.Domain;
 
-namespace Cine.Modules.Shows.Domain
+namespace Cine.Modules.Shows.Domain;
+
+public record HallId : TypedId<HallId>;
+
+public sealed class Hall : Entity, IAggregateRoot
 {
-    public record HallId : TypedId<HallId>;
+    public HallId HallId { get; }
 
-    public sealed class Hall : Entity, IAggregateRoot
+    private Hall()
     {
-        public HallId HallId { get; }
-
-        private Hall()
-        {
-            // Blank for ORM.
-        }
-
-        private Hall(HallId hallId)
-        {
-            HallId = hallId;
-        }
-
-        public static Hall Create(HallId hallId) => new(hallId);
+        // Blank for ORM.
     }
+
+    private Hall(HallId hallId)
+    {
+        HallId = hallId;
+    }
+
+    public static Hall Create(HallId hallId) => new(hallId);
 }

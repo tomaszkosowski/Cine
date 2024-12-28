@@ -1,7 +1,6 @@
-﻿namespace Cine.Modules.Movies.Domain
+﻿namespace Cine.Modules.Movies.Domain;
+
+public interface IMoviesRepository
 {
-    public interface IMoviesRepository
-    {
-        Task AddAsync(Movie movie);
-    }
+    Task AddAsync(Movie movie);
 }

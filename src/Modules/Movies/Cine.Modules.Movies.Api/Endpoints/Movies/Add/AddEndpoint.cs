@@ -3,37 +3,36 @@ using Cine.Modules.Movies.Application.Movies.CreateMovie;
 using FastEndpoints;
 using MediatR;
 
-namespace Cine.Modules.Movies.Api.Endpoints.Movies.Add
+namespace Cine.Modules.Movies.Api.Endpoints.Movies.Add;
+
+internal record Request(string Title, string Description, string Genre, TimeOnly Duration, DateOnly ReleaseDate, List<Person> Directors, List<Person> Cast);
+
+internal record Response(Guid MovieId);
+
+internal record Person(string FirstName, string LastName)
 {
-    internal record Request(string Title, string Description, string Genre, TimeOnly Duration, DateOnly ReleaseDate, List<Person> Directors, List<Person> Cast);
+    internal (string FirstName, string LastName) Deconstruct() => (FirstName, LastName);
+}
 
-    internal record Response(Guid MovieId);
-
-    internal record Person(string FirstName, string LastName)
+internal sealed class AddEndpoint(ISender sender) : Endpoint<Request, Response>
+{
+    public override void Configure()
     {
-        internal (string FirstName, string LastName) Deconstruct() => (FirstName, LastName);
+        Post("movie/add");
+
+        //TODO: Add roles instead
+        AllowAnonymous();
     }
 
-    internal sealed class AddEndpoint(ISender sender) : Endpoint<Request, Response>
+    public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        public override void Configure()
-        {
-            Post("movie/add");
+        var directors = req.Directors.Select(person => person.Deconstruct()).ToList();
+        var cast = req.Cast.Select(person => person.Deconstruct()).ToList();
 
-            //TODO: Add roles instead
-            AllowAnonymous();
-        }
+        var oneOf = await sender.Send(new CreateMovieCommand(req.Title, req.Description, req.Genre, req.Duration, req.ReleaseDate, directors.AsReadOnly(), cast.AsReadOnly()), ct);
 
-        public override async Task HandleAsync(Request req, CancellationToken ct)
-        {
-            var directors = req.Directors.Select(person => person.Deconstruct()).ToList();
-            var cast = req.Cast.Select(person => person.Deconstruct()).ToList();
-
-            var oneOf = await sender.Send(new CreateMovieCommand(req.Title, req.Description, req.Genre, req.Duration, req.ReleaseDate, directors.AsReadOnly(), cast.AsReadOnly()), ct);
-
-            await oneOf.Match(
-                async movieId => await SendCreatedAtAsync<GetEndpoint>(movieId, new(movieId), cancellation: ct),
-                error => throw error.Value);
-        }
+        await oneOf.Match(
+            async movieId => await SendCreatedAtAsync<GetEndpoint>(movieId, new(movieId), cancellation: ct),
+            error => throw error.Value);
     }
 }

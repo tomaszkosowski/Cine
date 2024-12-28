@@ -1,33 +1,32 @@
 ﻿using FluentValidation;
 using MediatR;
 
-namespace Cine.Shared.Application.Validation
+namespace Cine.Shared.Application.Validation;
+
+public sealed class ValidationBehavior<TRequest, TResult>(IEnumerable<IValidator<TRequest>> validators)
+    : IPipelineBehavior<TRequest, TResult> where TRequest : notnull
 {
-    public sealed class ValidationBehavior<TRequest, TResult>(IEnumerable<IValidator<TRequest>> validators)
-        : IPipelineBehavior<TRequest, TResult> where TRequest : notnull
+    public async Task<TResult> Handle(TRequest request, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken)
     {
-        public async Task<TResult> Handle(TRequest request, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken)
+        if (validators.Any())
         {
-            if (validators.Any())
+            var context = new ValidationContext<TRequest>(request);
+
+            var validationResults = await Task.WhenAll(
+                validators.Select(validator =>
+                    validator.ValidateAsync(context, cancellationToken)));
+
+            var errors = validationResults
+                .Where(result => result.Errors.Count > 0)
+                .SelectMany(result => result.Errors)
+                .ToList();
+
+            if (errors.Count > 0)
             {
-                var context = new ValidationContext<TRequest>(request);
-
-                var validationResults = await Task.WhenAll(
-                    validators.Select(validator =>
-                        validator.ValidateAsync(context, cancellationToken)));
-
-                var errors = validationResults
-                    .Where(result => result.Errors.Count > 0)
-                    .SelectMany(result => result.Errors)
-                    .ToList();
-
-                if (errors.Count > 0)
-                {
-                    throw new ValidationException(errors);
-                }
+                throw new ValidationException(errors);
             }
-
-            return await next();
         }
+
+        return await next();
     }
 }

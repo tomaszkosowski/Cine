@@ -1,22 +1,21 @@
 ﻿using Cine.Shared.Domain.Rules;
 
-namespace Cine.Modules.Shows.Domain.Rules
+namespace Cine.Modules.Shows.Domain.Rules;
+
+internal sealed class EnsureNotOverlapsOtherShows(Schedule scheduledAt, IReadOnlyList<Show> otherShows) : IBusinessRule
 {
-    internal sealed class EnsureNotOverlapsOtherShows(Schedule scheduledAt, IReadOnlyList<Show> otherShows) : IBusinessRule
+    public string Message => "Schedule overlaps with other show.";
+
+    public bool IsBroken()
     {
-        public string Message => "Schedule overlaps with other show.";
-
-        public bool IsBroken()
+        foreach (var otherShow in otherShows)
         {
-            foreach (var otherShow in otherShows)
+            if (scheduledAt.IsOverlapping(otherShow.ScheduledAt))
             {
-                if (scheduledAt.IsOverlapping(otherShow.ScheduledAt))
-                {
-                    return true;
-                }
+                return true;
             }
-
-            return false;
         }
+
+        return false;
     }
 }

@@ -9,8 +9,6 @@ public class ReservationCreatedNotificationHandler(IEventsBus eventsBus)
 {
     public async Task Handle(ReservationCreatedNotification notification, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-
-        eventsBus.Publish(new ReservationCreatedIntegrationEvent(), cancellationToken);
+        await eventsBus.PublishAsync(new ReservationCreatedIntegrationEvent(), cancellationToken);
     }
 }

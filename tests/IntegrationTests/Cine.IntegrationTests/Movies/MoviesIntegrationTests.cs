@@ -13,86 +13,85 @@ using AddPersonResponse = Cine.Modules.Movies.Api.Endpoints.People.Add.Response;
 using GetMovieRequest = Cine.Modules.Movies.Api.Endpoints.Movies.Get.Request;
 using GetMovieResponse = Cine.Modules.Movies.Api.Endpoints.Movies.Get.Response;
 
-namespace Cine.IntegrationTests.Movies
+namespace Cine.IntegrationTests.Movies;
+
+public class MoviesIntegrationTests(MoviesApiApp app) : TestBase<MoviesApiApp>
 {
-    public class MoviesIntegrationTests(MoviesApiApp app) : TestBase<MoviesApiApp>, IAsyncLifetime
+    [Fact]
+    public async Task Add_WhenValidRequest_ShouldReturnValidResponse()
     {
-        [Fact]
-        public async Task Add_WhenValidRequest_ShouldReturnValidResponse()
+        async Task<bool> AddDirectorsAsync()
         {
-            async Task<bool> AddDirectorsAsync()
-            {
-                var results = await Task.WhenAll(
-                    CallAddPersonAsync("Elizabeth", "Banks"),
-                    CallAddPersonAsync("Peter", "Farrelly"));
+            var results = await Task.WhenAll(
+                CallAddPersonAsync("Elizabeth", "Banks"),
+                CallAddPersonAsync("Peter", "Farrelly"));
 
-                return results.All(result => result.IsSuccessStatusCode);
-            }
-
-            async Task<bool> AddCastAsync()
-            {
-                var results = await Task.WhenAll(
-                    CallAddPersonAsync("Hugh", "Jackman"),
-                    CallAddPersonAsync("Kate", "Winslet"),
-                    CallAddPersonAsync("Halle", "Berry"),
-                    CallAddPersonAsync("Johnny", "Knoxville"));
-
-                return results.All(result => result.IsSuccessStatusCode);
-            }
-
-            var (directorsOk, castOk) = await (AddDirectorsAsync(), AddCastAsync());
-
-            directorsOk.Should().BeTrue();
-            castOk.Should().BeTrue();
-
-            var (addHttp, addResponse) = await CallAddMovieAsync();
-            addHttp.IsSuccessStatusCode.Should().BeTrue();
-
-            var (getHttp, getResponse) = await CallGetMovieAsync(addResponse.MovieId);
-            getHttp.IsSuccessStatusCode.Should().BeTrue();
-
-            Snapshot.Match(getResponse);
+            return results.All(result => result.IsSuccessStatusCode);
         }
 
-        private async Task<HttpResponseMessage> CallAddPersonAsync(string firstName, string lastName)
+        async Task<bool> AddCastAsync()
         {
-            var request = new AddPersonRequest(firstName, lastName);
+            var results = await Task.WhenAll(
+                CallAddPersonAsync("Hugh", "Jackman"),
+                CallAddPersonAsync("Kate", "Winslet"),
+                CallAddPersonAsync("Halle", "Berry"),
+                CallAddPersonAsync("Johnny", "Knoxville"));
 
-            var (http, _) = await app.Client.POSTAsync<AddPersonEndpoint, AddPersonRequest, AddPersonResponse>(request);
-
-            return http;
+            return results.All(result => result.IsSuccessStatusCode);
         }
 
-        private async Task<(HttpResponseMessage, AddMovieResponse)> CallAddMovieAsync()
-        {
-            var request = new AddMovieRequest(
-                "Movie 43",
-                "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
-                "Comedy",
-                TimeOnly.Parse("01:33:00"),
-                DateOnly.Parse("2013-01-25"),
-                [
-                    new("Elizabeth", "Banks"),
-                    new("Peter", "Farrelly")],
-                [
-                    new("Hugh", "Jackman"),
-                    new("Kate", "Winslet"),
-                    new("Halle", "Berry"),
-                    new("Johnny", "Knoxville")
-                ]);
+        var (directorsOk, castOk) = await (AddDirectorsAsync(), AddCastAsync());
 
-            var (http, response) = await app.Client.POSTAsync<AddMovieEndpoint, AddMovieRequest, AddMovieResponse>(request);
+        directorsOk.Should().BeTrue();
+        castOk.Should().BeTrue();
 
-            return (http, response);
-        }
+        var (addHttp, addResponse) = await CallAddMovieAsync();
+        addHttp.IsSuccessStatusCode.Should().BeTrue();
 
-        private async Task<(HttpResponseMessage, GetMovieResponse)> CallGetMovieAsync(Guid personId)
-        {
-            var request = new GetMovieRequest(personId);
+        var (getHttp, getResponse) = await CallGetMovieAsync(addResponse.MovieId);
+        getHttp.IsSuccessStatusCode.Should().BeTrue();
 
-            var (http, response) = await app.Client.GETAsync<GetEndpoint, GetMovieRequest, GetMovieResponse>(request);
+        Snapshot.Match(getResponse);
+    }
 
-            return (http, response);
-        }
+    private async Task<HttpResponseMessage> CallAddPersonAsync(string firstName, string lastName)
+    {
+        var request = new AddPersonRequest(firstName, lastName);
+
+        var (http, _) = await app.Client.POSTAsync<AddPersonEndpoint, AddPersonRequest, AddPersonResponse>(request);
+
+        return http;
+    }
+
+    private async Task<(HttpResponseMessage, AddMovieResponse)> CallAddMovieAsync()
+    {
+        var request = new AddMovieRequest(
+            "Movie 43",
+            "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+            "Comedy",
+            TimeOnly.Parse("01:33:00"),
+            DateOnly.Parse("2013-01-25"),
+            [
+                new("Elizabeth", "Banks"),
+                new("Peter", "Farrelly")],
+            [
+                new("Hugh", "Jackman"),
+                new("Kate", "Winslet"),
+                new("Halle", "Berry"),
+                new("Johnny", "Knoxville")
+            ]);
+
+        var (http, response) = await app.Client.POSTAsync<AddMovieEndpoint, AddMovieRequest, AddMovieResponse>(request);
+
+        return (http, response);
+    }
+
+    private async Task<(HttpResponseMessage, GetMovieResponse)> CallGetMovieAsync(Guid personId)
+    {
+        var request = new GetMovieRequest(personId);
+
+        var (http, response) = await app.Client.GETAsync<GetEndpoint, GetMovieRequest, GetMovieResponse>(request);
+
+        return (http, response);
     }
 }

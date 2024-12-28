@@ -1,23 +1,22 @@
 ﻿using Cine.Modules.Theater.Infrastructure.Database.Write;
 using Cine.Shared.Application.Outbox;
 
-namespace Cine.Modules.Theater.Infrastructure.Outbox
+namespace Cine.Modules.Theater.Infrastructure.Outbox;
+
+internal sealed class OutboxAccessor(WriteContext context) : IOutbox
 {
-    internal sealed class OutboxAccessor(WriteContext context) : IOutbox
+    public void Add(OutboxMessage message)
     {
-        public void Add(OutboxMessage message)
-        {
-            context.OutboxMessages.Add(message);
-        }
+        context.OutboxMessages.Add(message);
+    }
 
-        public void AddRange(IEnumerable<OutboxMessage> messages)
-        {
-            context.OutboxMessages.AddRange(messages);
-        }
+    public void AddRange(IEnumerable<OutboxMessage> messages)
+    {
+        context.OutboxMessages.AddRange(messages);
+    }
 
-        public async Task SaveAsync()
-        {
-            await context.SaveChangesAsync();
-        }
+    public async Task SaveAsync()
+    {
+        await context.SaveChangesAsync();
     }
 }

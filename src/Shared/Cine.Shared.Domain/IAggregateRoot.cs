@@ -1,6 +1,5 @@
-﻿namespace Cine.Shared.Domain
+﻿namespace Cine.Shared.Domain;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
-    }
 }

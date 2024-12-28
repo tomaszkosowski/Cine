@@ -1,23 +1,22 @@
 ﻿using Cine.Shared.Domain;
 
-namespace Cine.Modules.Shows.Domain
+namespace Cine.Modules.Shows.Domain;
+
+public record MovieId : TypedId<MovieId>;
+
+public sealed class Movie : Entity, IAggregateRoot
 {
-    public record MovieId : TypedId<MovieId>;
+    public MovieId MovieId { get; }
 
-    public sealed class Movie : Entity, IAggregateRoot
+    private Movie()
     {
-        public MovieId MovieId { get; }
-
-        private Movie()
-        {
-            // Blank for ORM.
-        }
-
-        private Movie(MovieId movieId)
-        {
-            MovieId = movieId;
-        }
-
-        public static Movie Create(MovieId movieId) => new(movieId);
+        // Blank for ORM.
     }
+
+    private Movie(MovieId movieId)
+    {
+        MovieId = movieId;
+    }
+
+    public static Movie Create(MovieId movieId) => new(movieId);
 }

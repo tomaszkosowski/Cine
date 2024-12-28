@@ -1,11 +1,10 @@
 ﻿using Cine.Shared.Domain.Events;
 
-namespace Cine.Shared.Infrastructure.Events
-{
-    public interface IDomainEventsCollector
-    {
-        IReadOnlyCollection<IDomainEvent> GetAllDomainEvents();
+namespace Cine.Shared.Infrastructure.Events;
 
-        void ClearAllDomainEvents();
-    }
+public interface IDomainEventsCollector
+{
+    IReadOnlyCollection<IDomainEvent> GetAllDomainEvents();
+
+    void ClearAllDomainEvents();
 }
