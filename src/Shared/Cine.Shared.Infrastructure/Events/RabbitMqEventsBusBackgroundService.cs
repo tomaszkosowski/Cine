@@ -8,24 +8,22 @@ namespace Cine.Shared.Infrastructure.Events;
 
 public class RabbitMqEventsBusBackgroundService : IEventsBus, IHostedService
 {
-    private readonly string _hostName;
-    private readonly int _port;
+    private readonly string _connectionString;
     private readonly string _exchange;
 
     private IConnection _connection;
     private IChannel _channel;
-
-    public RabbitMqEventsBusBackgroundService(string hostName = "host.docker.internal", int port = 5672,
-        string exchange = "integration_events")
+    
+    public RabbitMqEventsBusBackgroundService(string connectionString, string exchange = "integration_events")
     {
-        _hostName = hostName;
-        _port = port;
+        _connectionString = connectionString;
         _exchange = exchange;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var connectionFactory = new ConnectionFactory { HostName = _hostName, Port = _port };
+        // var connectionFactory = new ConnectionFactory { HostName = _hostName, Port = _port };
+        var connectionFactory = new ConnectionFactory { Uri = new Uri(_connectionString) };
         _connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
         _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
 

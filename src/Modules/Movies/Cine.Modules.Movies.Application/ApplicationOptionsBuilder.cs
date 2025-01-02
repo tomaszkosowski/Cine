@@ -2,5 +2,5 @@
 
 public sealed class ApplicationOptionsBuilder
 {
-    public string ConnectionString { get; set; }
+    public string MsSqlConnectionString { get; set; }
 }

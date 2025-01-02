@@ -13,7 +13,7 @@ public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
 
     public RabbitMqEventsBusIntegrationTests()
     {
-        _container = _container = new RabbitMqBuilder()
+        _container = new RabbitMqBuilder()
             .WithImage("rabbitmq:3-management-alpine")
             .WithName("rabbitmq-integration-tests")
             .WithPortBinding(5672, true)
@@ -26,7 +26,7 @@ public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
     {
         await _container.StartAsync();
 
-        var eventsBus = new RabbitMqEventsBusBackgroundService(_container.Hostname, _container.GetMappedPublicPort(5672));
+        var eventsBus = new RabbitMqEventsBusBackgroundService(_container.GetConnectionString());
             
         _hostedService = eventsBus;
         _eventsBus = eventsBus;

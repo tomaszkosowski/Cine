@@ -19,7 +19,7 @@ public static class DependencyInjectionExtensions
         services.AddQueryHandlers();
         services.AddValidators();
 
-        services.AddSqlConnection(options.ConnectionString);
+        services.AddSqlConnection(options.MsSqlConnectionString);
 
         return services;
     }

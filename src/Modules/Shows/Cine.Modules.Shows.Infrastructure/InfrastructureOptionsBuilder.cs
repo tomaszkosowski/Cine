@@ -2,5 +2,7 @@
 
 public sealed class InfrastructureOptionsBuilder
 {
-    public string ConnectionString { get; set; }
+    public string MsSqlConnectionString { get; set; }
+    
+    public string RabbitMqConnectionString { get; set; }
 }

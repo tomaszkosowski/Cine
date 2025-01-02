@@ -25,11 +25,11 @@ public static class DependencyInjectionExtensions
         builder(options);
 
         services.AddUnitOfWork();
-        services.AddDbContext<WriteContext>(cfg => cfg.UseSqlServer(options.ConnectionString));
+        services.AddDbContext<WriteContext>(cfg => cfg.UseSqlServer(options.MsSqlConnectionString));
 
         services.AddOutbox();
         services.AddHangfire();
-        services.AddEventsBus();
+        services.AddEventsBus(options.RabbitMqConnectionString);
         services.AddRepositories();
         services.AddRecurringJobs();
         services.AddEventsDispatching();
@@ -79,11 +79,16 @@ public static class DependencyInjectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddEventsBus(this IServiceCollection services)
+    private static IServiceCollection AddEventsBus(this IServiceCollection services, string connectionString)
     {
-        services.AddHostedService<RabbitMqEventsBusBackgroundService>();
-        services.AddSingleton<IEventsBus, RabbitMqEventsBusBackgroundService>();
+        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ => new RabbitMqEventsBusBackgroundService(connectionString));
 
+        services.AddSingleton<IEventsBus>(serviceProvider =>
+            serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
+
+        services.AddHostedService(serviceProvider =>
+            serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
+        
         return services;
     }
 

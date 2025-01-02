@@ -8,7 +8,11 @@ var configuration = builder.Configuration;
 builder.Services
     .AddFastEndpoints()
     .AddApplication(opts => opts.ConnectionString = configuration["Database:MsSql:ConnectionString"]!)
-    .AddInfrastructure(opts => opts.ConnectionString = configuration["Database:MsSql:ConnectionString"]!);
+    .AddInfrastructure(opts =>
+    {
+        opts.MsSqlConnectionString = configuration["Database:MsSql:ConnectionString"]!;
+        opts.RabbitMqConnectionString = configuration["EventsBus:RabbitMq:ConnectionString"]!;
+    });
 
 var application = builder.Build();
 
