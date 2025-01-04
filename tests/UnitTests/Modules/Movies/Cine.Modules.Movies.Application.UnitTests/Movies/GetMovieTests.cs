@@ -21,8 +21,8 @@ public class GetMovieTests
         _sqlConnection.QuerySingleOrDefaultAsync<MovieDto>(Arg.Any<string>(), Arg.Any<object>())
             .Returns(new MovieDto
             {
-                Title = "Movie 43",
-                Description = "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+                Title = "Movies 43",
+                Description = "Movies 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
                 Genre = "Comedy",
                 Duration = TimeSpan.Parse("01:33:00"),
                 ReleaseDate = DateTime.Parse("2013-01-25"),
@@ -38,8 +38,8 @@ public class GetMovieTests
             dto => dto.Should().Be(
                 new MovieDto
                 {
-                    Title = "Movie 43",
-                    Description = "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+                    Title = "Movies 43",
+                    Description = "Movies 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
                     Genre = "Comedy",
                     Duration = TimeSpan.Parse("01:33:00"),
                     ReleaseDate = DateTime.Parse("2013-01-25"),

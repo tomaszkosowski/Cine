@@ -5,70 +5,142 @@ services:
       context: "C:\\Dev\\Craftusion\\Cine"
       dockerfile: "src/Modules/Movies/Cine.Modules.Movies.Api/Dockerfile"
       target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net9.0/Cine.Modules.Movies.Api.dll"
+    - "/opt/JetBrains/RiderDebuggerTools/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/JetBrains/RiderDebuggerTools/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57000"
+    - "--backend-port=57200"
+    - "--roslyn-worker-port=57400"
+    - "--timeout=60"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
+      RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "cine.module.movies.api:dev"
-    ports: []
+    ports:
+    - "127.0.0.1:57028:57000"
+    - "127.0.0.1:57228:57200"
+    - "127.0.0.1:57428:57400"
     volumes:
     - "C:\\Dev\\Craftusion\\Cine\\src\\Modules\\Movies\\Cine.Modules.Movies.Api:/app:rw"
     - "C:\\Dev\\Craftusion\\Cine:/src:rw"
     - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.3.3\\\
+      Linux64:/opt/JetBrains/RiderDebuggerTools"
+    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.7\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\Rider2024.3\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2025_1_03_14_01_54:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"
   cine.modules.shows.api:
     build:
       context: "C:\\Dev\\Craftusion\\Cine"
       dockerfile: "src/Modules/Shows/Cine.Modules.Shows.Api/Dockerfile"
       target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net9.0/Cine.Modules.Shows.Api.dll"
+    - "/opt/JetBrains/RiderDebuggerTools/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/JetBrains/RiderDebuggerTools/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57000"
+    - "--backend-port=57200"
+    - "--roslyn-worker-port=57400"
+    - "--timeout=60"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
+      RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "cine.module.shows.api:dev"
-    ports: []
+    ports:
+    - "127.0.0.1:57029:57000"
+    - "127.0.0.1:57229:57200"
+    - "127.0.0.1:57429:57400"
     volumes:
     - "C:\\Dev\\Craftusion\\Cine\\src\\Modules\\Shows\\Cine.Modules.Shows.Api:/app:rw"
     - "C:\\Dev\\Craftusion\\Cine:/src:rw"
     - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.3.3\\\
+      Linux64:/opt/JetBrains/RiderDebuggerTools"
+    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.7\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\Rider2024.3\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2025_1_03_14_01_54:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"
   cine.modules.theater.api:
     build:
       context: "C:\\Dev\\Craftusion\\Cine"
       dockerfile: "src/Modules/Theater/Cine.Modules.Theater.Api/Dockerfile"
       target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net9.0/Cine.Modules.Theater.Api.dll"
+    - "/opt/JetBrains/RiderDebuggerTools/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/JetBrains/RiderDebuggerTools/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57000"
+    - "--backend-port=57200"
+    - "--roslyn-worker-port=57400"
+    - "--timeout=60"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
+      RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "cine.module.theater.api:dev"
-    ports: []
+    ports:
+    - "127.0.0.1:57030:57000"
+    - "127.0.0.1:57230:57200"
+    - "127.0.0.1:57430:57400"
     volumes:
     - "C:\\Dev\\Craftusion\\Cine\\src\\Modules\\Theater\\Cine.Modules.Theater.Api:/app:rw"
     - "C:\\Dev\\Craftusion\\Cine:/src:rw"
     - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.3.3\\\
+      Linux64:/opt/JetBrains/RiderDebuggerTools"
+    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.7\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\Rider2024.3\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2025_1_03_14_01_54:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"
   cine.modules.tickets.api:
     build:
       context: "C:\\Dev\\Craftusion\\Cine"
       dockerfile: "src/Modules/Tickets/Cine.Modules.Tickets.Api/Dockerfile"
       target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net9.0/Cine.Modules.Tickets.Api.dll"
+    - "/opt/JetBrains/RiderDebuggerTools/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/JetBrains/RiderDebuggerTools/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57000"
+    - "--backend-port=57200"
+    - "--roslyn-worker-port=57400"
+    - "--timeout=60"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
+      RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "cine.module.tickets.api:dev"
-    ports: []
+    ports:
+    - "127.0.0.1:57031:57000"
+    - "127.0.0.1:57231:57200"
+    - "127.0.0.1:57431:57400"
     volumes:
     - "C:\\Dev\\Craftusion\\Cine\\src\\Modules\\Tickets\\Cine.Modules.Tickets.Api:/app:rw"
     - "C:\\Dev\\Craftusion\\Cine:/src:rw"
     - "C:\\Users\\Tomek\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.3.3\\\
+      Linux64:/opt/JetBrains/RiderDebuggerTools"
+    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.7\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    - "C:\\Users\\Tomek\\AppData\\Local\\JetBrains\\Rider2024.3\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2025_1_03_14_01_54:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"

@@ -1,13 +1,16 @@
 ﻿using Cine.Modules.Shows.Application.Halls;
-using Cine.Modules.Shows.Application.Movie;
+using Cine.Modules.Shows.Application.Movies;
 using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Database;
 using Cine.Shared.Application.Queries;
+using Cine.Shared.Application.Tasks;
 using Cine.Shared.Application.Validation;
 using Cine.Shared.Infrastructure.Events;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Cine.Modules.Shows.Application;
 
@@ -43,13 +46,6 @@ public static class DependencyInjectionExtensions
     {
         services.AddSingleton<HallCreatedIntegrationEventHandler>();
         services.AddSingleton<MovieCreatedIntegrationEventHandler>();
-
-        // return services.Scan(scanner =>
-        // {
-        //     scanner.FromAssemblyOf<IApplicationAssembly>()
-        //         .AddClasses(classes => classes.AssignableTo(typeof(IIntegrationEventHandler<>)))
-        //         .AsImplementedInterfaces().WithSingletonLifetime();
-        // });
 
         return services;
     }
@@ -92,16 +88,17 @@ public static class DependencyInjectionExtensions
     private static IApplicationBuilder UseIntegrationEvents(this IApplicationBuilder appBuilder)
     {
         var services = appBuilder.ApplicationServices;
+        
         var eventBus = services.GetRequiredService<IEventsBus>();
-
-        appBuilder.Use(async (context, next) =>
+        var logger = services.GetRequiredService<ILogger<IApplicationAssembly>>();
+        
+        var hostLifetime = services.GetRequiredService<IHostApplicationLifetime>();
+        hostLifetime.ApplicationStarted.Register(() =>
         {
-            await eventBus.SubscribeAsync(services.GetRequiredService<HallCreatedIntegrationEventHandler>());
-            await eventBus.SubscribeAsync(services.GetRequiredService<MovieCreatedIntegrationEventHandler>());
-                
-            await next();
+            eventBus.SubscribeAsync(services.GetRequiredService<HallCreatedIntegrationEventHandler>()).Forget(logger);
+            eventBus.SubscribeAsync(services.GetRequiredService<MovieCreatedIntegrationEventHandler>()).Forget(logger);
         });
-            
+
         return appBuilder;
     }
 }

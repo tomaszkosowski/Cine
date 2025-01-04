@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Cine.Modules.Tickets.Domain.Events;
 using Cine.Shared.Domain;
-using Cine.Shared.Domain.Rules;
 
 namespace Cine.Modules.Tickets.Domain;
 

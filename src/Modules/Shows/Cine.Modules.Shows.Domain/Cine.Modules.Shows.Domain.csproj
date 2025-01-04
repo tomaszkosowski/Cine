@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Cine.Modules.Shows.Domain.UnitTests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Cine.Shared.Domain\Cine.Shared.Domain.csproj" />
   </ItemGroup>
 

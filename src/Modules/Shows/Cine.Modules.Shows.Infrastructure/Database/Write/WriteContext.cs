@@ -7,6 +7,8 @@ namespace Cine.Modules.Shows.Infrastructure.Database.Write;
 
 internal sealed class WriteContext(DbContextOptions<WriteContext> options) : DbContext(options)
 {
+    public DbSet<Show> Shows { get; set; }
+    
     public DbSet<Hall> Halls { get; set; }
 
     public DbSet<Movie> Movies { get; set; }

@@ -1,5 +1,4 @@
-﻿using Cine.Shared.Domain;
-using Cine.Shared.Infrastructure.Events;
+﻿using Cine.Shared.Infrastructure.Events;
 
 namespace Cine.Modules.Shows.IntegrationEvents.Shows;
 

@@ -1,6 +1,4 @@
-﻿using Cine.Modules.Shows.IntegrationEvents.Shows;
-using Cine.Modules.Tickets.Application.Reservations.CreateReservation;
-using Cine.Shared.Infrastructure.Events;
+﻿using Cine.Modules.Tickets.Application.Reservations.CreateReservation;
 using FastEndpoints;
 using MediatR;
 

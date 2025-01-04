@@ -22,7 +22,6 @@ public class RabbitMqEventsBusBackgroundService : IEventsBus, IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        // var connectionFactory = new ConnectionFactory { HostName = _hostName, Port = _port };
         var connectionFactory = new ConnectionFactory { Uri = new Uri(_connectionString) };
         _connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
         _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);

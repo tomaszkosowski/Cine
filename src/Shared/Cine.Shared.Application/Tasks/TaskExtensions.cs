@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging;
 
 namespace Cine.Shared.Application.Tasks;
 
@@ -15,5 +16,27 @@ public static class TaskExtensions
         }
 
         return CombineTasks().GetAwaiter();
+    }
+
+    public static void Forget(this Task task, ILogger logger)
+    {
+        if (!task.IsCompleted || task.IsFaulted)
+        {
+            _ = ForgetAwaited(task, logger);
+        }
+
+        return;
+
+        static async Task ForgetAwaited(Task task, ILogger logger)
+        {
+            try
+            {
+                await task.ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occured while executing fire-and-forget task.");
+            }
+        }
     }
 }

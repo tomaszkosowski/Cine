@@ -1,5 +1,4 @@
 ﻿using Cine.Shared.Application.Commands;
-using MediatR;
 using OneOf;
 using OneOf.Types;
 

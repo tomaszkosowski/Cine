@@ -79,14 +79,15 @@ public static class DependencyInjectionExtensions
 
     private static IServiceCollection AddEventsBus(this IServiceCollection services, string connectionString)
     {
-        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ => new RabbitMqEventsBusBackgroundService(connectionString));
+        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ =>
+            new RabbitMqEventsBusBackgroundService(connectionString));
 
         services.AddSingleton<IEventsBus>(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
 
         services.AddHostedService(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
-        
+
         return services;
     }
 
@@ -106,6 +107,7 @@ public static class DependencyInjectionExtensions
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
+        services.AddScoped<IShowsRepository, ShowsRepository>();
         services.AddScoped<IHallsRepository, HallsRepository>();
         services.AddScoped<IMoviesRepository, MoviesRepository>();
 
@@ -116,7 +118,7 @@ public static class DependencyInjectionExtensions
     {
         using var scope = appBuilder.ApplicationServices.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<WriteContext>();
-            
+
         context.Database.Migrate();
 
         return appBuilder;

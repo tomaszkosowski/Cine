@@ -21,9 +21,9 @@ public sealed class Show : Entity, IAggregateRoot
         // Blank for ORM.
     }
 
-    private Show(HallId hallId, MovieId movieId, Schedule scheduledAt, IReadOnlyList<Show> otherShows)
+    private Show(HallId hallId, MovieId movieId, Schedule scheduledAt, IReadOnlyList<ShowInfo> otherShows)
     {
-        CheckRule(new EnsureNotOverlapsOtherShows(scheduledAt, otherShows));
+        CheckRule(new EnsureNotOverlapsOtherShows(hallId, scheduledAt, otherShows));
 
         ShowId = ShowId.Create();
 
@@ -34,6 +34,6 @@ public sealed class Show : Entity, IAggregateRoot
         AddDomainEvent(new ShowCreatedDomainEvent(ShowId));
     }
 
-    public static Show Create(HallId hallId, MovieId movieId, Schedule scheduledAt, IReadOnlyList<Show> otherShows)
+    public static Show Create(HallId hallId, MovieId movieId, Schedule scheduledAt, IReadOnlyList<ShowInfo> otherShows)
         => new(hallId, movieId, scheduledAt, otherShows);
 }

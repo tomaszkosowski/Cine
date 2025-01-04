@@ -32,14 +32,33 @@ namespace Cine.Modules.Shows.Infrastructure.Database.Migrations
                     b.ToTable("Halls", (string)null);
                 });
 
-            modelBuilder.Entity("Cine.Modules.Shows.Domain.Movie", b =>
+            modelBuilder.Entity("Cine.Modules.Shows.Domain.Movies", b =>
                 {
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<TimeOnly>("Duration")
+                        .HasColumnType("time");
+
                     b.HasKey("MovieId");
 
                     b.ToTable("Movies", (string)null);
+                });
+
+            modelBuilder.Entity("Cine.Modules.Shows.Domain.Show", b =>
+                {
+                    b.Property<Guid>("ShowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("HallId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ShowId");
+
+                    b.ToTable("Shows", (string)null);
                 });
 
             modelBuilder.Entity("Cine.Shared.Application.Outbox.OutboxMessage", b =>
@@ -65,6 +84,33 @@ namespace Cine.Modules.Shows.Infrastructure.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OutboxMessages", (string)null);
+                });
+
+            modelBuilder.Entity("Cine.Modules.Shows.Domain.Show", b =>
+                {
+                    b.OwnsOne("Cine.Modules.Shows.Domain.Schedule", "ScheduledAt", b1 =>
+                        {
+                            b1.Property<Guid>("ShowId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<TimeSpan>("Duration")
+                                .HasColumnType("time")
+                                .HasColumnName("Duration");
+
+                            b1.Property<DateTime>("StartAt")
+                                .HasColumnType("datetime2")
+                                .HasColumnName("StartAt");
+
+                            b1.HasKey("ShowId");
+
+                            b1.ToTable("Shows");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ShowId");
+                        });
+
+                    b.Navigation("ScheduledAt")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

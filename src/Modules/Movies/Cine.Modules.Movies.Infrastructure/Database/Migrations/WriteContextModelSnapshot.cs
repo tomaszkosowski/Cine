@@ -22,7 +22,7 @@ namespace Cine.Modules.Movies.Infrastructure.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Cine.Modules.Movies.Domain.Movie", b =>
+            modelBuilder.Entity("Cine.Modules.Movies.Domain.Movies", b =>
                 {
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
@@ -125,7 +125,7 @@ namespace Cine.Modules.Movies.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("MovieCast", b =>
                 {
-                    b.HasOne("Cine.Modules.Movies.Domain.Movie", null)
+                    b.HasOne("Cine.Modules.Movies.Domain.Movies", null)
                         .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -140,7 +140,7 @@ namespace Cine.Modules.Movies.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("MovieDirector", b =>
                 {
-                    b.HasOne("Cine.Modules.Movies.Domain.Movie", null)
+                    b.HasOne("Cine.Modules.Movies.Domain.Movies", null)
                         .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)

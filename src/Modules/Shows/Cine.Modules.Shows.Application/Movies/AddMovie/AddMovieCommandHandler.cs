@@ -4,7 +4,7 @@ using Cine.Shared.Application.Logger;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Cine.Modules.Shows.Application.Movie.AddMovie;
+namespace Cine.Modules.Shows.Application.Movies.AddMovie;
 
 internal sealed class AddMovieCommandHandler(IMoviesRepository moviesRepository, ILogger<AddMovieCommandHandler> logger)
     : ICommandHandler<AddMovieCommand, Unit>
@@ -13,7 +13,7 @@ internal sealed class AddMovieCommandHandler(IMoviesRepository moviesRepository,
     {
         try
         {
-            var movie = Domain.Movie.Create(MovieId.Create(request.MovieId));
+            var movie = Movie.Create(MovieId.Create(request.MovieId), TimeOnly.FromTimeSpan(request.Duration));
 
             await moviesRepository.AddAsync(movie);
         }

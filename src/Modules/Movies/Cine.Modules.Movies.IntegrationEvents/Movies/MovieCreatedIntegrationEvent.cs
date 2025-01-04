@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Movies.IntegrationEvents.Movies;
 
-public record MovieCreatedIntegrationEvent(Guid MovieId) : IntegrationEvent;
+public record MovieCreatedIntegrationEvent(Guid MovieId, TimeSpan Duration) : IntegrationEvent;

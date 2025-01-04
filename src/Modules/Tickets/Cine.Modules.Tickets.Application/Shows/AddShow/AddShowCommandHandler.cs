@@ -2,7 +2,6 @@
 using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Logger;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Cine.Modules.Tickets.Application.Shows.AddShow;

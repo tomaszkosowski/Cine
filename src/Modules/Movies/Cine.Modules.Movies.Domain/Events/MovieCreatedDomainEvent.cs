@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Movies.Domain.Events;
 
-public record MovieCreatedDomainEvent(MovieId MovieId) : DomainEvent;
+public record MovieCreatedDomainEvent(MovieId MovieId, TimeOnly Duration) : DomainEvent;

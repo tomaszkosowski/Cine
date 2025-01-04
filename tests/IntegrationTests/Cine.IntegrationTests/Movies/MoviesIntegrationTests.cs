@@ -66,8 +66,8 @@ public class MoviesIntegrationTests(MoviesApiApp app) : TestBase<MoviesApiApp>
     private async Task<(HttpResponseMessage, AddMovieResponse)> CallAddMovieAsync()
     {
         var request = new AddMovieRequest(
-            "Movie 43",
-            "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+            "Movies 43",
+            "Movies 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
             "Comedy",
             TimeOnly.Parse("01:33:00"),
             DateOnly.Parse("2013-01-25"),

@@ -1,7 +1,5 @@
-﻿using Cine.Shared.Infrastructure.Events;
-using FastEndpoints.Testing;
+﻿using FastEndpoints.Testing;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Testcontainers.MsSql;
 using Testcontainers.RabbitMq;

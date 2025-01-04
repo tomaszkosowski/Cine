@@ -2,11 +2,14 @@
 using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Database;
 using Cine.Shared.Application.Queries;
+using Cine.Shared.Application.Tasks;
 using Cine.Shared.Application.Validation;
 using Cine.Shared.Infrastructure.Events;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Cine.Modules.Tickets.Application;
 
@@ -90,9 +93,15 @@ public static class DependencyInjectionExtensions
     private static IApplicationBuilder UseIntegrationEvents(this IApplicationBuilder appBuilder)
     {
         var services = appBuilder.ApplicationServices;
-        var eventBus = services.GetRequiredService<IEventsBus>();
 
-        eventBus.SubscribeAsync(services.GetRequiredService<ShowAddedIntegrationEventHandler>());
+        var eventBus = services.GetRequiredService<IEventsBus>();
+        var logger = services.GetRequiredService<ILogger<IApplicationAssembly>>();
+
+        var hostLifetime = services.GetRequiredService<IHostApplicationLifetime>();
+        hostLifetime.ApplicationStarted.Register(() =>
+        {
+            eventBus.SubscribeAsync(services.GetRequiredService<ShowAddedIntegrationEventHandler>()).Forget(logger);
+        });
 
         return appBuilder;
     }

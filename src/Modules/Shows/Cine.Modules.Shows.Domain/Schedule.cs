@@ -9,7 +9,7 @@ public record Schedule : ValueObject
 
     public TimeSpan Duration { get; }
 
-    public DateTime EndAt { get; }
+    public DateTime EndAt => StartAt.Add(Duration);
 
     private Schedule(DateTime startAt, TimeSpan duration)
     {
@@ -19,8 +19,6 @@ public record Schedule : ValueObject
 
         StartAt = startAt;
         Duration = duration;
-
-        EndAt = StartAt.Add(duration);
     }
 
     public bool IsOverlapping(Schedule other)

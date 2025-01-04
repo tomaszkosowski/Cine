@@ -26,7 +26,7 @@ public static class DependencyInjectionExtensions
 
         services.AddOutbox();
         services.AddHangfire();
-        services.AddEventsBus(options.RabbitMqConnectionString);
+        services.AddEventsBus(options.RabbitMqConnectionString) ;
         services.AddRepositories();
         services.AddRecurringJobs();
         services.AddEventsDispatching();

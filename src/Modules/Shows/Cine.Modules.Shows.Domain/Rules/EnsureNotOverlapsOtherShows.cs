@@ -2,20 +2,14 @@
 
 namespace Cine.Modules.Shows.Domain.Rules;
 
-internal sealed class EnsureNotOverlapsOtherShows(Schedule scheduledAt, IReadOnlyList<Show> otherShows) : IBusinessRule
+internal sealed class EnsureNotOverlapsOtherShows(HallId hallId, Schedule scheduledAt, IReadOnlyList<ShowInfo> otherShows)
+    : IBusinessRule
 {
     public string Message => "Schedule overlaps with other show.";
 
     public bool IsBroken()
     {
-        foreach (var otherShow in otherShows)
-        {
-            if (scheduledAt.IsOverlapping(otherShow.ScheduledAt))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return otherShows.Where(otherShow => hallId == otherShow.HallId)
+            .Any(otherShow => scheduledAt.IsOverlapping(otherShow.ScheduledAt));
     }
 }

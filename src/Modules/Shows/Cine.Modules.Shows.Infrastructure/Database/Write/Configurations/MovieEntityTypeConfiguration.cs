@@ -17,5 +17,8 @@ public class MovieEntityTypeConfiguration : IEntityTypeConfiguration<Movie>
                 movieId => (Guid)movieId,
                 id => MovieId.Create(id))
             .IsRequired();
+        
+        builder.Property(entity => entity.Duration)
+            .IsRequired();
     }
 }
