@@ -1,5 +1,4 @@
 ﻿using Cine.Modules.Tickets.Domain;
-using Cine.Modules.Tickets.Domain.Events;
 using Cine.Modules.Tickets.Infrastructure.Database.Write;
 using Cine.Modules.Tickets.Infrastructure.Jobs;
 using Cine.Modules.Tickets.Infrastructure.Outbox;

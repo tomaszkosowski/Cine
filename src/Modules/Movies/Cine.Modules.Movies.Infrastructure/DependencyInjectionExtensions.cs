@@ -1,10 +1,7 @@
-﻿using System.Reflection;
-using Cine.Modules.Movies.Domain;
-using Cine.Modules.Movies.Domain.Events;
+﻿using Cine.Modules.Movies.Domain;
 using Cine.Modules.Movies.Infrastructure.Database.Write;
 using Cine.Modules.Movies.Infrastructure.Outbox;
 using Cine.Shared.Application.Outbox;
-using Cine.Shared.Domain.Events;
 using Cine.Shared.Infrastructure.Database;
 using Cine.Shared.Infrastructure.Events;
 using Cine.Shared.Infrastructure.Jobs;

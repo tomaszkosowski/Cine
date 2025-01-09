@@ -1,21 +1,14 @@
-﻿using Cine.Shared.Domain;
+﻿using Ardalis.SmartEnum;
 
 namespace Cine.Modules.Tickets.Domain;
 
-public record SeatStatusType : ValueObject
+public sealed class SeatStatusType : SmartEnum<SeatStatusType, string>
 {
-    public string Value { get; }
-    
-    private SeatStatusType(string status)
-        => Value = status.ToLower();
+    public static readonly SeatStatusType Open = new(nameof(Open));
+    public static readonly SeatStatusType Reserved = new(nameof(Reserved));
+    public static readonly SeatStatusType Purchased = new(nameof(Purchased));
 
-    public static SeatStatusType Available => new(nameof(Available));
-
-    public static SeatStatusType Reserved => new(nameof(Reserved));
-
-    public static SeatStatusType Sold = new(nameof(Sold));
-
-    public override string ToString() => Value;
-
-    public static SeatStatusType Of(string status) => new(status);
+    private SeatStatusType(string member) : base(name: member, value: member)
+    {
+    }
 }

@@ -33,7 +33,7 @@ public class SeatEntityTypeConfiguration : IEntityTypeConfiguration<Seat>
         builder.Property(entity => entity.Status)
             .HasConversion(
                 statusType => statusType.Value,
-                status => SeatStatusType.Of(status))
+                status => SeatStatusType.FromValue(status))
             .IsRequired();
 
         builder.Property(entity => entity.ReservationId)

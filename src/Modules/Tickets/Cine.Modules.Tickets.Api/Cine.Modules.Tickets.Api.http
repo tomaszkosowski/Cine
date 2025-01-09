@@ -1,7 +1,7 @@
 @host = http://localhost:8081
-@showId = 259c8a97-434a-4e07-a448-18ca0661e908
-@reservationId = 4185079c-79a0-48ae-89a9-24d6d750cfd7
-@seatId = 34fd711a-66b1-4045-b6ef-f44dac1f2693
+@showId = 5f081035-13dc-441a-8df3-b83adedfe0c1
+@reservationId = 4d354f62-aa3c-4d60-a0e0-23c0124ceaf0
+@seatId = 3f6dfc50-4c1b-471e-85b2-af29b40f6512
 
 POST {{host}}/reservation/create
 Accept: application/json

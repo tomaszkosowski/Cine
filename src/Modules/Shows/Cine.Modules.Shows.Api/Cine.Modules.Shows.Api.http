@@ -7,6 +7,6 @@ Content-Type: application/json
 {
   "HallId": "dc6428b5-498b-4515-9e21-44791965f729",
   "MovieId": "ddf28d91-7f5c-4009-99c5-e69f58d99b49",
-  "StartAt": "2025-02-27T12:00:00"
+  "StartAt": "2025-03-01T12:00:00"
 }
 ###

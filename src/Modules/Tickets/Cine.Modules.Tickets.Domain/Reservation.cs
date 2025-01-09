@@ -57,8 +57,8 @@ public sealed class Reservation : Entity, IAggregateRoot
 
     public void AddSeat(Seat seat)
     {
-        CheckRule(new EnsureSeatNotReservedRule(seat));
-        
+        CheckRule(new EnsureSeatNotSeparatedRule(seat, Seats));
+
         seat.ChangeStatus(SeatStatusType.Reserved);
 
         _seats.Add(seat);
@@ -66,10 +66,10 @@ public sealed class Reservation : Entity, IAggregateRoot
 
     public void RemoveSeat(Seat seat)
     {
-        CheckRule(new EnsureSeatNotSoldRule(seat));
-        
-        seat.ChangeStatus(SeatStatusType.Available);
-        
+        CheckRule(new EnsureSeatNotAdjacentRule(seat, Seats));
+
+        seat.ChangeStatus(SeatStatusType.Open);
+
         _seats.Remove(seat);
     }
 

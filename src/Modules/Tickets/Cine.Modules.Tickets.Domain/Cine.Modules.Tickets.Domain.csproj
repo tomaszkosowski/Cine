@@ -4,9 +4,17 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Cine.Modules.Tickets.Domain.UnitTests" />
+    </ItemGroup>
     
     <ItemGroup>
         <ProjectReference Include="..\..\..\Shared\Cine.Shared.Domain\Cine.Shared.Domain.csproj"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Ardalis.SmartEnum" />
     </ItemGroup>
     
 </Project>

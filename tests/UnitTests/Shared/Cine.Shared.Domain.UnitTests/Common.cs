@@ -16,4 +16,10 @@ public static class Common
         var exception = Assert.Throws<BusinessRuleValidationException>(action);
         exception.BrokenRule.Should().BeOfType<TRule>();
     }
+    
+    public static void AssertBrokenRule<TRule>(this Action action) where TRule : IBusinessRule
+    {
+        var exception = Assert.Throws<BusinessRuleValidationException>(action);
+        exception.BrokenRule.Should().BeOfType<TRule>();
+    }
 }

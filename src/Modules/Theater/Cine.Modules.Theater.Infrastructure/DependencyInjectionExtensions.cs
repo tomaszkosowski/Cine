@@ -1,5 +1,4 @@
 ﻿using Cine.Modules.Theater.Domain;
-using Cine.Modules.Theater.Domain.Events;
 using Cine.Modules.Theater.Infrastructure.Database.Write;
 using Cine.Modules.Theater.Infrastructure.Outbox;
 using Cine.Shared.Application.Outbox;
