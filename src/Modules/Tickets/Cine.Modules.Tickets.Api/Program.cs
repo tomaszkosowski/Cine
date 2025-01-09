@@ -7,7 +7,11 @@ var configuration = builder.Configuration;
 
 builder.Services
     .AddFastEndpoints()
-    .AddApplication(opts => opts.ConnectionString = configuration["Database:MsSql:ConnectionString"]!)
+    .AddApplication(opts =>
+    {
+        opts.ConnectionString = configuration["Database:MsSql:ConnectionString"]!;
+        opts.TheaterApiUrl = configuration["ApiClients:Theater"]!;
+    })
     .AddInfrastructure(opts =>
     {
         opts.MsSqlConnectionString = configuration["Database:MsSql:ConnectionString"]!;

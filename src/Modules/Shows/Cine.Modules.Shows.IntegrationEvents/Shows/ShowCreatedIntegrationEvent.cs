@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Shows.IntegrationEvents.Shows;
 
-public sealed record ShowCreatedIntegrationEvent(Guid ShowId) : IntegrationEvent;
+public sealed record ShowCreatedIntegrationEvent(Guid ShowId, Guid HallId) : IntegrationEvent;

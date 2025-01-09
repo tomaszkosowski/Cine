@@ -17,5 +17,11 @@ internal sealed class ShowEntityTypeConfiguration : IEntityTypeConfiguration<Sho
                 showId => (Guid)showId,
                 id => ShowId.Create(id))
             .IsRequired();
+
+        builder.Property(entity => entity.HallId)
+            .HasConversion(
+                hallId => (Guid)hallId,
+                id => HallId.Create(id))
+            .IsRequired();
     }
 }

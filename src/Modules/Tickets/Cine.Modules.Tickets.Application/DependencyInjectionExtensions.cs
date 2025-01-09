@@ -1,4 +1,5 @@
-﻿using Cine.Modules.Tickets.Application.Shows;
+﻿using Cine.Modules.Tickets.Application.ApiClients.Theater;
+using Cine.Modules.Tickets.Application.Shows;
 using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Database;
 using Cine.Shared.Application.Queries;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Refit;
 
 namespace Cine.Modules.Tickets.Application;
 
@@ -28,6 +30,7 @@ public static class DependencyInjectionExtensions
         services.AddCommandHandlers();
         services.AddQueryHandlers();
         services.AddValidators();
+        services.AddApiClients(options);
 
         services.AddSqlConnection(options.ConnectionString);
 
@@ -43,9 +46,10 @@ public static class DependencyInjectionExtensions
 
     private static IServiceCollection AddIntegrationEventHandlers(this IServiceCollection services)
     {
-        services.AddSingleton<ShowAddedIntegrationEventHandler>();
+        services.AddSingleton<ShowCreatedIntegrationEventHandler>();
 
-        // return services.Scan(scanner =>
+        // return services
+        // .Scan(scanner =>
         // {
         //     scanner.FromAssemblyOf<IApplicationAssembly>()
         //         .AddClasses(classes => classes.AssignableTo(typeof(IIntegrationEventHandler<>)))
@@ -82,6 +86,14 @@ public static class DependencyInjectionExtensions
         return services;
     }
 
+    private static IServiceCollection AddApiClients(this IServiceCollection services, ApplicationOptionsBuilder options)
+    {
+        services.AddRefitClient<ITheaterApiClient>()
+            .ConfigureHttpClient(client => client.BaseAddress = new Uri(options.TheaterApiUrl));
+
+        return services;
+    }
+
     private static IServiceCollection AddSqlConnection(this IServiceCollection services, string connectionString)
     {
         services.AddScoped<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
@@ -100,7 +112,10 @@ public static class DependencyInjectionExtensions
         var hostLifetime = services.GetRequiredService<IHostApplicationLifetime>();
         hostLifetime.ApplicationStarted.Register(() =>
         {
-            eventBus.SubscribeAsync(services.GetRequiredService<ShowAddedIntegrationEventHandler>()).Forget(logger);
+            const string queueName = "tickets";
+            
+            eventBus.SubscribeAsync(queueName, services.GetRequiredService<ShowCreatedIntegrationEventHandler>())
+                .Forget(logger);
         });
 
         return appBuilder;

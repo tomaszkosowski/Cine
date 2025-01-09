@@ -10,12 +10,24 @@ public class SeatEntityTypeConfiguration : IEntityTypeConfiguration<Seat>
     {
         builder.ToTable("Seats");
 
-        builder.HasKey(entity => entity.SeatId);
+        builder.HasKey(entity => new { entity.SeatId, entity.ShowId });
 
         builder.Property(entity => entity.SeatId)
             .HasConversion(
                 seatId => (Guid)seatId,
                 id => SeatId.Create(id))
+            .IsRequired();
+
+        builder.Property(entity => entity.ShowId)
+            .HasConversion(
+                showId => (Guid)showId,
+                id => ShowId.Create(id))
+            .IsRequired();
+
+        builder.Property(entity => entity.Row)
+            .IsRequired();
+
+        builder.Property(entity => entity.Number)
             .IsRequired();
 
         builder.Property(entity => entity.Status)
@@ -28,11 +40,12 @@ public class SeatEntityTypeConfiguration : IEntityTypeConfiguration<Seat>
             .HasConversion(
                 reservationId => (Guid)reservationId,
                 id => ReservationId.Create(id))
-            .IsRequired();
+            .IsRequired(false);
 
         builder.HasOne(seat => seat.Reservation)
             .WithMany(reservation => reservation.Seats)
             .HasForeignKey(seat => seat.ReservationId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired(false);
     }
 }

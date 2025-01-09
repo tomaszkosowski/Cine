@@ -88,15 +88,19 @@ public static class DependencyInjectionExtensions
     private static IApplicationBuilder UseIntegrationEvents(this IApplicationBuilder appBuilder)
     {
         var services = appBuilder.ApplicationServices;
-        
+
         var eventBus = services.GetRequiredService<IEventsBus>();
         var logger = services.GetRequiredService<ILogger<IApplicationAssembly>>();
-        
+
         var hostLifetime = services.GetRequiredService<IHostApplicationLifetime>();
         hostLifetime.ApplicationStarted.Register(() =>
         {
-            eventBus.SubscribeAsync(services.GetRequiredService<HallCreatedIntegrationEventHandler>()).Forget(logger);
-            eventBus.SubscribeAsync(services.GetRequiredService<MovieCreatedIntegrationEventHandler>()).Forget(logger);
+            const string queueName = "shows";
+
+            eventBus.SubscribeAsync(queueName, services.GetRequiredService<HallCreatedIntegrationEventHandler>())
+                .Forget(logger);
+            eventBus.SubscribeAsync(queueName, services.GetRequiredService<MovieCreatedIntegrationEventHandler>())
+                .Forget(logger);
         });
 
         return appBuilder;

@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Tickets.Domain.Events;
 
-public record SeatReservedDomainEvent : IDomainEvent;
+public record SeatReservedDomainEvent : DomainEvent;

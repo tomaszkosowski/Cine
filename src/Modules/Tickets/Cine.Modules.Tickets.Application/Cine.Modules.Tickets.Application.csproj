@@ -11,6 +11,8 @@
       <PackageReference Include="MediatR" />
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
       <PackageReference Include="Microsoft.Extensions.Configuration" />
+      <PackageReference Include="Refit" />
+      <PackageReference Include="Refit.HttpClientFactory" />
       <PackageReference Include="Scrutor" />
     </ItemGroup>
 

@@ -45,7 +45,7 @@ public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
         var integrationEvent = new TestIntegrationEvent(Guid.NewGuid());
         var integrationEventHandler = new TestIntegrationEventHandler(manualResetEvent);
 
-        await _eventsBus.SubscribeAsync(integrationEventHandler);
+        await _eventsBus.SubscribeAsync("", integrationEventHandler);
 
         // Act
         await _eventsBus.PublishAsync(integrationEvent);

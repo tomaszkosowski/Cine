@@ -56,10 +56,8 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddOutbox(this IServiceCollection services)
     {
         services.AddScoped<IOutbox, OutboxAccessor>();
-        services.AddSingleton<IDomainEventsMapper>(_ => new DomainEventsMapper(new Dictionary<string, Type>
-        {
-            { nameof(ShowCreatedDomainEvent), typeof(ShowCreatedDomainEvent) }
-        }));
+        services.AddSingleton<IDomainEventsMapper>(_ =>
+            new DomainEventsMapper(AssemblyExtensions.DiscoverDomainEventsMappings<IDomainAssembly>()));
 
         return services;
     }

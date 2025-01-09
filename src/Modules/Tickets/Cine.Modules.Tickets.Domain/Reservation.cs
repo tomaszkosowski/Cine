@@ -1,5 +1,5 @@
-﻿using System.Collections.Immutable;
-using Cine.Modules.Tickets.Domain.Events;
+﻿using Cine.Modules.Tickets.Domain.Events;
+using Cine.Modules.Tickets.Domain.Rules;
 using Cine.Shared.Domain;
 
 namespace Cine.Modules.Tickets.Domain;
@@ -18,7 +18,9 @@ public sealed class Reservation : Entity, IAggregateRoot
 
     public ReservationId ReservationId { get; private set; }
 
-    public IReadOnlyList<Seat> Seats => _seats.ToImmutableList();
+    public ShowId ShowId { get; private set; }
+
+    public IReadOnlyList<Seat> Seats => _seats;
 
     public IReservationStatus ReservationStatus { get; private set; }
 
@@ -37,11 +39,10 @@ public sealed class Reservation : Entity, IAggregateRoot
         // Blank for ORM.
     }
 
-    private Reservation(DateTime reservedAt)
+    private Reservation(ShowId showId, DateTime reservedAt)
     {
-        // CheckRule(new EnsureNotPastRule(reservedAt, nameof(reservedAt)));
-
         ReservationId = ReservationId.Create();
+        ShowId = showId;
 
         ReservationStatus = new Unpaid(reservedAt);
 
@@ -52,13 +53,24 @@ public sealed class Reservation : Entity, IAggregateRoot
 
     #region Public methods
 
-    public static Reservation Create() => new(Utc.Now);
+    public static Reservation Create(ShowId showId) => new(showId, Utc.Now);
 
     public void AddSeat(Seat seat)
     {
-        _seats.Add(seat);
+        CheckRule(new EnsureSeatNotReservedRule(seat));
         
-        AddDomainEvent(new SeatReservedDomainEvent());
+        seat.ChangeStatus(SeatStatusType.Reserved);
+
+        _seats.Add(seat);
+    }
+
+    public void RemoveSeat(Seat seat)
+    {
+        CheckRule(new EnsureSeatNotSoldRule(seat));
+        
+        seat.ChangeStatus(SeatStatusType.Available);
+        
+        _seats.Remove(seat);
     }
 
     public void Expire()

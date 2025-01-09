@@ -57,11 +57,8 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddOutbox(this IServiceCollection services)
     {
         services.AddScoped<IOutbox, OutboxAccessor>();
-        services.AddSingleton<IDomainEventsMapper>(_ => new DomainEventsMapper(new Dictionary<string, Type>
-        {
-            { nameof(ReservationCreatedDomainEvent), typeof(ReservationCreatedDomainEvent) },
-            { nameof(ReservationExpiredDomainEvent), typeof(ReservationExpiredDomainEvent) }
-        }));
+        services.AddSingleton<IDomainEventsMapper>(_ =>
+            new DomainEventsMapper(AssemblyExtensions.DiscoverDomainEventsMappings<IDomainAssembly>()));
 
         return services;
     }
@@ -81,14 +78,15 @@ public static class DependencyInjectionExtensions
 
     private static IServiceCollection AddEventsBus(this IServiceCollection services, string connectionString)
     {
-        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ => new RabbitMqEventsBusBackgroundService(connectionString));
+        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ =>
+            new RabbitMqEventsBusBackgroundService(connectionString));
 
         services.AddSingleton<IEventsBus>(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
 
         services.AddHostedService(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
-        
+
         return services;
     }
 
@@ -109,6 +107,7 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IReservationsRepository, ReservationsRepository>();
+        services.AddScoped<ISeatsRepository, SeatsRepository>();
         services.AddScoped<IShowsRepository, ShowsRepository>();
 
         return services;

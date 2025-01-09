@@ -1,8 +1,10 @@
-﻿using Cine.Modules.Movies.Domain;
+﻿using System.Reflection;
+using Cine.Modules.Movies.Domain;
 using Cine.Modules.Movies.Domain.Events;
 using Cine.Modules.Movies.Infrastructure.Database.Write;
 using Cine.Modules.Movies.Infrastructure.Outbox;
 using Cine.Shared.Application.Outbox;
+using Cine.Shared.Domain.Events;
 using Cine.Shared.Infrastructure.Database;
 using Cine.Shared.Infrastructure.Events;
 using Cine.Shared.Infrastructure.Jobs;
@@ -12,6 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using AssemblyExtensions = Cine.Shared.Infrastructure.Events.AssemblyExtensions;
 
 namespace Cine.Modules.Movies.Infrastructure;
 
@@ -56,10 +59,8 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddOutbox(this IServiceCollection services)
     {
         services.AddScoped<IOutbox, OutboxAccessor>();
-        services.AddSingleton<IDomainEventsMapper>(_ => new DomainEventsMapper(new Dictionary<string, Type>
-        {
-            { nameof(MovieCreatedDomainEvent), typeof(MovieCreatedDomainEvent) }
-        }));
+        services.AddSingleton<IDomainEventsMapper>(_ =>
+            new DomainEventsMapper(AssemblyExtensions.DiscoverDomainEventsMappings<IDomainAssembly>()));
 
         return services;
     }
@@ -79,14 +80,15 @@ public static class DependencyInjectionExtensions
 
     private static IServiceCollection AddEventsBus(this IServiceCollection services, string connectionString)
     {
-        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ => new RabbitMqEventsBusBackgroundService(connectionString));
+        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ =>
+            new RabbitMqEventsBusBackgroundService(connectionString));
 
         services.AddSingleton<IEventsBus>(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
 
         services.AddHostedService(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
-        
+
         return services;
     }
 
@@ -121,7 +123,7 @@ public static class DependencyInjectionExtensions
 
         return appBuilder;
     }
-    
+
     private static IApplicationBuilder UseHangfireDashboard(this IApplicationBuilder appBuilder)
     {
         appBuilder.UseHangfireDashboard("/hangfire", new DashboardOptions
@@ -131,7 +133,7 @@ public static class DependencyInjectionExtensions
 
         return appBuilder;
     }
-    
+
     private static IApplicationBuilder TriggerRecurringJobs(this IApplicationBuilder appBuilder)
     {
         RecurringJob.AddOrUpdate<ProcessOutboxJob>(ProcessOutboxJob.JobName, job => job.ExecuteAsync(),
@@ -141,7 +143,7 @@ public static class DependencyInjectionExtensions
 
         return appBuilder;
     }
-    
+
     private class AllowAll : IDashboardAuthorizationFilter
     {
         public bool Authorize(DashboardContext context) => true;

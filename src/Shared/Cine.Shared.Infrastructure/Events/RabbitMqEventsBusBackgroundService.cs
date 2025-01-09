@@ -6,27 +6,19 @@ using RabbitMQ.Client.Events;
 
 namespace Cine.Shared.Infrastructure.Events;
 
-public class RabbitMqEventsBusBackgroundService : IEventsBus, IHostedService
+public class RabbitMqEventsBusBackgroundService(string connectionString, string exchange = "integration_events")
+    : IEventsBus, IHostedService
 {
-    private readonly string _connectionString;
-    private readonly string _exchange;
-
     private IConnection _connection;
     private IChannel _channel;
-    
-    public RabbitMqEventsBusBackgroundService(string connectionString, string exchange = "integration_events")
-    {
-        _connectionString = connectionString;
-        _exchange = exchange;
-    }
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var connectionFactory = new ConnectionFactory { Uri = new Uri(_connectionString) };
+        var connectionFactory = new ConnectionFactory { Uri = new Uri(connectionString) };
         _connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
         _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
 
-        await _channel.ExchangeDeclareAsync(exchange: _exchange, type: ExchangeType.Fanout,
+        await _channel.ExchangeDeclareAsync(exchange: exchange, type: ExchangeType.Fanout,
             cancellationToken: cancellationToken);
     }
 
@@ -44,21 +36,21 @@ public class RabbitMqEventsBusBackgroundService : IEventsBus, IHostedService
             Type = typeof(TEvent).FullName
         };
 
-        await _channel.BasicPublishAsync(exchange: _exchange, routingKey: "", mandatory: true,
+        await _channel.BasicPublishAsync(exchange: exchange, routingKey: "", mandatory: true,
             basicProperties: properties, body: Encoding.UTF8.GetBytes(body), cancellationToken: cancellationToken);
     }
 
-    public async Task SubscribeAsync<TEvent>(IIntegrationEventHandler<TEvent> handler,
+    public async Task SubscribeAsync<TEvent>(string queueName, IIntegrationEventHandler<TEvent> handler,
         CancellationToken cancellationToken = default) where TEvent : IIntegrationEvent
     {
-        var queue = await _channel.QueueDeclareAsync(cancellationToken: cancellationToken);
+        var queue = await _channel.QueueDeclareAsync(queue: queueName, durable: true, exclusive: false, autoDelete: false,
+            cancellationToken: cancellationToken);
 
-        var queueName = queue.QueueName;
-        await _channel.QueueBindAsync(queue: queueName, exchange: _exchange, routingKey: "",
+        await _channel.QueueBindAsync(queue: queue.QueueName, exchange: exchange, routingKey: "",
             cancellationToken: cancellationToken);
 
         var consumer = new AsyncEventingBasicConsumer(_channel);
-        consumer.ReceivedAsync += async (model, args) =>
+        consumer.ReceivedAsync += async (_, args) =>
         {
             var type = args.BasicProperties.Type;
             if (type != typeof(TEvent).FullName)
@@ -71,13 +63,15 @@ public class RabbitMqEventsBusBackgroundService : IEventsBus, IHostedService
             var @event = JsonConvert.DeserializeObject<TEvent>(message);
 
             await handler.HandleAsync(@event!);
+
+            await _channel.BasicAckAsync(args.DeliveryTag, multiple: false, cancellationToken: cancellationToken);
         };
 
-        await _channel.BasicConsumeAsync(queue: queueName, autoAck: true, consumer: consumer,
+        await _channel.BasicConsumeAsync(queue: queueName, autoAck: false, consumer: consumer,
             cancellationToken: cancellationToken);
     }
 
-    public async ValueTask DisposeAsync()
+    private async ValueTask DisposeAsync()
     {
         await _connection.CloseAsync();
         await _channel.CloseAsync();

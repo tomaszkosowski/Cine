@@ -2,7 +2,7 @@
 using FastEndpoints;
 using MediatR;
 
-namespace Cine.Modules.Theater.Api.Endpoints.Hall.Add;
+namespace Cine.Modules.Theater.Api.Endpoints.Halls.Add;
 
 internal record Request(string Name, int SeatRows, int SeatsPerRow, List<PremiumSeatDto> PremiumSeats);
 

@@ -10,6 +10,11 @@ internal sealed class ReservationsRepository(WriteContext context) : IReservatio
         await context.Reservations.AddAsync(reservation);
     }
 
+    public async Task<Reservation?> FindAsync(ReservationId reservationId)
+    {
+        return await context.Reservations.FindAsync(reservationId);
+    }
+
     public async Task<IReadOnlyList<Reservation>> GetUnpaidReservationsAsync()
     {
         var reservations = await context.Reservations

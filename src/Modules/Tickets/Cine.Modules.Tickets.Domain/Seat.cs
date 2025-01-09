@@ -11,10 +11,16 @@ public sealed class Seat : Entity, IAggregateRoot
 
     public SeatId SeatId { get; }
 
+    public ShowId ShowId { get; }
+
+    public string Row { get; }
+
+    public int Number { get; }
+
     public SeatStatusType Status { get; private set; }
 
     public ReservationId ReservationId { get; }
-    
+
     public Reservation? Reservation { get; }
 
     #endregion
@@ -26,10 +32,12 @@ public sealed class Seat : Entity, IAggregateRoot
         // Blank for ORM.
     }
 
-    private Seat(SeatStatusType status)
+    private Seat(SeatId seatId, ShowId showId, string row, int number, SeatStatusType status)
     {
-        SeatId = SeatId.Create();
-
+        SeatId = seatId;
+        ShowId = showId;
+        Row = row;
+        Number = number;
         Status = status;
     }
 
@@ -37,12 +45,20 @@ public sealed class Seat : Entity, IAggregateRoot
 
     #region Public methods
 
-    public static Seat Create() => new(SeatStatusType.Available);
+    public static Seat Create(SeatId seatId, ShowId showId, string row, int number) =>
+        new(seatId, showId, row, number, SeatStatusType.Available);
 
     public void ChangeStatus(SeatStatusType status)
     {
         switch (status)
         {
+            case var _ when status == SeatStatusType.Available:
+            {
+                Status = SeatStatusType.Available;
+                AddDomainEvent(new SeatReleasedDomainEvent());
+                break;
+            }
+
             case var _ when status == SeatStatusType.Reserved:
             {
                 Status = SeatStatusType.Reserved;

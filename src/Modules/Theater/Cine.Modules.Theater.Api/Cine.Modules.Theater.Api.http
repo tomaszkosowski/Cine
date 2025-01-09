@@ -1,4 +1,5 @@
 @host = http://localhost:8082
+@hallId = dc6428b5-498b-4515-9e21-44791965f729
 
 POST {{host}}/hall/add
 Accept: application/json
@@ -12,3 +13,10 @@ Content-Type: application/json
 }
 
 ###
+
+GET {{host}}/halls/{{hallId}}/seats
+Accept: application/json
+Content-Type: application/json
+
+{
+}

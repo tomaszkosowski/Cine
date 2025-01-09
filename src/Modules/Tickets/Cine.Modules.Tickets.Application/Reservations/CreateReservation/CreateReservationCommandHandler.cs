@@ -25,7 +25,7 @@ internal sealed class CreateReservationCommandHandler(
             return await oneOf.Match<Task<OneOf<Guid, Error<ApplicationException>>>>(
                 async showDto =>
                 {
-                    var reservation = Reservation.Create();
+                    var reservation = Reservation.Create(ShowId.Create(showDto.ShowId));
                     
                     await reservationsRepository.AddAsync(reservation);
 

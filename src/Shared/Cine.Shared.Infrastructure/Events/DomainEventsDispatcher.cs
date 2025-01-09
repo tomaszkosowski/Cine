@@ -26,14 +26,16 @@ public sealed class DomainEventsDispatcher(IPublisher publisher, IOutbox outbox,
             outboxMessages.Add(outboxMessage);
         }
 
-        foreach (var domainEvent in domainEvents)
-        {
-            await publisher.Publish(domainEvent);
-        }
+        // foreach (var domainEvent in domainEvents)
+        // {
+        //     await publisher.Publish(domainEvent);
+        // }
 
         foreach (var outboxMessage in outboxMessages)
         {
             outbox.Add(outboxMessage);
         }
+
+        await Task.CompletedTask;
     }
 }

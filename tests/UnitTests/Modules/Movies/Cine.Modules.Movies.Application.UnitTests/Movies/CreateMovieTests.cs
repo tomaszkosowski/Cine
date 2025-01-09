@@ -18,8 +18,8 @@ public class CreateMovieTests
         // Arrange
         var handler = CreateHandler();
         var command = new CreateMovieCommand(
-            "Movies 43",
-            "Movies 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+            "Movie 43",
+            "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
             "Comedy",
             TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(93)),
             new DateOnly(2013, 01, 25),
@@ -56,8 +56,8 @@ public class CreateMovieTests
 
         var handler = CreateHandler();
         var command = new CreateMovieCommand(
-            "Movies 43",
-            "Movies 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+            "Movie 43",
+            "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
             "Comedy",
             TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(93)),
             new DateOnly(2013, 01, 25),
@@ -90,8 +90,8 @@ public class CreateMovieTests
 
         var handler = CreateHandler();
         var command = new CreateMovieCommand(
-            "Movies 43",
-            "Movies 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
+            "Movie 43",
+            "Movie 43 is like if a bunch of A-list actors lost a bet and had to film the weirdest, most random skits imaginable",
             "Comedy",
             TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(93)),
             new DateOnly(2013, 01, 25),

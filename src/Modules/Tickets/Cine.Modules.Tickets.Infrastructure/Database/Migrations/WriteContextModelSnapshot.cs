@@ -28,6 +28,9 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Migrations
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ShowId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.ComplexProperty<Dictionary<string, object>>("ReservationStatusRepresentation", "Cine.Modules.Tickets.Domain.Reservation.ReservationStatusRepresentation#ReservationStatusRepresentation", b1 =>
                         {
                             b1.IsRequired();
@@ -60,14 +63,24 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Migrations
                     b.Property<Guid>("SeatId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ReservationId")
+                    b.Property<Guid>("ShowId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ReservationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Row")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SeatId");
+                    b.HasKey("SeatId", "ShowId");
 
                     b.HasIndex("ReservationId");
 
@@ -77,6 +90,9 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Migrations
             modelBuilder.Entity("Cine.Modules.Tickets.Domain.Show", b =>
                 {
                     b.Property<Guid>("ShowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("HallId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ShowId");
@@ -114,8 +130,7 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Migrations
                     b.HasOne("Cine.Modules.Tickets.Domain.Reservation", "Reservation")
                         .WithMany("Seats")
                         .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Reservation");
                 });

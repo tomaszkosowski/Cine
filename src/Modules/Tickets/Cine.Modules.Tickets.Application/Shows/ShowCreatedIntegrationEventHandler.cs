@@ -1,12 +1,12 @@
 ﻿using Cine.Modules.Shows.IntegrationEvents.Shows;
-using Cine.Modules.Tickets.Application.Shows.AddShow;
+using Cine.Modules.Tickets.Application.Shows.CreateShow;
 using Cine.Shared.Infrastructure.Events;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cine.Modules.Tickets.Application.Shows;
 
-internal sealed class ShowAddedIntegrationEventHandler(IServiceProvider serviceProvider)
+internal sealed class ShowCreatedIntegrationEventHandler(IServiceProvider serviceProvider)
     : IIntegrationEventHandler<ShowCreatedIntegrationEvent>
 {
     public async Task HandleAsync(ShowCreatedIntegrationEvent @event)
@@ -14,6 +14,6 @@ internal sealed class ShowAddedIntegrationEventHandler(IServiceProvider serviceP
         using var scope = serviceProvider.CreateScope();
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
         
-        await sender.Send(new AddShowCommand(@event.ShowId));
+        await sender.Send(new CreateShowCommand(@event.ShowId, @event.HallId));
     }
 }
