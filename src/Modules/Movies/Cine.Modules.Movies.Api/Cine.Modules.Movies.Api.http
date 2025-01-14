@@ -47,7 +47,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "movieId": ""
+  "movieId": "32e49b69-3b1b-4080-98b5-8c5aab930278"
 }
 
 ###

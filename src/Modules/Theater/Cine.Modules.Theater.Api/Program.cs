@@ -1,6 +1,8 @@
 using Cine.Modules.Theater.Application;
 using Cine.Modules.Theater.Infrastructure;
 using FastEndpoints;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -12,7 +14,15 @@ builder.Services
     {
         opts.RabbitMqConnectionString = configuration["EventsBus:RabbitMq:ConnectionString"]!;
         opts.MsSqlConnectionString = configuration["Database:MsSql:ConnectionString"]!;
-    });
+    })
+    .AddOpenTelemetry()
+    .ConfigureResource(res => res.AddService("Cine.Modules.Theater.Api"))
+    .WithTracing(providerBuilder =>
+        providerBuilder
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddSqlClientInstrumentation(opts => opts.SetDbStatementForText = true)
+            .AddOtlpExporter());
 
 var application = builder.Build();
 

@@ -5,8 +5,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "HallId": "dc6428b5-498b-4515-9e21-44791965f729",
-  "MovieId": "ddf28d91-7f5c-4009-99c5-e69f58d99b49",
+  "HallId": "2d2586ef-5dcd-40a1-a3cc-ae5a72087595",
+  "MovieId": "e80db13b-0775-4aa7-96ed-55ec3c23b8cd",
   "StartAt": "2025-03-01T12:00:00"
 }
 ###

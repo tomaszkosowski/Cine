@@ -4,7 +4,9 @@ using Cine.Modules.Theater.Infrastructure.Outbox;
 using Cine.Shared.Application.Outbox;
 using Cine.Shared.Infrastructure.Database;
 using Cine.Shared.Infrastructure.Events;
+using Cine.Shared.Infrastructure.Jobs;
 using Hangfire;
+using Hangfire.Dashboard;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +27,7 @@ public static class DependencyInjectionExtensions
 
         services.AddOutbox();
         services.AddHangfire();
-        services.AddEventsBus(options.RabbitMqConnectionString) ;
+        services.AddEventsBus(options.RabbitMqConnectionString);
         services.AddRepositories();
         services.AddRecurringJobs();
         services.AddEventsDispatching();
@@ -36,6 +38,8 @@ public static class DependencyInjectionExtensions
     public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder appBuilder)
     {
         appBuilder.ApplyMigrations();
+        appBuilder.UseHangfireDashboard();
+        appBuilder.TriggerRecurringJobs();
 
         return appBuilder;
     }
@@ -56,7 +60,7 @@ public static class DependencyInjectionExtensions
 
         return services;
     }
-        
+
     private static IServiceCollection AddHangfire(this IServiceCollection services)
     {
         services.AddHangfire(cfg => cfg
@@ -72,17 +76,18 @@ public static class DependencyInjectionExtensions
 
     private static IServiceCollection AddEventsBus(this IServiceCollection services, string connectionString)
     {
-        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ => new RabbitMqEventsBusBackgroundService(connectionString));
+        services.AddSingleton<RabbitMqEventsBusBackgroundService>(_ =>
+            new RabbitMqEventsBusBackgroundService(connectionString));
 
         services.AddSingleton<IEventsBus>(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
 
         services.AddHostedService(serviceProvider =>
             serviceProvider.GetRequiredService<RabbitMqEventsBusBackgroundService>());
-        
+
         return services;
     }
-        
+
     private static IServiceCollection AddRecurringJobs(this IServiceCollection services)
     {
         return services;
@@ -101,7 +106,7 @@ public static class DependencyInjectionExtensions
     {
         services.AddScoped<IHallsRepository, HallsRepository>();
         services.AddScoped<ISeatsRepository, SeatsRepository>();
-            
+
         return services;
     }
 
@@ -109,9 +114,34 @@ public static class DependencyInjectionExtensions
     {
         using var scope = appBuilder.ApplicationServices.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<WriteContext>();
-            
+
         context.Database.Migrate();
 
         return appBuilder;
+    }
+
+    private static IApplicationBuilder UseHangfireDashboard(this IApplicationBuilder appBuilder)
+    {
+        appBuilder.UseHangfireDashboard("/hangfire", new DashboardOptions
+        {
+            Authorization = [new AllowAll()]
+        });
+
+        return appBuilder;
+    }
+
+    private static IApplicationBuilder TriggerRecurringJobs(this IApplicationBuilder appBuilder)
+    {
+        RecurringJob.AddOrUpdate<ProcessOutboxJob>(ProcessOutboxJob.JobName, job => job.ExecuteAsync(),
+            "* * * * * *");
+
+        RecurringJob.TriggerJob(ProcessOutboxJob.JobName);
+
+        return appBuilder;
+    }
+
+    private class AllowAll : IDashboardAuthorizationFilter
+    {
+        public bool Authorize(DashboardContext context) => true;
     }
 }

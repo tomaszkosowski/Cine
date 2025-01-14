@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -14,12 +16,20 @@ public class RabbitMqEventsBusBackgroundService(string connectionString, string 
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var connectionFactory = new ConnectionFactory { Uri = new Uri(connectionString) };
-        _connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
-        _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
+        var resiliencePipeline = BuildResiliencePipeline();
 
-        await _channel.ExchangeDeclareAsync(exchange: exchange, type: ExchangeType.Fanout,
-            cancellationToken: cancellationToken);
+        await resiliencePipeline.ExecuteAsync(
+            async _ =>
+            {
+                var connectionFactory = new ConnectionFactory { Uri = new Uri(connectionString) };
+
+                _connection = await connectionFactory.CreateConnectionAsync(cancellationToken);
+                _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
+
+                await _channel.ExchangeDeclareAsync(exchange: exchange, type: ExchangeType.Fanout,
+                    cancellationToken: cancellationToken);
+            },
+            cancellationToken);
     }
 
     public async Task StopAsync(CancellationToken cancellationToken)
@@ -43,7 +53,8 @@ public class RabbitMqEventsBusBackgroundService(string connectionString, string 
     public async Task SubscribeAsync<TEvent>(string queueName, IIntegrationEventHandler<TEvent> handler,
         CancellationToken cancellationToken = default) where TEvent : IIntegrationEvent
     {
-        var queue = await _channel.QueueDeclareAsync(queue: queueName, durable: true, exclusive: false, autoDelete: false,
+        var queue = await _channel.QueueDeclareAsync(queue: queueName, durable: true, exclusive: false,
+            autoDelete: false,
             cancellationToken: cancellationToken);
 
         await _channel.QueueBindAsync(queue: queue.QueueName, exchange: exchange, routingKey: "",
@@ -78,5 +89,18 @@ public class RabbitMqEventsBusBackgroundService(string connectionString, string 
 
         await _connection.DisposeAsync();
         await _channel.DisposeAsync();
+    }
+
+    private static ResiliencePipeline BuildResiliencePipeline()
+    {
+        var options = new RetryStrategyOptions
+        {
+            MaxRetryAttempts = int.MaxValue,
+            Delay = TimeSpan.FromSeconds(5)
+        };
+
+        return new ResiliencePipelineBuilder()
+            .AddRetry(options)
+            .Build();
     }
 }

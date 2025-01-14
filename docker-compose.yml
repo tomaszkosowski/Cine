@@ -6,6 +6,8 @@ services:
       dockerfile: src/Modules/Movies/Cine.Modules.Movies.Api/Dockerfile
     ports:
       - "8080:8080"
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
     depends_on:
       - mssql
       - rabbitmq
@@ -17,10 +19,12 @@ services:
       dockerfile: src/Modules/Tickets/Cine.Modules.Tickets.Api/Dockerfile
     ports:
       - "8081:8081"
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
     depends_on:
       - mssql
       - rabbitmq
-    
+  
   cine.modules.theater.api:
     image: ${DOCKER_REGISTRY-}cine.module.theater.api
     build:
@@ -28,10 +32,12 @@ services:
       dockerfile: src/Modules/Theater/Cine.Modules.Theater.Api/Dockerfile
     ports:
       - "8082:8082"
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
     depends_on:
       - mssql
       - rabbitmq
-        
+  
   cine.modules.shows.api:
     image: ${DOCKER_REGISTRY-}cine.module.shows.api
     build:
@@ -39,6 +45,8 @@ services:
       dockerfile: src/Modules/Shows/Cine.Modules.Shows.Api/Dockerfile
     ports:
       - "8083:8083"
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
     depends_on:
       - mssql
       - rabbitmq
@@ -60,3 +68,11 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "16686:16686"
