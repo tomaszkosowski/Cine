@@ -72,6 +72,11 @@ public sealed class Reservation : Entity, IAggregateRoot
 
         _seats.Remove(seat);
     }
+    
+    public void Confirm()
+    {
+        AddDomainEvent(new ReservationConfirmedDomainEvent(ReservationId));
+    }
 
     public void Expire()
     {

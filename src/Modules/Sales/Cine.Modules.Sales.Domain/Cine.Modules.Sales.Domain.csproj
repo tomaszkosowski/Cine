@@ -5,4 +5,17 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Events\" />
+      <Folder Include="Rules\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Cine.Modules.Sales.Domain.UnitTests" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Domain\Cine.Shared.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

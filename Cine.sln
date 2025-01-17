@@ -108,6 +108,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Modules.Tickets.Domain
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tickets", "Tickets", "{3B63728C-46FB-4685-82CE-6D3E03008FA7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sales", "Sales", "{A1C8C147-54E7-40B8-B2C2-7A57A46BB469}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cine.Modules.Sales.Domain.UnitTests", "tests\UnitTests\Modules\Sales\Cine.Modules.Sales.Domain.UnitTests\Cine.Modules.Sales.Domain.UnitTests.csproj", "{268B92EC-E8C5-458D-865A-BD5C504A5A1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -242,6 +246,10 @@ Global
 		{EDD05B7B-8B6C-403C-A8A4-466C7618F21B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD05B7B-8B6C-403C-A8A4-466C7618F21B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDD05B7B-8B6C-403C-A8A4-466C7618F21B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{268B92EC-E8C5-458D-865A-BD5C504A5A1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{268B92EC-E8C5-458D-865A-BD5C504A5A1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{268B92EC-E8C5-458D-865A-BD5C504A5A1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{268B92EC-E8C5-458D-865A-BD5C504A5A1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +301,8 @@ Global
 		{7E0B9DFC-0644-42AA-912A-DA712A37318A} = {FBB941D5-D696-4A70-B70D-9BC2170BFB55}
 		{3B63728C-46FB-4685-82CE-6D3E03008FA7} = {DBAE702B-9783-4848-9059-4EE3F7918389}
 		{EDD05B7B-8B6C-403C-A8A4-466C7618F21B} = {3B63728C-46FB-4685-82CE-6D3E03008FA7}
+		{A1C8C147-54E7-40B8-B2C2-7A57A46BB469} = {DBAE702B-9783-4848-9059-4EE3F7918389}
+		{268B92EC-E8C5-458D-865A-BD5C504A5A1E} = {A1C8C147-54E7-40B8-B2C2-7A57A46BB469}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72CCF0CE-B2C8-4FA5-A63C-A57C199D79A0}
