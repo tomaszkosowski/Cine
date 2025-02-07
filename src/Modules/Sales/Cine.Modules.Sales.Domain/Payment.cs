@@ -33,8 +33,6 @@ public class Payment
     #region Public methods
 
     public static Payment Create(ReservationId reservationId) => new(reservationId);
-    
-     
 
     #endregion
 }

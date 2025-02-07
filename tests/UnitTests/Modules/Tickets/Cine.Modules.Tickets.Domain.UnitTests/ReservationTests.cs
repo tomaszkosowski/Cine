@@ -1,4 +1,5 @@
 ﻿using Cine.Modules.Tickets.Domain.Events;
+using Cine.Modules.Tickets.Domain.Rules;
 using Cine.Modules.Tickets.Domain.UnitTests.Factories;
 using Cine.Shared.Domain.UnitTests;
 using FluentAssertions;
@@ -55,6 +56,20 @@ public class ReservationTests
     }
 
     [Fact]
+    public void Confirm_WhenReservationEmpty_ShouldThrowBusinessRuleException()
+    {
+        // Arrange
+        var reservation = ReservationObjectFactory.CreateValidObject();
+
+        // Act
+        var confirmReservation = () => reservation.Confirm();
+
+        // Assert
+        reservation.Seats.Should().BeEmpty();
+        confirmReservation.AssertBrokenRule<EnsureReservationNotEmpty>();
+    }
+
+    [Fact]
     public void Expire_WhenUnpaid_ShouldThrowInvalidOperationException()
     {
         // Arrange
@@ -71,17 +86,18 @@ public class ReservationTests
     }
 
     [Fact]
-    public void Expire_WhenPaid_ShouldThrowInvalidOperationException()
+    public void Expire_WhenConfirmed_ShouldThrowInvalidOperationException()
     {
         // Arrange
         var reservation = ReservationObjectFactory.CreateValidObject();
-        reservation.Pay();
+        reservation.AddSeat(SeatObjectFactory.CreateValidObject());
+        reservation.Confirm();
 
         // Act
         var expire = () => reservation.Expire();
 
         // Assert
         expire.Should().ThrowExactly<InvalidOperationException>()
-            .WithMessage("Cannot advance from Paid to Expired");
+            .WithMessage("Cannot advance from Confirmed to Expired");
     }
 }

@@ -10,7 +10,7 @@ public class Discount
 
     public DiscountId DiscountId { get; }
 
-    public Type DiscountSpecyfication { get; }
+    public Type DiscountSpecification { get; }
 
     public bool IsActive { get; private set; }
 

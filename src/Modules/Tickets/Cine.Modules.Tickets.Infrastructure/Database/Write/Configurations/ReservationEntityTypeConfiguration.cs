@@ -37,6 +37,9 @@ internal class ReservationEntityTypeConfiguration : IEntityTypeConfiguration<Res
             complexBuilder.Property(representation => representation.ReservedAt)
                 .HasColumnName("ReservedAt");
 
+            complexBuilder.Property(representation => representation.ConfirmedAt)
+                .HasColumnName("ConfirmedAt");
+
             complexBuilder.Property(representation => representation.PaidAt)
                 .HasColumnName("PaidAt");
 
@@ -55,7 +58,7 @@ internal class ReservationEntityTypeConfiguration : IEntityTypeConfiguration<Res
 
     private static Type DiscriminatorToType(string name)
     {
-        return new[] { typeof(Unpaid), typeof(Paid), typeof(Expired) }.First(
+        return new[] { typeof(Unpaid), typeof(Confirmed), typeof(Paid), typeof(Expired) }.First(
             type => string.Equals(type.Name, name));
     }
 }

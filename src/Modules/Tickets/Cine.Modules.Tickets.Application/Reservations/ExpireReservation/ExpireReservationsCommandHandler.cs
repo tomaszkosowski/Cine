@@ -11,7 +11,7 @@ using OneOf.Types;
 
 namespace Cine.Modules.Tickets.Application.Reservations.ExpireReservation;
 
-public class ExpireReservationsCommandHandler(
+internal sealed class ExpireReservationsCommandHandler(
     IConfiguration configuration,
     IReservationsRepository reservationsRepository,
     ILogger<ExpireReservationsCommandHandler> logger)
@@ -22,9 +22,9 @@ public class ExpireReservationsCommandHandler(
     {
         try
         {
+            var expiredCount = 0;
             var expireAfter = TimeSpan.ParseExact(configuration["Features:Reservations:ReservationExpiryTime"]!,
                 @"hh\:mm\:ss", CultureInfo.InvariantCulture);
-            var expiredCount = 0;
 
             var unpaidReservations = await reservationsRepository.GetUnpaidReservationsAsync();
             foreach (var unpaidReservation in unpaidReservations.Where(reservation => ShouldBeExpired(reservation, expireAfter)))
@@ -42,7 +42,6 @@ public class ExpireReservationsCommandHandler(
         catch (Exception ex)
         {
             logger.LogApplicationError(ex);
-
             return OneOfFactory.CreateApplicationError(ex);
         }
     }

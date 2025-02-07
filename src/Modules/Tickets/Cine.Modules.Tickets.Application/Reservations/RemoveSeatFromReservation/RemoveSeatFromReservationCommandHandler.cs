@@ -14,30 +14,29 @@ public class RemoveSeatFromReservationCommandHandler(
     ILogger<RemoveSeatFromReservationCommandHandler> logger)
     : ICommandHandler<RemoveSeatFromReservationCommand, OneOf<Success, Error<ApplicationException>>>
 {
-    public async Task<OneOf<Success, Error<ApplicationException>>> Handle(RemoveSeatFromReservationCommand request,
+    public async Task<OneOf<Success, Error<ApplicationException>>> Handle(RemoveSeatFromReservationCommand command,
         CancellationToken cancellationToken)
     {
         try
         {
-            var reservation = await reservationsRepository.FindAsync(ReservationId.Create(request.ReservationId));
+            var reservation = await reservationsRepository.FindAsync(ReservationId.Create(command.ReservationId));
             if (reservation is null)
             {
                 throw new ApplicationException(
-                    $"Reservation with given ReservationId {request.ReservationId} was not found");
+                    $"Reservation with given ReservationId {command.ReservationId} was not found");
             }
             
-            if (reservation.ReservationStatus is Paid)
+            if (reservation.ReservationStatus is Confirmed or Paid)
             {
                 throw new ApplicationException(
-                    $"Reservation with given ReservationId {request.ReservationId} has been paid");
-            }
+                    $"Reservation with given ReservationId {command.ReservationId} has been {reservation.ReservationStatus.GetType().Name}");            }
 
-            var seatId = SeatId.Create(request.SeatId);
+            var seatId = SeatId.Create(command.SeatId);
 
             var seat = await seatsRepository.FindAsync(seatId, reservation.ShowId);
             return seat switch
             {
-                null => throw new ApplicationException($"Seat with given SeatId {request.SeatId} was not found"),
+                null => throw new ApplicationException($"Seat with given SeatId {command.SeatId} was not found"),
                 not null => RemoveSeatFromReservation(reservation, seat)
             };
         }

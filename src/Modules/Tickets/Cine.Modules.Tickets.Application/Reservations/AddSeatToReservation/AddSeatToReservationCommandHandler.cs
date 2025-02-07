@@ -8,7 +8,7 @@ using OneOf.Types;
 
 namespace Cine.Modules.Tickets.Application.Reservations.AddSeatToReservation;
 
-public class
+internal sealed class
     AddSeatToReservationCommandHandler(
         IReservationsRepository reservationsRepository,
         ISeatsRepository seatsRepository,
@@ -16,25 +16,25 @@ public class
     : ICommandHandler<AddSeatToReservationCommand,
         OneOf<Success, Error<ApplicationException>>>
 {
-    public async Task<OneOf<Success, Error<ApplicationException>>> Handle(AddSeatToReservationCommand request,
+    public async Task<OneOf<Success, Error<ApplicationException>>> Handle(AddSeatToReservationCommand command,
         CancellationToken cancellationToken)
     {
         try
         {
-            var reservation = await reservationsRepository.FindAsync(ReservationId.Create(request.ReservationId));
+            var reservation = await reservationsRepository.FindAsync(ReservationId.Create(command.ReservationId));
             if (reservation is null)
             {
                 throw new ApplicationException(
-                    $"Reservation with given ReservationId {request.ReservationId} was not found");
+                    $"Reservation with given ReservationId {command.ReservationId} was not found");
             }
 
-            if (reservation.ReservationStatus is Paid or Expired)
+            if (reservation.ReservationStatus is Confirmed or Paid or Expired)
             {
                 throw new ApplicationException(
-                    $"Reservation with given ReservationId {request.ReservationId} has been paid or expired");
+                    $"Reservation with given ReservationId {command.ReservationId} has been {reservation.ReservationStatus.GetType().Name}");
             }
 
-            var seatId = SeatId.Create(request.SeatId);
+            var seatId = SeatId.Create(command.SeatId);
 
             var seat = await seatsRepository.FindAsync(seatId, reservation.ShowId);
             return seat switch

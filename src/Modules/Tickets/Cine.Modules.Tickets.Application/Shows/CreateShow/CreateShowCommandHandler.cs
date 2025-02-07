@@ -13,12 +13,12 @@ internal sealed class CreateShowCommandHandler(
     ILogger<CreateShowCommandHandler> logger)
     : ICommandHandler<CreateShowCommand, OneOf<Guid, Error<ApplicationException>>>
 {
-    public async Task<OneOf<Guid, Error<ApplicationException>>> Handle(CreateShowCommand request,
+    public async Task<OneOf<Guid, Error<ApplicationException>>> Handle(CreateShowCommand command,
         CancellationToken cancellationToken)
     {
         try
         {
-            var show = Show.Create(ShowId.Create(request.ShowId), HallId.Create(request.HallId));
+            var show = Show.Create(ShowId.Create(command.ShowId), HallId.Create(command.HallId));
 
             await showsRepository.AddAsync(show);
 

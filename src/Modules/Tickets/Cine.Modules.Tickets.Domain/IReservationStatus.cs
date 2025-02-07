@@ -13,8 +13,20 @@ public record Unpaid(DateTime ReservedAt) : IReservationStatus
     {
         return typeof(TStatus) switch
         {
-            var type when type == typeof(Paid) => new Paid(Utc.Now, ReservedAt),
+            var type when type == typeof(Confirmed) => new Confirmed(Utc.Now, ReservedAt),
             var type when type == typeof(Expired) => new Expired(Utc.Now, ReservedAt),
+            _ => throw new InvalidOperationException($"Cannot advance from {GetType().Name} to {typeof(TStatus).Name}")
+        };
+    }
+}
+
+public record Confirmed(DateTime ConfirmedAt, DateTime ReservedAt) : IReservationStatus
+{
+    public IReservationStatus AdvanceTo<TStatus>() where TStatus : IReservationStatus
+    {
+        return typeof(TStatus) switch
+        {
+            var type when type == typeof(Paid) => new Paid(Utc.Now, ReservedAt),
             _ => throw new InvalidOperationException($"Cannot advance from {GetType().Name} to {typeof(TStatus).Name}")
         };
     }
