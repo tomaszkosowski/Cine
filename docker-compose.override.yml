@@ -26,3 +26,10 @@ services:
       - ASPNETCORE_HTTP_PORTS=8083
     ports:
       - "8083"
+        
+  cine.modules.sales.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8084
+    ports:
+      - "8084"

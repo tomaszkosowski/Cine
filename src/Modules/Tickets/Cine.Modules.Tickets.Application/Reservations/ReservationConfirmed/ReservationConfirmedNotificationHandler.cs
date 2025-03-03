@@ -9,6 +9,7 @@ internal sealed class ReservationConfirmedNotificationHandler(IEventsBus eventsB
 {
     public async Task Handle(ReservationConfirmedNotification notification, CancellationToken cancellationToken)
     {
-        await eventsBus.PublishAsync(new ReservationConfirmedIntegrationEvent(), cancellationToken);
+        var domainEvent = notification.domainEvent;
+        await eventsBus.PublishAsync(new ReservationConfirmedIntegrationEvent(domainEvent.ReservationId), cancellationToken);
     }
 }

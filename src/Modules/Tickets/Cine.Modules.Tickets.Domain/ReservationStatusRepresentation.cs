@@ -14,7 +14,7 @@ internal static class ReservationStatusRepresentationConverter
         {
             Unpaid unpaid => new ReservationStatusRepresentation(unpaid.GetType(), ReservedAt: unpaid.ReservedAt),
             Confirmed confirmed => new ReservationStatusRepresentation(confirmed.GetType(), ConfirmedAt: confirmed.ConfirmedAt, ReservedAt: confirmed.ReservedAt),
-            Paid paid => new ReservationStatusRepresentation(paid.GetType(), PaidAt: paid.PaidAt, ReservedAt: paid.ReservedAt),
+            Completed paid => new ReservationStatusRepresentation(paid.GetType(), PaidAt: paid.PaidAt, ReservedAt: paid.ReservedAt),
             Expired expired => new ReservationStatusRepresentation(expired.GetType(), ExpiredAt: expired.ExpiredAt, ReservedAt: expired.ReservedAt),
             _ => throw new InvalidOperationException($"Unknown reservation status type {reservationStatus.GetType().Name}")
         };
@@ -24,7 +24,7 @@ internal static class ReservationStatusRepresentationConverter
         {
             _ when reservationStatus.Discriminator == typeof(Unpaid) => new Unpaid(reservationStatus.ReservedAt!.Value),
             _ when reservationStatus.Discriminator == typeof(Confirmed) => new Confirmed(reservationStatus.ConfirmedAt!.Value, reservationStatus.ReservedAt!.Value),
-            _ when reservationStatus.Discriminator == typeof(Paid) => new Paid(reservationStatus.PaidAt!.Value, reservationStatus.ReservedAt!.Value),
+            _ when reservationStatus.Discriminator == typeof(Completed) => new Completed(reservationStatus.PaidAt!.Value, reservationStatus.ReservedAt!.Value),
             _ when reservationStatus.Discriminator == typeof(Expired) => new Expired(reservationStatus.ExpiredAt!.Value, reservationStatus.ReservedAt!.Value),
             _ => throw new InvalidOperationException($"Unknown reservation status representation")
         };

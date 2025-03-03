@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Tickets.IntegrationEvents.Reservations;
 
-public record ReservationConfirmedIntegrationEvent : IntegrationEvent;
+public record ReservationConfirmedIntegrationEvent(Guid ReservationId) : IntegrationEvent;

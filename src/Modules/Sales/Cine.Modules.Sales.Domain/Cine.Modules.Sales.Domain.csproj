@@ -6,7 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Events\" />
       <Folder Include="Rules\" />
     </ItemGroup>
 
@@ -16,6 +15,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Cine.Shared.Domain\Cine.Shared.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Ardalis.SmartEnum" />
     </ItemGroup>
 
 </Project>

@@ -24,7 +24,7 @@ public class ReservationExpiredDomainEventHandler(
                     $"Reservation with given ReservationId {notification.ReservationId} was not found");
             }
 
-            if (reservation.ReservationStatus is Confirmed or Paid)
+            if (reservation.ReservationStatus is Confirmed or Completed)
             {
                 throw new ApplicationException(
                     $"Reservation with given ReservationId {notification.ReservationId} has been paid");

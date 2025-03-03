@@ -36,5 +36,5 @@ application.Run();
 
 namespace Cine.Modules.Theater.Api
 {
-    public partial class Program { }
+    public partial class Program;
 }

@@ -1,6 +1,6 @@
 ﻿namespace Cine.Modules.Sales.Domain.DiscountSpecifications;
 
-internal sealed class ReservationContext
+public sealed class ReservationContext
 {
     public double Amount { get; private set; }
 

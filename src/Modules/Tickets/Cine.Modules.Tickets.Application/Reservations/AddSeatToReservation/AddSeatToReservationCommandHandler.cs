@@ -28,7 +28,7 @@ internal sealed class
                     $"Reservation with given ReservationId {command.ReservationId} was not found");
             }
 
-            if (reservation.ReservationStatus is Confirmed or Paid or Expired)
+            if (reservation.ReservationStatus is Confirmed or Completed or Expired)
             {
                 throw new ApplicationException(
                     $"Reservation with given ReservationId {command.ReservationId} has been {reservation.ReservationStatus.GetType().Name}");

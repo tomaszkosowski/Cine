@@ -25,7 +25,7 @@ internal sealed class ConfirmReservationCommandHandler(
                 return new NotFound();
             }
 
-            if (reservation.ReservationStatus is Paid or Expired)
+            if (reservation.ReservationStatus is Completed or Expired)
             {
                 throw new ApplicationException(
                     $"Reservation with given ReservationId {command.ReservationId} has been paid or expired");

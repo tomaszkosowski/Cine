@@ -6,7 +6,7 @@ namespace Cine.Modules.Sales.Domain.DiscountRules;
 /// <summary>
 /// Special offer for Tue-Thu mornings.
 /// </summary>
-internal class BreakfastInAmericaDiscountRule : DiscountRule
+public class BreakfastInAmericaDiscountRule : DiscountRule
 {
     private readonly DiscountSpecification _specification =
         new MinimumAmountDiscountSpecification(8.0,

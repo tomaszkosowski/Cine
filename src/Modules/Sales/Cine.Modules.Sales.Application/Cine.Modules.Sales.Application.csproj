@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+        <PackageReference Include="MassTransit" />
+        <PackageReference Include="MassTransit.EntityFrameworkCore" />
+        <PackageReference Include="MassTransit.RabbitMQ" />
+        <PackageReference Include="MediatR" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" />
+        <PackageReference Include="Refit" />
+        <PackageReference Include="Refit.HttpClientFactory" />
+        <PackageReference Include="Scrutor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Application\Cine.Shared.Application.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Cine.Shared.Infrastructure\Cine.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Tickets\Cine.Modules.Tickets.IntegrationEvents\Cine.Modules.Tickets.IntegrationEvents.csproj" />
+      <ProjectReference Include="..\Cine.Modules.Sales.Application.Sagas\Cine.Modules.Sales.Application.Sagas.csproj" />
+      <ProjectReference Include="..\Cine.Modules.Sales.IntegrationEvents\Cine.Modules.Sales.IntegrationEvents.csproj" />
+    </ItemGroup>
+
+</Project>

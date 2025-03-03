@@ -26,7 +26,7 @@ public class RemoveSeatFromReservationCommandHandler(
                     $"Reservation with given ReservationId {command.ReservationId} was not found");
             }
             
-            if (reservation.ReservationStatus is Confirmed or Paid)
+            if (reservation.ReservationStatus is Confirmed or Completed)
             {
                 throw new ApplicationException(
                     $"Reservation with given ReservationId {command.ReservationId} has been {reservation.ReservationStatus.GetType().Name}");            }

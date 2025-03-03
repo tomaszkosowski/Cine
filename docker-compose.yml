@@ -1,5 +1,6 @@
 services:
   cine.modules.movies.api:
+    container_name: movies
     image: ${DOCKER_REGISTRY-}cine.module.movies.api
     build:
       context: .
@@ -13,6 +14,7 @@ services:
       - rabbitmq
   
   cine.modules.tickets.api:
+    container_name: tickets
     image: ${DOCKER_REGISTRY-}cine.module.tickets.api
     build:
       context: .
@@ -26,6 +28,7 @@ services:
       - rabbitmq
   
   cine.modules.theater.api:
+    container_name: theater
     image: ${DOCKER_REGISTRY-}cine.module.theater.api
     build:
       context: .
@@ -39,12 +42,27 @@ services:
       - rabbitmq
   
   cine.modules.shows.api:
+    container_name: shows
     image: ${DOCKER_REGISTRY-}cine.module.shows.api
     build:
       context: .
       dockerfile: src/Modules/Shows/Cine.Modules.Shows.Api/Dockerfile
     ports:
       - "8083:8083"
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+    depends_on:
+      - mssql
+      - rabbitmq
+  
+  cine.modules.sales.api:
+    container_name: sales
+    image: ${DOCKER_REGISTRY-}cine.modules.sales.api
+    build:
+      context: .
+      dockerfile: src/Modules/Sales/Cine.Modules.Sales.Api/Dockerfile
+    ports:
+      - "8084:8084"
     environment:
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
     depends_on:

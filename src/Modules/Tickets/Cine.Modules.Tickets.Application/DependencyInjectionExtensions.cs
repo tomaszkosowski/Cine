@@ -1,4 +1,5 @@
 ﻿using Cine.Modules.Tickets.Application.ApiClients.Theater;
+using Cine.Modules.Tickets.Application.Payments;
 using Cine.Modules.Tickets.Application.Shows;
 using Cine.Shared.Application.Commands;
 using Cine.Shared.Application.Database;
@@ -47,14 +48,7 @@ public static class DependencyInjectionExtensions
     private static IServiceCollection AddIntegrationEventHandlers(this IServiceCollection services)
     {
         services.AddSingleton<ShowCreatedIntegrationEventHandler>();
-
-        // return services
-        // .Scan(scanner =>
-        // {
-        //     scanner.FromAssemblyOf<IApplicationAssembly>()
-        //         .AddClasses(classes => classes.AssignableTo(typeof(IIntegrationEventHandler<>)))
-        //         .AsImplementedInterfaces().WithSingletonLifetime();
-        // });
+        services.AddSingleton<PaymentConfirmedIntegrationEventHandler>();
 
         return services;
     }
@@ -115,6 +109,9 @@ public static class DependencyInjectionExtensions
             const string queueName = "tickets";
             
             eventBus.SubscribeAsync(queueName, services.GetRequiredService<ShowCreatedIntegrationEventHandler>())
+                .Forget(logger);
+            
+            eventBus.SubscribeAsync(queueName, services.GetRequiredService<PaymentConfirmedIntegrationEventHandler>())
                 .Forget(logger);
         });
 

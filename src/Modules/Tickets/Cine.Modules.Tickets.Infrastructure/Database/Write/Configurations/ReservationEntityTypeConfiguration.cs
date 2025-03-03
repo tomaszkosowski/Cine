@@ -58,7 +58,7 @@ internal class ReservationEntityTypeConfiguration : IEntityTypeConfiguration<Res
 
     private static Type DiscriminatorToType(string name)
     {
-        return new[] { typeof(Unpaid), typeof(Confirmed), typeof(Paid), typeof(Expired) }.First(
+        return new[] { typeof(Unpaid), typeof(Confirmed), typeof(Completed), typeof(Expired) }.First(
             type => string.Equals(type.Name, name));
     }
 }

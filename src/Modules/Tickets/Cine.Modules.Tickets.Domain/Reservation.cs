@@ -89,11 +89,11 @@ public sealed class Reservation : Entity, IAggregateRoot
         AddDomainEvent(new ReservationExpiredDomainEvent(ReservationId));
     }
 
-    public void Pay()
+    public void Complete()
     {
-        ReservationStatus = ReservationStatus.AdvanceTo<Paid>();
+        ReservationStatus = ReservationStatus.AdvanceTo<Completed>();
 
-        AddDomainEvent(new ReservationPaidDomainEvent(ReservationId));
+        AddDomainEvent(new ReservationCompletedDomainEvent(ReservationId));
     }
 
     #endregion

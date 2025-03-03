@@ -6,7 +6,7 @@ namespace Cine.Modules.Sales.Domain.DiscountRules;
 /// <summary>
 /// Special offer on Mondays for groups.
 /// </summary>
-internal sealed class MondaySpecialDiscountRule : DiscountRule
+public sealed class MondaySpecialDiscountRule : DiscountRule
 {
     private readonly DiscountSpecification _specification =
         new MinimumAmountDiscountSpecification(40.0,
