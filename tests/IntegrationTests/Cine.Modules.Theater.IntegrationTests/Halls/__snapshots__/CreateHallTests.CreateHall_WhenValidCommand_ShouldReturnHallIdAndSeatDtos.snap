@@ -1,0 +1,65 @@
+﻿{
+  "Item1": "de119fba-408b-40f3-8c29-3319c593a9f8",
+  "Item2": [
+    {
+      "Row": "I",
+      "Number": 1,
+      "Type": "regular"
+    },
+    {
+      "Row": "I",
+      "Number": 2,
+      "Type": "regular"
+    },
+    {
+      "Row": "I",
+      "Number": 3,
+      "Type": "regular"
+    },
+    {
+      "Row": "I",
+      "Number": 4,
+      "Type": "regular"
+    },
+    {
+      "Row": "II",
+      "Number": 1,
+      "Type": "regular"
+    },
+    {
+      "Row": "II",
+      "Number": 2,
+      "Type": "regular"
+    },
+    {
+      "Row": "II",
+      "Number": 3,
+      "Type": "regular"
+    },
+    {
+      "Row": "II",
+      "Number": 4,
+      "Type": "regular"
+    },
+    {
+      "Row": "III",
+      "Number": 1,
+      "Type": "regular"
+    },
+    {
+      "Row": "III",
+      "Number": 2,
+      "Type": "regular"
+    },
+    {
+      "Row": "III",
+      "Number": 3,
+      "Type": "regular"
+    },
+    {
+      "Row": "III",
+      "Number": 4,
+      "Type": "regular"
+    }
+  ]
+}

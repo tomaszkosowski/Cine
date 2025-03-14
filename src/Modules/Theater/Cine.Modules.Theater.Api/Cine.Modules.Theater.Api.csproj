@@ -21,6 +21,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="Cine.IntegrationTests" />
+        <InternalsVisibleTo Include="Cine.Modules.Theater.IntegrationTests" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Include="..\..\..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>

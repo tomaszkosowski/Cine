@@ -24,6 +24,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="Cine.IntegrationTests"/>
+        <InternalsVisibleTo Include="Cine.Modules.Movies.IntegrationTests" />
     </ItemGroup>
 
 </Project>

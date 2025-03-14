@@ -21,10 +21,8 @@ public record Schedule : ValueObject
         Duration = duration;
     }
 
-    public bool IsOverlapping(Schedule other)
-    {
-        return StartAt < other.EndAt && other.StartAt < EndAt;
-    }
+    public bool IsOverlapping(Schedule other) 
+        => StartAt < other.EndAt && other.StartAt < EndAt;
 
     public static Schedule Create(DateTime startAt, TimeSpan duration)
         => new(startAt, duration);

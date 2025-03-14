@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Modules\Movies\Cine.Modules.Movies.Api\Cine.Modules.Movies.Api.csproj" />
+    <ProjectReference Include="..\..\..\src\Modules\Theater\Cine.Modules.Theater.Api\Cine.Modules.Theater.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

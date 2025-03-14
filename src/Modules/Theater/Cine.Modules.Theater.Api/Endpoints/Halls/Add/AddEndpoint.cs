@@ -25,7 +25,7 @@ internal sealed class AddEndpoint(ISender sender) : Endpoint<Request, Response>
         var layout = (req.SeatRows, req.SeatsPerRow);
         var premiumSeats = req.PremiumSeats.Select(seat => (row: seat.Row, seat.Number)).ToList();
 
-        var oneOf = await sender.Send(new CreateHallCommand(req.Name, layout, premiumSeats), ct);
+        var oneOf = await sender.Send(new CreateHallCommand(req.Name, layout), ct);
 
         await oneOf.Match(
             async result => await SendOkAsync(new Response(result.HallId, result.Seats.ToList()), ct),

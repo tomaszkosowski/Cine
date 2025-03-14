@@ -26,7 +26,8 @@ public class
                                     S.[Number] AS [{nameof(SeatDto.Number)}],
                                     S.[Type] AS [{nameof(SeatDto.Type)}]
                                 FROM Seats S
-                                WHERE S.[HallId] = @HallId;
+                                WHERE S.[HallId] = @HallId
+                                ORDER BY S.[Row], S.[Number];
                                 """;
 
             var seats = await sqlConnection.QueryAsync<SeatDto>(sql, new { HallId = request.HallId });

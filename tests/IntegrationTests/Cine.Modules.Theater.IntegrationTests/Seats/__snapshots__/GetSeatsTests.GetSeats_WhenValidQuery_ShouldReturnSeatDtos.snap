@@ -1,0 +1,86 @@
+﻿[
+  {
+    "SeatId": "7fc86552-592e-4a67-9d2d-8ce8cf625612",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "I",
+    "Number": 1,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "c8cf0f9b-7f1d-4026-a1c8-1f9380cf10b7",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "I",
+    "Number": 2,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "58cff312-58a4-4cb7-a302-6cc75c732b30",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "I",
+    "Number": 3,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "8406109f-17d1-41e1-8a28-161b591d5dd1",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "I",
+    "Number": 4,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "705afd33-1ac6-4e1a-b9ec-9e8ff830b079",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "II",
+    "Number": 1,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "9a3863e8-9f26-44df-98dd-8b5ef1510cdb",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "II",
+    "Number": 2,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "c0ae1567-6492-40c9-9068-a9d70cdce1f2",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "II",
+    "Number": 3,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "6fa0cbd6-2ca1-451f-b696-d24f31822a8b",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "II",
+    "Number": 4,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "ca321c70-8522-42a6-ba30-87b8486ec5b1",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "III",
+    "Number": 1,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "54c91bef-876b-4c00-a746-e6424a160a41",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "III",
+    "Number": 2,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "9fb8fb25-62b0-4f90-b079-ffc5840932a3",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "III",
+    "Number": 3,
+    "Type": "regular"
+  },
+  {
+    "SeatId": "6ea4224b-e160-45bd-b16a-178bb4a48e4e",
+    "HallId": "533d4991-9d56-4cd7-969f-a6908f47a02c",
+    "Row": "III",
+    "Number": 4,
+    "Type": "regular"
+  }
+]

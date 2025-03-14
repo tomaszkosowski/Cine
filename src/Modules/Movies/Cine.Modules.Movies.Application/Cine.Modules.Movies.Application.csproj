@@ -8,6 +8,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     <InternalsVisibleTo Include="Cine.Modules.Movies.Application.UnitTests" />
+    <InternalsVisibleTo Include="Cine.Modules.Movies.IntegrationTests" />
   </ItemGroup>
 
   <ItemGroup>

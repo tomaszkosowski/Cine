@@ -21,5 +21,6 @@ public sealed class Movie : Entity, IAggregateRoot
         Duration = duration;
     }
 
-    public static Movie Create(MovieId movieId, TimeOnly duration) => new(movieId, duration);
+    public static Movie Create(MovieId movieId, TimeOnly duration) 
+        => new(movieId, duration);
 }

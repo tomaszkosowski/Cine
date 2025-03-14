@@ -6,6 +6,5 @@ namespace Cine.Modules.Theater.Application.Halls.CreateHall;
 
 public record CreateHallCommand(
     string Name,
-    (int seatsRows, int seatsPerRow) Layout,
-    IReadOnlyList<(string Row, int Number)> PremiumSeats)
+    (int seatsRows, int seatsPerRow) Layout)
     : Command<OneOf<(Guid HallId, IReadOnlyList<SeatDto> Seats), Error<ApplicationException>>>;
