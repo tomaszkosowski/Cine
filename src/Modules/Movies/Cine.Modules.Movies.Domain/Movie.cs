@@ -57,7 +57,7 @@ public sealed class Movie : Entity, IAggregateRoot
         _directors.AddRange(directors);
         _cast.AddRange(cast);
 
-        AddDomainEvent(new MovieCreatedDomainEvent(MovieId, Duration));
+        AddDomainEvent(new MovieCreatedDomainEvent(MovieId, Title, Duration));
     }
 
     #endregion

@@ -8,9 +8,11 @@ public class MovieCreatedNotificationHandler(IEventsBus eventsBus) : INotificati
 {
     public async Task Handle(MovieCreatedNotification notification, CancellationToken cancellationToken)
     {
+        var domainEvent = notification.DomainEvent;
         await eventsBus.PublishAsync(
             new MovieCreatedIntegrationEvent(
-                notification.DomainEvent.MovieId,
-                notification.domainEvent.Duration.ToTimeSpan()), cancellationToken);
+                domainEvent.MovieId,
+                domainEvent.Title,
+                domainEvent.Duration.ToTimeSpan()), cancellationToken);
     }
 }
