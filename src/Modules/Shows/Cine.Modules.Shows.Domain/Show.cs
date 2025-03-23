@@ -31,7 +31,7 @@ public sealed class Show : Entity, IAggregateRoot
         MovieId = movieId;
         ScheduledAt = scheduledAt;
 
-        AddDomainEvent(new ShowCreatedDomainEvent(ShowId, HallId));
+        AddDomainEvent(new ShowCreatedDomainEvent(ShowId, HallId, ScheduledAt.StartAt));
     }
 
     public static Show Create(HallId hallId, MovieId movieId, Schedule scheduledAt, IReadOnlyList<ShowInfo> otherShows)

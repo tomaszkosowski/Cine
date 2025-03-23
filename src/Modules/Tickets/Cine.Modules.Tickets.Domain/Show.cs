@@ -15,6 +15,8 @@ public sealed class Show : Entity, IAggregateRoot
 
     public HallId HallId { get; }
 
+    public DateTime StartAt { get; }
+
     #endregion
 
     #region Constructors
@@ -24,19 +26,21 @@ public sealed class Show : Entity, IAggregateRoot
         // Blank for ORM.
     }
 
-    private Show(ShowId showId, HallId hallId)
+    private Show(ShowId showId, HallId hallId, DateTime startAt)
     {
         ShowId = showId;
         HallId = hallId;
+        StartAt = startAt;
 
-        AddDomainEvent(new ShowCreatedDomainEvent(ShowId, HallId));
+        AddDomainEvent(new ShowCreatedDomainEvent(ShowId, HallId, StartAt));
     }
 
     #endregion
 
     #region Public methods
 
-    public static Show Create(ShowId showId, HallId hallId) => new(showId, hallId);
+    public static Show Create(ShowId showId, HallId hallId, DateTime startAt)
+        => new(showId, hallId, startAt);
 
     #endregion
 }

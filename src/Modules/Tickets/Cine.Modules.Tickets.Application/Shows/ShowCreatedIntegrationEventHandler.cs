@@ -14,6 +14,6 @@ internal sealed class ShowCreatedIntegrationEventHandler(IServiceProvider servic
         using var scope = serviceProvider.CreateScope();
         var sender = scope.ServiceProvider.GetRequiredService<ISender>();
         
-        await sender.Send(new CreateShowCommand(@event.ShowId, @event.HallId));
+        await sender.Send(new CreateShowCommand(@event.ShowId, @event.HallId, @event.StartAt));
     }
 }

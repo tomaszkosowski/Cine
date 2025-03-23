@@ -16,7 +16,7 @@ public class ShowCreatedTests(App app) : IntegrationTestBase(app)
         await EventsBus.SubscribeAsync("", new IntegrationEventHandler(completed));
 
         // Act
-        await Publisher.Publish(new ShowCreatedDomainEvent(ShowId.Create(), HallId.Create()));
+        await Publisher.Publish(new ShowCreatedDomainEvent(ShowId.Create(), HallId.Create(), DateTime.Parse("2025-01-30T12:00:00")));
 
         // Assert
         var handled = await completed.Task.WaitAsync(TimeSpan.FromSeconds(5));

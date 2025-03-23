@@ -23,5 +23,8 @@ internal sealed class ShowEntityTypeConfiguration : IEntityTypeConfiguration<Sho
                 hallId => (Guid)hallId,
                 id => HallId.Create(id))
             .IsRequired();
+
+        builder.Property(entity => entity.StartAt)
+            .IsRequired();
     }
 }

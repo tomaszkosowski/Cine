@@ -113,6 +113,9 @@ namespace Cine.Modules.Tickets.Infrastructure.Database.Migrations
                     b.Property<Guid>("HallId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("StartAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("ShowId");
 
                     b.ToTable("Shows", (string)null);

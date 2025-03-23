@@ -48,7 +48,7 @@ public class ExpireReservationTests(App app) : IntegrationTestBase(app)
 
     private async Task AddShowAsync(Guid showId, Guid hallId)
     {
-        var command = new CreateShowCommand(showId, hallId);
+        var command = new CreateShowCommand(showId, hallId, DateTime.Parse("2024-01-30T12:00:00"));
         var result = await Sender.Send(command);
 
         result.IsT0.Should().BeTrue();

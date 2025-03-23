@@ -4,4 +4,4 @@ using OneOf.Types;
 
 namespace Cine.Modules.Tickets.Application.Shows.CreateShow;
 
-public record CreateShowCommand(Guid ShowId, Guid HallId) : Command<OneOf<Guid, Error<ApplicationException>>>;
+public record CreateShowCommand(Guid ShowId, Guid HallId, DateTime StartAt) : Command<OneOf<Guid, Error<ApplicationException>>>;

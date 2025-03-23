@@ -12,7 +12,7 @@ public class CreateShowTests(App app) : IntegrationTestBase(app)
         var showId = Guid.NewGuid();
         var hallId = Guid.NewGuid();
 
-        var command = new CreateShowCommand(showId, hallId);
+        var command = new CreateShowCommand(showId, hallId, DateTime.Parse("2024-01-30T12:00:00"));
 
         // Act
         var result = await Sender.Send(command);

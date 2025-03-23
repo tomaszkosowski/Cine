@@ -9,6 +9,8 @@ public class ShowCreatedNotificationHandler(IEventsBus eventsBus) : INotificatio
     public async Task Handle(ShowCreatedNotification notification, CancellationToken cancellationToken)
     {
         var domainEvent = notification.domainEvent;
-        await eventsBus.PublishAsync(new ShowCreatedIntegrationEvent(domainEvent.ShowId, domainEvent.HallId), cancellationToken);
+        await eventsBus.PublishAsync(
+            new ShowCreatedIntegrationEvent(domainEvent.ShowId, domainEvent.HallId, domainEvent.StartAt),
+            cancellationToken);
     }
 }

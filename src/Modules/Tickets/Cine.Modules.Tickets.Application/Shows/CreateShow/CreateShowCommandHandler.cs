@@ -18,7 +18,7 @@ internal sealed class CreateShowCommandHandler(
     {
         try
         {
-            var show = Show.Create(ShowId.Create(command.ShowId), HallId.Create(command.HallId));
+            var show = Show.Create(ShowId.Create(command.ShowId), HallId.Create(command.HallId), command.StartAt);
 
             await showsRepository.AddAsync(show);
 

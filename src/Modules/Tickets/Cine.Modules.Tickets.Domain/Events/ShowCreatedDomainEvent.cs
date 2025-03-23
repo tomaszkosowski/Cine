@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Tickets.Domain.Events;
 
-public record ShowCreatedDomainEvent(Guid ShowId, Guid HallId) : DomainEvent;
+public record ShowCreatedDomainEvent(Guid ShowId, Guid HallId, DateTime StartAt) : DomainEvent;

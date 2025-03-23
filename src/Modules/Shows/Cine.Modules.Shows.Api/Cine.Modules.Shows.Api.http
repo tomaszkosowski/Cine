@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "HallId": "2d2586ef-5dcd-40a1-a3cc-ae5a72087595",
-  "MovieId": "e80db13b-0775-4aa7-96ed-55ec3c23b8cd",
-  "StartAt": "2025-03-01T12:00:00"
+  "MovieId": "3586fd95-eb4e-4483-88a6-8fdc3cb82555",
+  "StartAt": "2025-04-01T12:00:00"
 }
 ###

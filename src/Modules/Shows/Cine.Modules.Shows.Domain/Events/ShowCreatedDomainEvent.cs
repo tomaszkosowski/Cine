@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Shows.Domain.Events;
 
-public record ShowCreatedDomainEvent(ShowId ShowId, HallId HallId) : DomainEvent;
+public record ShowCreatedDomainEvent(ShowId ShowId, HallId HallId, DateTime StartAt) : DomainEvent;

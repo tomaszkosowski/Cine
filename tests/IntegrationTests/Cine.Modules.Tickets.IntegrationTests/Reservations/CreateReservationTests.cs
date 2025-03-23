@@ -26,7 +26,7 @@ public class CreateReservationTests(App app) : IntegrationTestBase(app)
 
     private async Task AddShowAsync(Guid showId)
     {
-        var command = new CreateShowCommand(showId, Guid.NewGuid());
+        var command = new CreateShowCommand(showId, Guid.NewGuid(), DateTime.Parse("2024-01-30T12:00:00"));
         
         var result = await Sender.Send(command);
 
