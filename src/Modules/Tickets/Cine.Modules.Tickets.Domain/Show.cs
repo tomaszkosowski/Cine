@@ -5,8 +5,6 @@ namespace Cine.Modules.Tickets.Domain;
 
 public record ShowId : TypedId<ShowId>;
 
-public record HallId : TypedId<HallId>;
-
 public sealed class Show : Entity, IAggregateRoot
 {
     #region Properties

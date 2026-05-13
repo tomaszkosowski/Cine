@@ -6,7 +6,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Hall #1",
+  "name": "Hall #2",
   "seatRows": 2,
   "seatsPerRow": 4,
   "premiumSeats": []

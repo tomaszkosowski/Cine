@@ -22,6 +22,7 @@
       <ProjectReference Include="..\..\Movies\Cine.Modules.Movies.IntegrationEvents\Cine.Modules.Movies.IntegrationEvents.csproj" />
       <ProjectReference Include="..\..\Sales\Cine.Modules.Sales.IntegrationEvents\Cine.Modules.Sales.IntegrationEvents.csproj" />
       <ProjectReference Include="..\..\Shows\Cine.Modules.Shows.IntegrationEvents\Cine.Modules.Shows.IntegrationEvents.csproj" />
+      <ProjectReference Include="..\..\Theater\Cine.Modules.Theater.IntegrationEvents\Cine.Modules.Theater.IntegrationEvents.csproj" />
       <ProjectReference Include="..\Cine.Modules.Tickets.Domain\Cine.Modules.Tickets.Domain.csproj" />
       <ProjectReference Include="..\Cine.Modules.Tickets.IntegrationEvents\Cine.Modules.Tickets.IntegrationEvents.csproj" />
     </ItemGroup>

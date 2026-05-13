@@ -25,7 +25,7 @@ public sealed class Hall : Entity, IAggregateRoot
         Name = name;
         Seats = seats;
 
-        AddDomainEvent(new HallCreatedDomainEvent(HallId));
+        AddDomainEvent(new HallCreatedDomainEvent(HallId, Name));
     }
 
     public static Hall Create(string name, List<Seat> seats) => new(name, seats);

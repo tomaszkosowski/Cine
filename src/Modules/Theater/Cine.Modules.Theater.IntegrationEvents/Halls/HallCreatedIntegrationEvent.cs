@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Theater.IntegrationEvents.Halls;
 
-public record HallCreatedIntegrationEvent(Guid HallId) : IntegrationEvent;
+public record HallCreatedIntegrationEvent(Guid HallId, string Name) : IntegrationEvent;

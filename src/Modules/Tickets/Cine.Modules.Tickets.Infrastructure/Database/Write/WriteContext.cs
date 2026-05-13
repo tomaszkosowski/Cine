@@ -10,6 +10,8 @@ internal sealed class WriteContext(DbContextOptions<WriteContext> options) : DbC
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Seat> Seats { get; set; }
     public DbSet<Show> Shows { get; set; }
+
+    public DbSet<Hall> Halls { get; set; }
     public DbSet<Movie> Movies { get; set; }
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using Cine.Modules.Tickets.Application.ApiClients.Theater;
+using Cine.Modules.Tickets.Application.Halls;
 using Cine.Modules.Tickets.Application.Movies;
 using Cine.Modules.Tickets.Application.Payments;
 using Cine.Modules.Tickets.Application.Shows;
@@ -51,6 +52,7 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<ShowCreatedIntegrationEventHandler>();
         services.AddSingleton<PaymentConfirmedIntegrationEventHandler>();
         services.AddSingleton<MovieCreatedIntegrationEventHandler>();
+        services.AddSingleton<HallCreatedIntegrationEventHandler>();
 
         return services;
     }
@@ -109,14 +111,17 @@ public static class DependencyInjectionExtensions
         hostLifetime.ApplicationStarted.Register(() =>
         {
             const string queueName = "tickets";
-            
+
             eventBus.SubscribeAsync(queueName, services.GetRequiredService<ShowCreatedIntegrationEventHandler>())
                 .Forget(logger);
-            
+
             eventBus.SubscribeAsync(queueName, services.GetRequiredService<PaymentConfirmedIntegrationEventHandler>())
                 .Forget(logger);
 
             eventBus.SubscribeAsync(queueName, services.GetRequiredService<MovieCreatedIntegrationEventHandler>())
+                .Forget(logger);
+
+            eventBus.SubscribeAsync(queueName, services.GetRequiredService<HallCreatedIntegrationEventHandler>())
                 .Forget(logger);
         });
 

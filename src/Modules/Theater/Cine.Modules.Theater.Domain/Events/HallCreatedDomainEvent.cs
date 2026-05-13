@@ -2,4 +2,4 @@
 
 namespace Cine.Modules.Theater.Domain.Events;
 
-public record HallCreatedDomainEvent(HallId HallId) : DomainEvent;
+public record HallCreatedDomainEvent(HallId HallId, string Name) : DomainEvent;
