@@ -66,6 +66,17 @@ dotnet test ./Cine.sln --filter "FullyQualifiedName~CreateMovie"
 
 Integration tests spin up real SQL Server and RabbitMQ containers via Testcontainers — no manual setup needed.
 
+## Documentation
+
+Full documentation is in the [`docs/`](./docs/index.md) folder, split into domain and architecture areas:
+
+- **[Domain overview](./docs/domain/overview.md)** — ubiquitous language, aggregate map, end-to-end flow
+- **[Architecture overview](./docs/architecture/overview.md)** — project layout, layer rules, DI wiring
+- **[Event-driven design](./docs/architecture/event-driven.md)** — outbox, RabbitMQ, integration events
+- **[Sagas](./docs/architecture/sagas.md)** — MassTransit payment saga
+
+---
+
 ## Key concepts explored
 
 ### Domain-Driven Design
