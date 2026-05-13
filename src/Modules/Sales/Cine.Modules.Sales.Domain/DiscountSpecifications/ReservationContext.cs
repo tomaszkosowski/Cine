@@ -17,9 +17,9 @@ public sealed class ReservationContext
 
     public void ReduceAmount(double discountedAmount)
     {
-        if (discountedAmount < 0.0)
+        if (discountedAmount < 0.0 || discountedAmount > Amount)
         {
-            throw new InvalidOperationException("Discounted amount cannot be negative.");
+            throw new InvalidOperationException("Discounted amount is invalid.");
         }
 
         Amount -= discountedAmount;
