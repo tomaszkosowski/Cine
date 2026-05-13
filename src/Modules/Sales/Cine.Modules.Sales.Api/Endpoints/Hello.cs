@@ -11,6 +11,6 @@ public class Hello : Ep.NoReq.NoRes
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        await SendOkAsync(ct);
+        await Send.OkAsync(ct);
     }
 }

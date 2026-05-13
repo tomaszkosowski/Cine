@@ -32,7 +32,7 @@ internal sealed class AddEndpoint(ISender sender) : Endpoint<Request, Response>
         var oneOf = await sender.Send(new CreateMovieCommand(req.Title, req.Description, req.Genre, req.Duration, req.ReleaseDate, directors.AsReadOnly(), cast.AsReadOnly()), ct);
 
         await oneOf.Match(
-            async movieId => await SendCreatedAtAsync<GetEndpoint>(movieId, new(movieId), cancellation: ct),
+            async movieId => await Send.CreatedAtAsync<GetEndpoint>(movieId, new(movieId), cancellation: ct),
             error => throw error.Value);
     }
 }

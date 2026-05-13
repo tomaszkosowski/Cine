@@ -13,7 +13,7 @@ public class AddHallTests(App app) : IntegrationTestBase(app)
         var command = new AddHallCommand(Guid.NewGuid());
 
         // Act
-        var result = await Sender.Send(command);
+        var result = await Sender.Send(command, TestContext.Current.CancellationToken);
 
         // Assert
         result.Should().Be(Unit.Value);

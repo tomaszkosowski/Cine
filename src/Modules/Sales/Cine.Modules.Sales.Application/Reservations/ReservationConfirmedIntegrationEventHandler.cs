@@ -3,7 +3,6 @@ using Cine.Modules.Tickets.IntegrationEvents.Reservations;
 using Cine.Shared.Infrastructure.Events;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using OneOf.Types;
 
 namespace Cine.Modules.Sales.Application.Reservations;
 

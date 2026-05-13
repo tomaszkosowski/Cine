@@ -1,6 +1,4 @@
-﻿using Cine.Modules.Sales.Application.Sagas;
-using Cine.Modules.Sales.Application.Sagas.Consumers;
-using Cine.Modules.Sales.Domain;
+﻿using Cine.Modules.Sales.Domain;
 using Cine.Modules.Sales.Infrastructure.Database.Write;
 using Cine.Modules.Sales.Infrastructure.Outbox;
 using Cine.Shared.Application.Outbox;
@@ -9,7 +7,6 @@ using Cine.Shared.Infrastructure.Events;
 using Cine.Shared.Infrastructure.Jobs;
 using Hangfire;
 using Hangfire.Dashboard;
-using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;

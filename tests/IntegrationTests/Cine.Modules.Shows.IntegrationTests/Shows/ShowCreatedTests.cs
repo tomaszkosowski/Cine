@@ -13,13 +13,13 @@ public class ShowCreatedTests(App app) : IntegrationTestBase(app)
     {
         // Arrange
         var completed = new TaskCompletionSource<bool>();
-        await EventsBus.SubscribeAsync("", new IntegrationEventHandler(completed));
+        await EventsBus.SubscribeAsync("", new IntegrationEventHandler(completed), TestContext.Current.CancellationToken);
 
         // Act
-        await Publisher.Publish(new ShowCreatedDomainEvent(ShowId.Create(), HallId.Create(), DateTime.Parse("2025-01-30T12:00:00")));
+        await Publisher.Publish(new ShowCreatedDomainEvent(ShowId.Create(), HallId.Create(), DateTime.Parse("2025-01-30T12:00:00")), TestContext.Current.CancellationToken);
 
         // Assert
-        var handled = await completed.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        var handled = await completed.Task.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
         handled.Should().BeTrue();
     }
 

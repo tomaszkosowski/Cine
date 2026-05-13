@@ -11,15 +11,13 @@ public abstract class ApiApp(string name) : AppFixture<Modules.Movies.Api.Progra
     private MsSqlContainer _mssql = default!;
     private RabbitMqContainer _rabbitmq = default!;
 
-    protected override async Task PreSetupAsync()
+    protected override async ValueTask PreSetupAsync()
     {
-        _mssql = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+        _mssql = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
             .WithName($"ms-sql-{name}-integration-tests")
             .Build();
 
-        _rabbitmq = new RabbitMqBuilder()
-            .WithImage("rabbitmq:3-management-alpine")
+        _rabbitmq = new RabbitMqBuilder("rabbitmq:3-management-alpine")
             .WithName($"rabbitmq-{name}-integration-tests")
             .WithPortBinding(5672, true)
             .WithUsername("guest")
@@ -42,7 +40,7 @@ public abstract class ApiApp(string name) : AppFixture<Modules.Movies.Api.Progra
         return base.ConfigureAppHost(a);
     }
 
-    protected override async Task TearDownAsync()
+    protected override async ValueTask TearDownAsync()
     {
         await _mssql.DisposeAsync();
         await _rabbitmq.DisposeAsync();

@@ -17,7 +17,7 @@ public class CreateReservationTests(App app) : IntegrationTestBase(app)
         var command = new CreateReservationCommand(showId);
 
         // Act
-        var result = await Sender.Send(command);
+        var result = await Sender.Send(command, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT0.Should().BeTrue();

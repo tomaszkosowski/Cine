@@ -24,7 +24,7 @@ public class CreateShowTests(App app) : IntegrationTestBase(app)
         var command = new CreateShowCommand(hallId, movieId, DateTime.Parse("2025-03-01T12:00:00"));
 
         // Act
-        var result = await Sender.Send(command);
+        var result = await Sender.Send(command, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT0.Should().BeTrue();

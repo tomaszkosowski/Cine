@@ -3,7 +3,7 @@ using Cine.Shared.Application.Tasks;
 using FastEndpoints;
 using FastEndpoints.Testing;
 using FluentAssertions;
-using Snapshooter.Xunit;
+using Snapshooter.Xunit3;
 using AddMovieEndpoint = Cine.Modules.Movies.Api.Endpoints.Movies.Add.AddEndpoint;
 using AddMovieRequest = Cine.Modules.Movies.Api.Endpoints.Movies.Add.Request;
 using AddMovieResponse = Cine.Modules.Movies.Api.Endpoints.Movies.Add.Response;

@@ -19,7 +19,7 @@ public class AddSeatsTests(App app) : IntegrationTestBase(app)
             new SeatsDto([new SeatDto(Guid.NewGuid(), "I", 1)]));
 
         // Act
-        var result = await Sender.Send(command);
+        var result = await Sender.Send(command, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT0.Should().BeTrue();

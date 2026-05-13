@@ -1,7 +1,7 @@
 ﻿using Cine.Modules.Theater.Application.Halls.CreateHall;
 using Cine.Modules.Theater.Application.Seats.GetSeats;
 using FluentAssertions;
-using Snapshooter.Xunit;
+using Snapshooter.Xunit3;
 
 namespace Cine.Modules.Theater.IntegrationTests.Seats;
 
@@ -15,7 +15,7 @@ public class GetSeatsTests(App app) : IntegrationTestBase(app)
         var query = new GetSeatsQuery(hallId);
         
         // Act
-        var result = await Sender.Send(query);
+        var result = await Sender.Send(query, TestContext.Current.CancellationToken);
         
         // Assert
         result.IsT0.Should().BeTrue();

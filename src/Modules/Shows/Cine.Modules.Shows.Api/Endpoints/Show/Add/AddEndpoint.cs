@@ -21,7 +21,7 @@ internal sealed class AddEndpoint(ISender sender) : Endpoint<Request, Response>
         var oneOf = await sender.Send(new CreateShowCommand(req.HallId, req.MovieId, req.StartAt), ct);
 
         await oneOf.Match(
-            async showId => await SendOkAsync(new Response(showId), ct),
+            async showId => await Send.OkAsync(new Response(showId), ct),
             error => throw error.Value);
     }
 }

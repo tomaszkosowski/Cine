@@ -1,6 +1,5 @@
 ﻿using Cine.Modules.Theater.IntegrationEvents.Halls;
 using Cine.Modules.Tickets.Application.Halls.AddHall;
-using Cine.Modules.Tickets.Application.Shows.CreateShow;
 using Cine.Shared.Infrastructure.Events;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

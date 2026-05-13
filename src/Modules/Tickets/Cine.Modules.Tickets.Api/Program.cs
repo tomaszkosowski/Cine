@@ -25,7 +25,7 @@ builder.Services
         providerBuilder
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
-            .AddSqlClientInstrumentation(opts => opts.SetDbStatementForText = true)
+            .AddSqlClientInstrumentation()
             .AddOtlpExporter());
 
 var application = builder.Build();

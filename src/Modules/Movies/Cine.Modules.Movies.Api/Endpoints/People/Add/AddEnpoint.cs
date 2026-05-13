@@ -24,7 +24,7 @@ internal sealed class AddEnpoint(ISender sender) : Endpoint<Request, Response>
         var oneOf = await sender.Send(new CreatePersonCommand(req.FirstName, req.LastName), ct);
 
         await oneOf.Match(
-            async personId => await SendCreatedAtAsync<GetEndpoint>(personId, new(personId), cancellation: ct),
+            async personId => await Send.CreatedAtAsync<GetEndpoint>(personId, new(personId), cancellation: ct),
             error => throw error.Value);
     }
 }

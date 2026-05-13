@@ -21,7 +21,7 @@ internal sealed class GetEndpoint(ISender sender) : Ep.NoReq.Res<Response>
 
         var oneOf = await sender.Send(new GetSeatsQuery(hallId), ct);
         await oneOf.Match(
-            async seatDtos => await SendOkAsync(new Response(seatDtos.ToList()), ct),
+            async seatDtos => await Send.OkAsync(new Response(seatDtos.ToList()), ct),
             error => throw error.Value);
     }
 }

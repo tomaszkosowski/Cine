@@ -21,8 +21,8 @@ internal sealed class GetEndpoint(ISender sender) : Endpoint<Request, Response>
         var oneOf = await sender.Send(new GetMovieQuery(req.MovieId), ct);
 
         await oneOf.Match(
-            async dto => await SendOkAsync(new Response(dto), ct),
-            async notFound => await SendNotFoundAsync(ct),
+            async dto => await Send.OkAsync(new Response(dto), ct),
+            async notFound => await Send.NotFoundAsync(ct),
             error => throw error.Value);
     }
 }

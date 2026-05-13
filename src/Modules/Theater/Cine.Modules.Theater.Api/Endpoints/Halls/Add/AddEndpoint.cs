@@ -28,7 +28,7 @@ internal sealed class AddEndpoint(ISender sender) : Endpoint<Request, Response>
         var oneOf = await sender.Send(new CreateHallCommand(req.Name, layout), ct);
 
         await oneOf.Match(
-            async result => await SendOkAsync(new Response(result.HallId, result.Seats.ToList()), ct),
+            async result => await Send.OkAsync(new Response(result.HallId, result.Seats.ToList()), ct),
             error => throw error.Value);
     }
 }

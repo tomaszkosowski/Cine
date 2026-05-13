@@ -1,8 +1,6 @@
 ﻿using Cine.Modules.Movies.Application.Movies.CreateMovie;
 using FastEndpoints.Testing;
 using FluentAssertions;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Cine.Modules.Movies.IntegrationTests.Movies;
 
@@ -32,7 +30,7 @@ public class CreateMovieTests(App app) : IntegrationTestBase(app)
                 new("Johnny", "Knoxville")
             ]);
 
-        var result = await Sender.Send(command);
+        var result = await Sender.Send(command, TestContext.Current.CancellationToken);
 
         result.IsT0.Should().BeTrue();
         result.AsT0.Should().NotBeEmpty();

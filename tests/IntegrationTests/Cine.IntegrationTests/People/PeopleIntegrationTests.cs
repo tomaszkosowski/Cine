@@ -3,7 +3,7 @@ using Cine.Modules.Movies.Api.Endpoints.People.Get;
 using FastEndpoints;
 using FastEndpoints.Testing;
 using FluentAssertions;
-using Snapshooter.Xunit;
+using Snapshooter.Xunit3;
 using AddRequest = Cine.Modules.Movies.Api.Endpoints.People.Add.Request;
 using AddResponse = Cine.Modules.Movies.Api.Endpoints.People.Add.Response;
 using GetRequest = Cine.Modules.Movies.Api.Endpoints.People.Get.Request;

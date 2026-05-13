@@ -27,7 +27,7 @@ public class ExpireReservationTests(App app) : IntegrationTestBase(app)
         var command = new ExpireReservationsCommand();
         
         // Act
-        var result = await Sender.Send(command);
+        var result = await Sender.Send(command, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT0.Should().BeTrue();

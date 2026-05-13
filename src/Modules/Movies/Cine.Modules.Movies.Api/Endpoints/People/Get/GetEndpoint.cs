@@ -21,8 +21,8 @@ internal sealed class GetEndpoint(ISender sender) : Endpoint<Request, Response>
         var oneOf = await sender.Send(new GetPersonQuery(req.PersonId), ct);
 
         await oneOf.Match(
-            async dto => await SendOkAsync(new(dto), ct),
-            async notFound => await SendNotFoundAsync(ct),
+            async dto => await Send.OkAsync(new(dto), ct),
+            async notFound => await Send.NotFoundAsync(ct),
             error => throw error.Value);
     }
 }

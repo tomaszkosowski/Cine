@@ -13,8 +13,7 @@ public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
 
     public RabbitMqEventsBusIntegrationTests()
     {
-        _container = new RabbitMqBuilder()
-            .WithImage("rabbitmq:3-management-alpine")
+        _container = new RabbitMqBuilder("rabbitmq:3-management-alpine")
             .WithName("rabbitmq-integration-tests")
             .WithPortBinding(5672, true)
             .WithUsername("guest")
@@ -22,7 +21,7 @@ public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
             .Build();
     }
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         await _container.StartAsync();
 
@@ -34,7 +33,7 @@ public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
         await _hostedService.StartAsync(CancellationToken.None);
     }
 
-    public async Task DisposeAsync() => await _container.DisposeAsync();
+    public async ValueTask DisposeAsync() => await _container.DisposeAsync();
 
     [Fact]
     public async Task Publish_WithValidIntegrationEvent_ShouldHandleIntegrationEvent()
@@ -45,13 +44,13 @@ public class RabbitMqEventsBusIntegrationTests : IAsyncLifetime
         var integrationEvent = new TestIntegrationEvent(Guid.NewGuid());
         var integrationEventHandler = new TestIntegrationEventHandler(manualResetEvent);
 
-        await _eventsBus.SubscribeAsync("", integrationEventHandler);
+        await _eventsBus.SubscribeAsync("", integrationEventHandler, TestContext.Current.CancellationToken);
 
         // Act
-        await _eventsBus.PublishAsync(integrationEvent);
+        await _eventsBus.PublishAsync(integrationEvent, TestContext.Current.CancellationToken);
 
         // Assert
-        manualResetEvent.Wait(TimeSpan.FromSeconds(1));
+        manualResetEvent.Wait(TimeSpan.FromSeconds(1), TestContext.Current.CancellationToken);
         integrationEvent.ValidationId.Should().Be(integrationEventHandler.ReceivedEvent!.ValidationId);
     }
 

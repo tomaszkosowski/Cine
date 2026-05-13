@@ -1,6 +1,4 @@
-﻿using Cine.Modules.Sales.Domain.DiscountRules;
-using Cine.Modules.Sales.Domain.DiscountSpecifications;
-using Cine.Modules.Sales.Domain.Events;
+﻿using Cine.Modules.Sales.Domain.Events;
 using Cine.Shared.Domain;
 
 namespace Cine.Modules.Sales.Domain;

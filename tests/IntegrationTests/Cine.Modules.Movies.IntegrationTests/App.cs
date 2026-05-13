@@ -3,24 +3,21 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Testcontainers.MsSql;
 using Testcontainers.RabbitMq;
-using Program = Cine.Modules.Movies.Api.Program;
 
 namespace Cine.Modules.Movies.IntegrationTests;
 
-public class App : AppFixture<Program>
+public class App : AppFixture<Api.Program>
 {
     private MsSqlContainer _mssql = default!;
     private RabbitMqContainer _rabbitmq = default!;
 
-    protected override async Task PreSetupAsync()
+    protected override async ValueTask PreSetupAsync()
     {
-        _mssql = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+        _mssql = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
             .WithName($"ms-sql-integration-tests-{Guid.NewGuid()}")
             .Build();
 
-        _rabbitmq = new RabbitMqBuilder()
-            .WithImage("rabbitmq:3-management-alpine")
+        _rabbitmq = new RabbitMqBuilder("rabbitmq:3-management-alpine")
             .WithName($"rabbitmq-integration-tests-{Guid.NewGuid()}")
             .WithPortBinding(5672, true)
             .WithUsername("guest")

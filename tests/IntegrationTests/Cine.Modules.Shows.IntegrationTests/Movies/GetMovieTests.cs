@@ -1,11 +1,9 @@
-﻿using Cine.Modules.Shows.Application.Halls.AddHall;
-using Cine.Modules.Shows.Application.Halls.GetHall;
-using Cine.Modules.Shows.Application.Movies.AddMovie;
+﻿using Cine.Modules.Shows.Application.Movies.AddMovie;
 using Cine.Modules.Shows.Application.Movies.GetMovie;
 using FluentAssertions;
 using MediatR;
 using OneOf.Types;
-using Snapshooter.Xunit;
+using Snapshooter.Xunit3;
 
 namespace Cine.Modules.Shows.IntegrationTests.Movies;
 
@@ -21,7 +19,7 @@ public class GetMovieTests(App app) : IntegrationTestBase(app)
         var query = new GetMovieQuery(movieId);
 
         // Act
-        var result = await Sender.Send(query);
+        var result = await Sender.Send(query, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT0.Should().BeTrue();
@@ -38,7 +36,7 @@ public class GetMovieTests(App app) : IntegrationTestBase(app)
         var query = new GetMovieQuery(movieId);
 
         // Act
-        var result = await Sender.Send(query);
+        var result = await Sender.Send(query, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT1.Should().BeTrue();

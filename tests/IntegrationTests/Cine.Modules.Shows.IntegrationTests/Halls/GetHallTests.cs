@@ -18,7 +18,7 @@ public class GetHallTests(App app) : IntegrationTestBase(app)
         var query = new GetHallQuery(hallId);
 
         // Act
-        var result = await Sender.Send(query);
+        var result = await Sender.Send(query, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT0.Should().BeTrue();
@@ -34,7 +34,7 @@ public class GetHallTests(App app) : IntegrationTestBase(app)
         var query = new GetHallQuery(hallId);
 
         // Act
-        var result = await Sender.Send(query);
+        var result = await Sender.Send(query, TestContext.Current.CancellationToken);
 
         // Assert
         result.IsT1.Should().BeTrue();

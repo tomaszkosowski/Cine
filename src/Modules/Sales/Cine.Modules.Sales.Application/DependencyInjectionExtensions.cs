@@ -1,5 +1,4 @@
-﻿using Cine.Modules.Sales.Application.Payments;
-using Cine.Modules.Sales.Application.Reservations;
+﻿using Cine.Modules.Sales.Application.Reservations;
 using Cine.Modules.Sales.Application.Sagas;
 using Cine.Modules.Sales.Application.Sagas.ApiClients;
 using Cine.Modules.Sales.Application.Sagas.Consumers;

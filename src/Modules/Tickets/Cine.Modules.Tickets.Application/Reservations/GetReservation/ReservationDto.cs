@@ -1,6 +1,4 @@
-﻿using Cine.Modules.Tickets.Domain;
-
-namespace Cine.Modules.Tickets.Application.Reservations.GetReservation;
+﻿namespace Cine.Modules.Tickets.Application.Reservations.GetReservation;
 
 public record ReservationDto(
     Guid ReservationId,
